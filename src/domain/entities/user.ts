@@ -14,7 +14,7 @@ export class User extends Entity {
   private _email: string;
   private _role: RoleEnum;
   private _feedbacks: Feedback[] | undefined;
-  protected constructor({ id, name, email, role }: UserProps) {
+  constructor({ id, name, email, role }: UserProps) {
     super({ id: id });
     this._name = name;
     this._email = email;

@@ -12,12 +12,7 @@ export class Settings extends Entity {
   private readonly _companyId;
   private _primaryColor: string;
   private _logoUrl: string | null;
-  protected constructor({
-    id,
-    companyId,
-    primaryColor,
-    logoUrl,
-  }: SettingsProps) {
+  constructor({ id, companyId, primaryColor, logoUrl }: SettingsProps) {
     super({ id: id });
     this._companyId = companyId;
     this._primaryColor = primaryColor;

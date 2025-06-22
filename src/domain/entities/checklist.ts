@@ -10,7 +10,7 @@ export class Checklist extends Entity {
   private readonly _companyId: string;
   private _tittle: string;
 
-  protected constructor({ id, companyId, tittle }: ChecklistProps) {
+  constructor({ id, companyId, tittle }: ChecklistProps) {
     super({ id: id });
     this._companyId = companyId;
     this._tittle = tittle;

@@ -1,16 +1,38 @@
-import { ok, serverError } from "../helpers/http-responses";
-import { Controller } from "../protocols/controller";
+import { badRequest, ok, serverError } from "../helpers/http-responses";
+import { IController } from "../protocols/controller";
 import { HttpRequest } from "../types/http-request";
 import { HttpResponse } from "../types/htpp-response";
+import { z } from "zod";
+import { RoleEnum } from "../../domain/enums/role-enum";
+import { IInviteUserUseCase } from "../../application/protocols/use-cases/invite-user-use-case";
+import { InviteUserDTO } from "../../application/dtos/invite-user-dto";
 
-export class InviteUserController implements Controller {
-  constructor() {}
+export const inviteUserSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(3)
+    .max(50)
+    .regex(/^[a-zA-ZÀ-ÿ\s]+$/),
+  role: z.nativeEnum(RoleEnum),
+});
+
+export class InviteUserController implements IController {
+  constructor(private readonly inviteUserUseCase: IInviteUserUseCase) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     try {
-      return ok({});
+      const result = inviteUserSchema.safeParse(request.body);
+      if (!result.success) {
+        return badRequest(result.error.format());
+      }
+      const dto: InviteUserDTO = {
+        name: result.data.name,
+        role: result.data.role,
+      };
+      return ok(await this.inviteUserUseCase.execute(dto));
     } catch (error) {
-      return serverError(new Error());
+      return serverError("SD");
     }
   }
 }

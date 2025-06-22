@@ -21,7 +21,7 @@ export class Feedback extends Entity {
   private _description: string | null;
   private _observation: string | null;
   private _score: number;
-  protected constructor({
+  constructor({
     id,
     userId,
     checklistId,

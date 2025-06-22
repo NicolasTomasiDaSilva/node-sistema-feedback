@@ -15,7 +15,7 @@ export class Company extends Entity {
   private _cpfCnpj: string;
   private _settings: Settings | undefined;
   private _invitations: Invitation[] | undefined;
-  protected constructor({ id, name, cpfCnpj, settings }: CompanyProps) {
+  constructor({ id, name, cpfCnpj, settings }: CompanyProps) {
     super({ id: id });
     this._name = name;
     this._cpfCnpj = cpfCnpj;

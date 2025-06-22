@@ -13,7 +13,7 @@ export class Invitation extends Entity {
   private _name: string;
   private _role: RoleEnum;
   private _isAccepted: boolean;
-  protected constructor({ id, companyId, name, role }: InvitationProps) {
+  constructor({ id, companyId, name, role }: InvitationProps) {
     super({ id: id });
     this._companyId = companyId;
     this._name = name;
