@@ -1,13 +1,6 @@
 import { Dialect, Options } from "sequelize";
 
-export const sequelizeConfig: {
-  dialect: Dialect;
-  host: string;
-  username: string;
-  password: string;
-  database: string;
-  port: number;
-} = {
+export const config: Options = {
   dialect: process.env.DB_DIALECT as Dialect,
   host: process.env.DB_HOST as string,
   username: process.env.DB_USERNAME as string,

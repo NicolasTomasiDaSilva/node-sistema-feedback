@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import { sequelizeConfig } from "./config";
+import { config } from "./config/config";
 
 export class Database {
   private static _instance: Sequelize;
@@ -8,7 +8,7 @@ export class Database {
 
   public static getInstance(): Sequelize {
     if (!Database._instance) {
-      Database._instance = new Sequelize(sequelizeConfig);
+      Database._instance = new Sequelize(config);
     }
     return Database._instance;
   }
