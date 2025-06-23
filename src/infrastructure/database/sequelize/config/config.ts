@@ -1,10 +1,15 @@
-import { Dialect, Options } from "sequelize";
+import "dotenv/config";
 
-export const config: Options = {
-  dialect: process.env.DB_DIALECT as Dialect,
-  host: process.env.DB_HOST as string,
-  username: process.env.DB_USERNAME as string,
-  password: process.env.DB_PASSWORD as string,
-  database: process.env.DB_NAME as string,
-  port: Number(process.env.DB_PORT) as number,
+import { Options } from "sequelize";
+
+const config: Options = {
+  database: process.env.DB_NAME || "sistema-feedback-db",
+  username: process.env.DB_USERNAME || "postgres",
+  password: process.env.DB_PASSWORD || "postgres",
+  host: process.env.DB_HOST || "localhost",
+  port: Number(process.env.DB_PORT) || 5432,
+  dialect: "postgres",
+  logging: false,
 };
+
+export = config;

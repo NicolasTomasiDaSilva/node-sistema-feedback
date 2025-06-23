@@ -1,17 +1,19 @@
-require("ts-node/register");
+// .sequelizerc
 const path = require("path");
-
 module.exports = {
-  // -------------▼  ajustado  ▼---------------
   config: path.resolve(
+    __dirname,
+    "build",
     "src",
     "infrastructure",
     "database",
     "sequelize",
-    "config", // sub-pasta
-    "config.ts"
+    "config",
+    "config.js"
   ),
   "models-path": path.resolve(
+    __dirname,
+    "build",
     "src",
     "infrastructure",
     "database",
@@ -19,6 +21,8 @@ module.exports = {
     "models"
   ),
   "migrations-path": path.resolve(
+    __dirname,
+    "build",
     "src",
     "infrastructure",
     "database",
@@ -26,6 +30,8 @@ module.exports = {
     "migrations"
   ),
   "seeders-path": path.resolve(
+    __dirname,
+    "build",
     "src",
     "infrastructure",
     "database",

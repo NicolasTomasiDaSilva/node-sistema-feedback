@@ -1,6 +1,5 @@
 import { Sequelize } from "sequelize";
-import { config } from "./config/config";
-
+import * as config from "./config/config";
 export class Database {
   private static _instance: Sequelize;
 
