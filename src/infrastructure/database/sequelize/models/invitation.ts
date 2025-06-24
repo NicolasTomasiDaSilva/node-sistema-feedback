@@ -1,32 +1,29 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from "sequelize";
 import { Database } from "../sequelize";
 import { RoleEnum } from "../../../../domain/enums/role-enum";
 
 const sequelize = Database.getInstance();
 
-interface UserAttributes {
-  id: string;
-  companyId: string;
-  name: string;
-  email: string;
-  role: RoleEnum;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
-}
-
-export class UserModel extends Model<UserAttributes> implements UserAttributes {
+export class InvitationModel extends Model<
+  InferAttributes<InvitationModel>,
+  InferCreationAttributes<InvitationModel>
+> {
   public id!: string;
   public companyId!: string;
   public name!: string;
-  public email!: string;
   public role!: RoleEnum;
+  public isAccepted!: boolean;
   public createdAt!: Date;
   public updatedAt!: Date;
   public deletedAt!: Date | null;
 }
 
-UserModel.init(
+InvitationModel.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -41,13 +38,12 @@ UserModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
     role: {
       type: DataTypes.ENUM(...Object.values(RoleEnum)),
+      allowNull: false,
+    },
+    isAccepted: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
     createdAt: DataTypes.DATE,
@@ -56,7 +52,7 @@ UserModel.init(
   },
   {
     sequelize,
-    tableName: "users",
+    tableName: "invitations",
     timestamps: true,
     paranoid: true,
   }

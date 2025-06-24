@@ -6,6 +6,10 @@ interface InvitationProps {
   companyId: string;
   name: string;
   role: RoleEnum;
+  isAccepted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
 }
 
 export class Invitation extends Entity {
@@ -13,12 +17,18 @@ export class Invitation extends Entity {
   private _name: string;
   private _role: RoleEnum;
   private _isAccepted: boolean;
-  constructor({ id, companyId, name, role }: InvitationProps) {
-    super({ id: id });
-    this._companyId = companyId;
-    this._name = name;
-    this._role = role;
-    this._isAccepted = false;
+
+  private constructor(props: InvitationProps) {
+    super({
+      id: props.id,
+      createdAt: props.createdAt,
+      updatedAt: props.updatedAt,
+      deletedAt: props.deletedAt,
+    });
+    this._companyId = props.companyId;
+    this._name = props.name;
+    this._role = props.role;
+    this._isAccepted = props.isAccepted;
   }
 
   get companyId(): string {

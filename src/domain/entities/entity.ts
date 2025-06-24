@@ -1,5 +1,8 @@
 interface EntityProps {
   id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
 }
 
 export abstract class Entity {
@@ -8,13 +11,12 @@ export abstract class Entity {
   private _updatedAt: Date;
   private _deletedAt: Date | null;
 
-  protected constructor({ id }: EntityProps) {
+  constructor({ id, createdAt, updatedAt, deletedAt }: EntityProps) {
     this._id = id;
-    this._createdAt = new Date();
-    this._updatedAt = new Date();
-    this._deletedAt = null;
+    this._createdAt = createdAt;
+    this._updatedAt = updatedAt;
+    this._deletedAt = deletedAt;
   }
-
   get id(): string {
     return this._id;
   }

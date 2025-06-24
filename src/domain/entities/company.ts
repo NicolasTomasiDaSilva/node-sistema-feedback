@@ -7,7 +7,11 @@ interface CompanyProps {
   id: string;
   name: string;
   cpfCnpj: string;
-  settings: Settings;
+  settings: Settings | undefined;
+  invitations: Invitation[] | undefined;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
 }
 
 export class Company extends Entity {
@@ -15,12 +19,33 @@ export class Company extends Entity {
   private _cpfCnpj: string;
   private _settings: Settings | undefined;
   private _invitations: Invitation[] | undefined;
-  constructor({ id, name, cpfCnpj, settings }: CompanyProps) {
-    super({ id: id });
+  private constructor({
+    id,
+    name,
+    cpfCnpj,
+    settings,
+    invitations,
+    createdAt,
+    updatedAt,
+    deletedAt,
+  }: CompanyProps) {
+    super({ id, createdAt, updatedAt, deletedAt });
     this._name = name;
     this._cpfCnpj = cpfCnpj;
     this._settings = settings;
-    this._invitations = [];
+    this._invitations = invitations;
+  }
+
+  static create(
+    props: Omit<CompanyProps, "createdAt" | "updatedAt" | "deletedAt">
+  ): Company {
+    const now = new Date();
+    return new Company({
+      ...props,
+      createdAt: now,
+      updatedAt: now,
+      deletedAt: null,
+    });
   }
 
   get name(): string {

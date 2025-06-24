@@ -6,39 +6,38 @@ interface FeedbackProps {
   id: string;
   userId: string;
   checklistId: string;
-  checklist: Checklist;
+  checklist: Checklist | undefined;
   tittle: string;
   description: string | null;
   observation: string | null;
   score: number;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
 }
 
 export class Feedback extends Entity {
   private readonly _userId: string;
   private readonly _checklistId: string;
-  private _checklist: Checklist;
+  private _checklist: Checklist | undefined;
   private _tittle: string;
   private _description: string | null;
   private _observation: string | null;
   private _score: number;
-  constructor({
-    id,
-    userId,
-    checklistId,
-    checklist,
-    tittle,
-    description,
-    observation,
-    score,
-  }: FeedbackProps) {
-    super({ id: id });
-    this._userId = userId;
-    this._checklistId = checklistId;
-    this._checklist = checklist;
-    this._tittle = tittle;
-    this._description = description ?? null;
-    this._observation = observation ?? null;
-    this._score = score;
+  constructor(props: FeedbackProps) {
+    super({
+      id: props.id,
+      createdAt: props.createdAt,
+      updatedAt: props.updatedAt,
+      deletedAt: props.deletedAt,
+    });
+    this._userId = props.userId;
+    this._checklistId = props.checklistId;
+    this._checklist = props.checklist;
+    this._tittle = props.tittle;
+    this._description = props.description;
+    this._observation = props.observation;
+    this._score = props.score;
   }
 
   get userId(): string {
@@ -47,7 +46,7 @@ export class Feedback extends Entity {
   get checklistId(): string {
     return this._checklistId;
   }
-  get checklist(): Checklist {
+  get checklist(): Checklist | undefined {
     return this._checklist;
   }
   get tittle(): string {

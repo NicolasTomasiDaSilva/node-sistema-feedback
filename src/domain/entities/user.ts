@@ -7,6 +7,10 @@ interface UserProps {
   name: string;
   email: string;
   role: RoleEnum;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+  feedbacks: Feedback[] | undefined;
 }
 
 export class User extends Entity {
@@ -14,12 +18,18 @@ export class User extends Entity {
   private _email: string;
   private _role: RoleEnum;
   private _feedbacks: Feedback[] | undefined;
-  constructor({ id, name, email, role }: UserProps) {
-    super({ id: id });
-    this._name = name;
-    this._email = email;
-    this._role = role;
-    this._feedbacks = [];
+
+  constructor(props: UserProps) {
+    super({
+      id: props.id,
+      createdAt: props.createdAt,
+      updatedAt: props.updatedAt,
+      deletedAt: props.deletedAt,
+    });
+    this._name = props.name;
+    this._email = props.email;
+    this._role = props.role;
+    this._feedbacks = props.feedbacks;
   }
 
   get name(): string {

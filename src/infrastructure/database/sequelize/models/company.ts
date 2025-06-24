@@ -4,50 +4,40 @@ import { RoleEnum } from "../../../../domain/enums/role-enum";
 
 const sequelize = Database.getInstance();
 
-interface UserAttributes {
+interface CompanyAttributes {
   id: string;
-  companyId: string;
   name: string;
-  email: string;
-  role: RoleEnum;
+  cpfCnpj: string;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
 }
 
-export class UserModel extends Model<UserAttributes> implements UserAttributes {
+export class CompanyModel
+  extends Model<CompanyAttributes>
+  implements CompanyAttributes
+{
   public id!: string;
-  public companyId!: string;
   public name!: string;
-  public email!: string;
-  public role!: RoleEnum;
+  public cpfCnpj!: string;
   public createdAt!: Date;
   public updatedAt!: Date;
   public deletedAt!: Date | null;
 }
 
-UserModel.init(
+CompanyModel.init(
   {
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
       allowNull: false,
     },
-    companyId: {
-      type: DataTypes.UUID,
-      allowNull: false,
-    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
+    cpfCnpj: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    role: {
-      type: DataTypes.ENUM(...Object.values(RoleEnum)),
       allowNull: false,
     },
     createdAt: DataTypes.DATE,
@@ -56,7 +46,7 @@ UserModel.init(
   },
   {
     sequelize,
-    tableName: "users",
+    tableName: "companies",
     timestamps: true,
     paranoid: true,
   }
