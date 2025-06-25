@@ -43,6 +43,10 @@ export class Invitation extends Entity {
     });
   }
 
+  static fromPersistence(props: InvitationProps): Invitation {
+    return new Invitation(props);
+  }
+
   get companyId(): string {
     return this._companyId;
   }

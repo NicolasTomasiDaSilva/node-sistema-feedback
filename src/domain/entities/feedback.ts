@@ -51,6 +51,10 @@ export class Feedback extends Entity {
     });
   }
 
+  static fromPersistence(props: FeedbackProps): Feedback {
+    return new Feedback(props);
+  }
+
   get userId(): string {
     return this._userId;
   }

@@ -36,6 +36,10 @@ export class Checklist extends Entity {
     });
   }
 
+  static fromPersistence(props: ChecklistProps): Checklist {
+    return new Checklist(props);
+  }
+
   get companyId(): string {
     return this._companyId;
   }

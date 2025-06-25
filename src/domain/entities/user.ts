@@ -44,6 +44,10 @@ export class User extends Entity {
     });
   }
 
+  fromPersistence(props: UserProps): User {
+    return new User(props);
+  }
+
   get name(): string {
     return this._name;
   }

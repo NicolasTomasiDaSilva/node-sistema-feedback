@@ -48,6 +48,10 @@ export class Company extends Entity {
     });
   }
 
+  static fromPersistence(props: CompanyProps): Company {
+    return new Company(props);
+  }
+
   get name(): string {
     return this._name;
   }

@@ -39,6 +39,10 @@ export class Settings extends Entity {
     });
   }
 
+  static fromPersistence(props: SettingsProps): Settings {
+    return new Settings(props);
+  }
+
   get companyId(): string {
     return this._companyId;
   }
