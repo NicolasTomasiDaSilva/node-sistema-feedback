@@ -1,6 +1,7 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import { Database } from "../sequelize";
 import { RoleEnum } from "../../../../domain/enums/role-enum";
+import { CompanyModel } from "./company";
 
 const sequelize = Database.getInstance();
 
@@ -61,3 +62,8 @@ UserModel.init(
     paranoid: true,
   }
 );
+
+UserModel.belongsTo(CompanyModel, {
+  foreignKey: "companyId",
+  as: "company",
+});

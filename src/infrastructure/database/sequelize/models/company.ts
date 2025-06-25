@@ -1,6 +1,8 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import { Database } from "../sequelize";
 import { RoleEnum } from "../../../../domain/enums/role-enum";
+import { UserModel } from "./user";
+import { InvitationModel } from "./invitation";
 
 const sequelize = Database.getInstance();
 
@@ -51,3 +53,17 @@ CompanyModel.init(
     paranoid: true,
   }
 );
+
+CompanyModel.hasMany(UserModel, {
+  foreignKey: "companyId",
+  as: "users",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+CompanyModel.hasMany(InvitationModel, {
+  foreignKey: "companyId",
+  as: "invitations",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});

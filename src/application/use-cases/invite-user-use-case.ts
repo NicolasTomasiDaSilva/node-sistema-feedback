@@ -5,11 +5,12 @@ import { IInviteUserUseCase } from "../protocols/use-cases/invite-user-use-case"
 export class InviteUserUseCase implements IInviteUserUseCase {
   execute(data: InviteUserDTO): Promise<Invitation> {
     return Promise.resolve(
-      new Invitation({
+      Invitation.create({
         id: "1",
         name: data.name,
         role: data.role,
         companyId: "1",
+        isAccepted: false,
       })
     );
   }

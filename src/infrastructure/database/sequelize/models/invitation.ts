@@ -6,6 +6,7 @@ import {
 } from "sequelize";
 import { Database } from "../sequelize";
 import { RoleEnum } from "../../../../domain/enums/role-enum";
+import { CompanyModel } from "./company";
 
 const sequelize = Database.getInstance();
 
@@ -57,3 +58,8 @@ InvitationModel.init(
     paranoid: true,
   }
 );
+
+InvitationModel.belongsTo(CompanyModel, {
+  foreignKey: "companyId",
+  as: "company",
+});
