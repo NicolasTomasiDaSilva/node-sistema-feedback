@@ -31,6 +31,18 @@ export class Invitation extends Entity {
     this._isAccepted = props.isAccepted;
   }
 
+  static create(
+    props: Omit<InvitationProps, "createdAt" | "updatedAt" | "deletedAt">
+  ): Invitation {
+    const now = new Date();
+    return new Invitation({
+      ...props,
+      createdAt: now,
+      updatedAt: now,
+      deletedAt: null,
+    });
+  }
+
   get companyId(): string {
     return this._companyId;
   }

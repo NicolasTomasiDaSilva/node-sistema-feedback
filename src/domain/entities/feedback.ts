@@ -39,6 +39,17 @@ export class Feedback extends Entity {
     this._observation = props.observation;
     this._score = props.score;
   }
+  static create(
+    props: Omit<FeedbackProps, "createdAt" | "updatedAt" | "deletedAt">
+  ): Feedback {
+    const now = new Date();
+    return new Feedback({
+      ...props,
+      createdAt: now,
+      updatedAt: now,
+      deletedAt: null,
+    });
+  }
 
   get userId(): string {
     return this._userId;

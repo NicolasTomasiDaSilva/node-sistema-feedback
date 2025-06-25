@@ -24,6 +24,18 @@ export class Checklist extends Entity {
     this._tittle = props.tittle;
   }
 
+  static create(
+    props: Omit<ChecklistProps, "createdAt" | "updatedAt" | "deletedAt">
+  ) {
+    const now = new Date();
+    return new Checklist({
+      ...props,
+      createdAt: now,
+      updatedAt: now,
+      deletedAt: null,
+    });
+  }
+
   get companyId(): string {
     return this._companyId;
   }

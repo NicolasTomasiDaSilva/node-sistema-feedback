@@ -32,6 +32,18 @@ export class User extends Entity {
     this._feedbacks = props.feedbacks;
   }
 
+  static create(
+    props: Omit<UserProps, "createdAt" | "updatedAt" | "deletedAt">
+  ) {
+    const now = new Date();
+    return new User({
+      ...props,
+      createdAt: now,
+      updatedAt: now,
+      deletedAt: null,
+    });
+  }
+
   get name(): string {
     return this._name;
   }

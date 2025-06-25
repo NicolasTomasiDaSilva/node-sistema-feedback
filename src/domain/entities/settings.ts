@@ -27,6 +27,18 @@ export class Settings extends Entity {
     this._logoUrl = props.logoUrl;
   }
 
+  static create(
+    props: Omit<SettingsProps, "createdAt" | "updatedAt" | "deletedAt">
+  ): Settings {
+    const now = new Date();
+    return new Settings({
+      ...props,
+      createdAt: now,
+      updatedAt: now,
+      deletedAt: null,
+    });
+  }
+
   get companyId(): string {
     return this._companyId;
   }
