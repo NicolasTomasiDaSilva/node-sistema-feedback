@@ -32,7 +32,8 @@ export class InviteUserController implements IController {
       };
       return ok(await this.inviteUserUseCase.execute(dto));
     } catch (error) {
-      return serverError("SD");
+      console.error(error);
+      return serverError(error);
     }
   }
 }

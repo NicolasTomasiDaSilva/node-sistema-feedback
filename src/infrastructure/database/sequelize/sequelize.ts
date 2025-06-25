@@ -1,5 +1,7 @@
+// src/infrastructure/sequelize.ts
 import { Sequelize } from "sequelize";
 import * as config from "./config/config";
+
 export class Database {
   private static _instance: Sequelize;
 
@@ -13,8 +15,30 @@ export class Database {
   }
 
   public static async connect(): Promise<void> {
-    await Database.getInstance().authenticate();
+    const sequelize = Database.getInstance();
+
+    await sequelize.authenticate();
     console.log("Connected to database");
+
+    const [{ CompanyModel }, { UserModel }, { InvitationModel }] =
+      await Promise.all([
+        import("./models/company"),
+        import("./models/user"),
+        import("./models/invitation"),
+      ]);
+
+    CompanyModel.initModel(sequelize);
+    UserModel.initModel(sequelize);
+    InvitationModel.initModel(sequelize);
+
+    CompanyModel.associate();
+    UserModel.associate();
+    InvitationModel.associate();
+
+    await sequelize.sync({
+      alter: true,
+    });
+    console.log("All models were synchronized successfully.");
   }
 
   public static async disconnect(): Promise<void> {
