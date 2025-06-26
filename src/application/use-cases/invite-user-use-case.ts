@@ -1,12 +1,13 @@
 import { Invitation } from "../../domain/entities/invitation";
 import { InviteUserDTO } from "../dtos/invite-user-dto";
-import { IInviteUserRepository } from "../protocols/repositories/invite-user-repository";
+import { IInvitationRepository } from "../protocols/repositories/invite-repository";
+
 import { IInviteUserUseCase } from "../protocols/use-cases/invite-user-use-case";
 import { IUuidGenerator } from "../protocols/uuid-generator";
 
 export class InviteUserUseCase implements IInviteUserUseCase {
   constructor(
-    private readonly inviteUserRepository: IInviteUserRepository,
+    private readonly invitationRepository: IInvitationRepository,
     private readonly uuidGenerator: IUuidGenerator
   ) {}
   execute(data: InviteUserDTO): Promise<Invitation> {
@@ -18,6 +19,6 @@ export class InviteUserUseCase implements IInviteUserUseCase {
       isAccepted: false,
     });
 
-    return this.inviteUserRepository.create(invitation);
+    return this.invitationRepository.create(invitation);
   }
 }

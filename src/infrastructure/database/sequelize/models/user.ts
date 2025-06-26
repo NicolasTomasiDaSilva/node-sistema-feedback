@@ -1,22 +1,22 @@
-import { DataTypes, Model, Optional, Sequelize } from "sequelize";
+import {
+  BelongsToGetAssociationMixin,
+  DataTypes,
+  HasManyGetAssociationsMixin,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  Optional,
+  Sequelize,
+} from "sequelize";
 import { Database } from "../sequelize";
 import { RoleEnum } from "../../../../domain/enums/role-enum";
 import { CompanyModel } from "./company";
+import { FeedbackModel } from "./feedback";
 
-const sequelize = Database.getInstance();
-
-interface UserAttributes {
-  id: string;
-  companyId: string;
-  name: string;
-  email: string;
-  role: RoleEnum;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
-}
-
-export class UserModel extends Model<UserAttributes> implements UserAttributes {
+export class UserModel extends Model<
+  InferAttributes<UserModel>,
+  InferCreationAttributes<UserModel>
+> {
   public id!: string;
   public companyId!: string;
   public name!: string;
@@ -25,6 +25,11 @@ export class UserModel extends Model<UserAttributes> implements UserAttributes {
   public createdAt!: Date;
   public updatedAt!: Date;
   public deletedAt!: Date | null;
+  public readonly receivedFeedbacks?: FeedbackModel[];
+  public getCompany!: BelongsToGetAssociationMixin<CompanyModel>;
+
+  public getGivenFeedbacks!: HasManyGetAssociationsMixin<FeedbackModel>;
+  public getReceivedFeedbacks!: HasManyGetAssociationsMixin<FeedbackModel>;
 
   static initModel(sequelize: Sequelize) {
     UserModel.init(
@@ -67,6 +72,20 @@ export class UserModel extends Model<UserAttributes> implements UserAttributes {
     UserModel.belongsTo(CompanyModel, {
       foreignKey: "companyId",
       as: "company",
+    });
+
+    UserModel.hasMany(FeedbackModel, {
+      foreignKey: "giverId",
+      as: "givenFeedbacks",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    });
+
+    UserModel.hasMany(FeedbackModel, {
+      foreignKey: "receiverId",
+      as: "receivedFeedbacks",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     });
   }
 }

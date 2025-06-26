@@ -1,5 +1,5 @@
 import { Invitation } from "../../../domain/entities/invitation";
 
-export interface IInviteUserRepository {
+export interface IInvitationRepository {
   create(data: Invitation): Promise<Invitation>;
 }

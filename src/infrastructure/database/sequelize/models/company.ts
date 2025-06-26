@@ -1,30 +1,30 @@
-import { DataTypes, Model, Optional, Sequelize } from "sequelize";
+import {
+  DataTypes,
+  HasManyGetAssociationsMixin,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  Optional,
+  Sequelize,
+} from "sequelize";
 import { Database } from "../sequelize";
 import { RoleEnum } from "../../../../domain/enums/role-enum";
 import { UserModel } from "./user";
 import { InvitationModel } from "./invitation";
 
-const sequelize = Database.getInstance();
-
-interface CompanyAttributes {
-  id: string;
-  name: string;
-  cpfCnpj: string;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
-}
-
-export class CompanyModel
-  extends Model<CompanyAttributes>
-  implements CompanyAttributes
-{
+export class CompanyModel extends Model<
+  InferAttributes<CompanyModel>,
+  InferCreationAttributes<CompanyModel>
+> {
   public id!: string;
   public name!: string;
   public cpfCnpj!: string;
   public createdAt!: Date;
   public updatedAt!: Date;
   public deletedAt!: Date | null;
+
+  public getUsers!: HasManyGetAssociationsMixin<UserModel>;
+  public getInvitations!: HasManyGetAssociationsMixin<InvitationModel>;
 
   static initModel(sequelize: Sequelize) {
     CompanyModel.init(

@@ -1,4 +1,5 @@
 import {
+  BelongsToGetAssociationMixin,
   DataTypes,
   InferAttributes,
   InferCreationAttributes,
@@ -8,8 +9,6 @@ import {
 import { Database } from "../sequelize";
 import { RoleEnum } from "../../../../domain/enums/role-enum";
 import { CompanyModel } from "./company";
-
-const sequelize = Database.getInstance();
 
 export class InvitationModel extends Model<
   InferAttributes<InvitationModel>,
@@ -23,6 +22,8 @@ export class InvitationModel extends Model<
   public createdAt!: Date;
   public updatedAt!: Date;
   public deletedAt!: Date | null;
+
+  public getCompany!: BelongsToGetAssociationMixin<CompanyModel>;
 
   static initModel(sequelize: Sequelize) {
     InvitationModel.init(

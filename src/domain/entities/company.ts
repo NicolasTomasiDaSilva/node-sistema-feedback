@@ -7,11 +7,11 @@ interface CompanyProps {
   id: string;
   name: string;
   cpfCnpj: string;
-  settings: Settings | undefined;
-  invitations: Invitation[] | undefined;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
+  settings: Settings | undefined;
+  invitations?: Invitation[] | undefined;
 }
 
 export class Company extends Entity {

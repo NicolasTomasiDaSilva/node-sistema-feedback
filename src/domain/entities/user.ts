@@ -4,6 +4,7 @@ import { Feedback } from "./feedback";
 
 interface UserProps {
   id: string;
+  companyId: string;
   name: string;
   email: string;
   role: RoleEnum;
@@ -14,6 +15,7 @@ interface UserProps {
 }
 
 export class User extends Entity {
+  private readonly _companyId: string;
   private _name: string;
   private _email: string;
   private _role: RoleEnum;
@@ -26,6 +28,7 @@ export class User extends Entity {
       updatedAt: props.updatedAt,
       deletedAt: props.deletedAt,
     });
+    this._companyId = props.companyId;
     this._name = props.name;
     this._email = props.email;
     this._role = props.role;
@@ -44,8 +47,12 @@ export class User extends Entity {
     });
   }
 
-  fromPersistence(props: UserProps): User {
+  static fromPersistence(props: UserProps): User {
     return new User(props);
+  }
+
+  get companyId(): string {
+    return this._companyId;
   }
 
   get name(): string {

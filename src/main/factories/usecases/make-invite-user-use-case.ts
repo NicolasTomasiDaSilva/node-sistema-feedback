@@ -3,9 +3,9 @@ import { InviteUserUseCase } from "../../../application/use-cases/invite-user-us
 
 import { UuidAdapter } from "../../../infrastructure/adapters/uuid-adapter";
 
-import { makeInviteUserRepository } from "../repositories/make-invite-user-repository";
+import { makeInvitationRepository } from "../repositories/make-invitation-repository";
 
 export function makeInviteUserUseCase(): IInviteUserUseCase {
   const uuidAdapter = new UuidAdapter();
-  return new InviteUserUseCase(makeInviteUserRepository(), uuidAdapter);
+  return new InviteUserUseCase(makeInvitationRepository(), uuidAdapter);
 }

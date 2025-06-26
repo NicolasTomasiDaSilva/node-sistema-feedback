@@ -4,26 +4,28 @@ import { Entity } from "./entity";
 
 interface FeedbackProps {
   id: string;
-  userId: string;
+  giverId: string;
+  receiverId: string;
   checklistId: string;
-  checklist: Checklist | undefined;
-  tittle: string;
+  title: string;
   description: string | null;
   observation: string | null;
   score: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
+  checklist?: Checklist | undefined;
 }
 
 export class Feedback extends Entity {
-  private readonly _userId: string;
+  private readonly _giverId: string;
+  private readonly _receiverId: string;
   private readonly _checklistId: string;
-  private _checklist: Checklist | undefined;
-  private _tittle: string;
+  private _title: string;
   private _description: string | null;
   private _observation: string | null;
   private _score: number;
+  private _checklist: Checklist | undefined;
   constructor(props: FeedbackProps) {
     super({
       id: props.id,
@@ -31,10 +33,11 @@ export class Feedback extends Entity {
       updatedAt: props.updatedAt,
       deletedAt: props.deletedAt,
     });
-    this._userId = props.userId;
+    this._giverId = props.giverId;
+    this._receiverId = props.receiverId;
     this._checklistId = props.checklistId;
     this._checklist = props.checklist;
-    this._tittle = props.tittle;
+    this._title = props.title;
     this._description = props.description;
     this._observation = props.observation;
     this._score = props.score;
@@ -55,8 +58,11 @@ export class Feedback extends Entity {
     return new Feedback(props);
   }
 
-  get userId(): string {
-    return this._userId;
+  get giverId(): string {
+    return this._giverId;
+  }
+  get receiverId(): string {
+    return this._receiverId;
   }
   get checklistId(): string {
     return this._checklistId;
@@ -64,8 +70,8 @@ export class Feedback extends Entity {
   get checklist(): Checklist | undefined {
     return this._checklist;
   }
-  get tittle(): string {
-    return this._tittle;
+  get title(): string {
+    return this._title;
   }
   get description(): string | null {
     return this._description;

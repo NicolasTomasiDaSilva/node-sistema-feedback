@@ -3,7 +3,7 @@ import { Entity } from "./entity";
 interface ChecklistProps {
   id: string;
   companyId: string;
-  tittle: string;
+  title: string;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
@@ -11,7 +11,7 @@ interface ChecklistProps {
 
 export class Checklist extends Entity {
   private readonly _companyId: string;
-  private _tittle: string;
+  private _title: string;
 
   constructor(props: ChecklistProps) {
     super({
@@ -21,7 +21,7 @@ export class Checklist extends Entity {
       deletedAt: props.deletedAt,
     });
     this._companyId = props.companyId;
-    this._tittle = props.tittle;
+    this._title = props.title;
   }
 
   static create(
@@ -43,7 +43,7 @@ export class Checklist extends Entity {
   get companyId(): string {
     return this._companyId;
   }
-  get tittle(): string {
-    return this._tittle;
+  get title(): string {
+    return this._title;
   }
 }
