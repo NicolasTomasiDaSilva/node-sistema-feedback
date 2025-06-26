@@ -10,6 +10,14 @@ export const created = (data: any): HttpResponse => ({
   body: data,
 });
 
+export const notFound = (error: any): HttpResponse => ({
+  status: 404,
+  body: {
+    error: error?.name,
+    message: error?.message,
+  },
+});
+
 export const noContent = (): HttpResponse => ({
   status: 204,
   body: null,
@@ -18,25 +26,25 @@ export const noContent = (): HttpResponse => ({
 export const badRequest = (error: any): HttpResponse => ({
   status: 400,
   body: {
-    error: "Bad Request",
-    message: error?.message ?? error,
+    error: error?.name,
+    message: error?.message,
     details: error?.details ?? undefined,
   },
 });
 
-export const unauthorized = (error: any = "Unauthorized"): HttpResponse => ({
+export const unauthorized = (error: any): HttpResponse => ({
   status: 401,
   body: {
-    error: "Unauthorized",
-    message: error?.message ?? error,
+    error: error?.name,
+    message: error?.message,
   },
 });
 
 export const forbidden = (error: any): HttpResponse => ({
   status: 403,
   body: {
-    error: "Forbidden",
-    message: error?.message ?? error,
+    error: error?.name,
+    message: error?.message,
   },
 });
 
