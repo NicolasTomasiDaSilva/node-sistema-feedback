@@ -5,7 +5,7 @@ import { User } from "../../domain/entities/user";
 import { AuthTokensDTO } from "../../application/dtos/auth-tokens";
 import { TokenPayloadDTO } from "../../application/dtos/token-payload-dto";
 
-export class JwtTokenService implements ITokenService {
+export class JwtTokenServiceAdapter implements ITokenService {
   private readonly secret: string;
   private readonly accessOptions: SignOptions;
   private readonly refreshOptions: SignOptions;

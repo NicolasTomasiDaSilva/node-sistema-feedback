@@ -25,11 +25,11 @@ export class UserModel extends Model<
   public createdAt!: Date;
   public updatedAt!: Date;
   public deletedAt!: Date | null;
-  public readonly receivedFeedbacks?: FeedbackModel[];
-  public getCompany!: BelongsToGetAssociationMixin<CompanyModel>;
+  public receivedFeedbacks?: FeedbackModel[];
+  public getCompany?: BelongsToGetAssociationMixin<CompanyModel>;
 
-  public getGivenFeedbacks!: HasManyGetAssociationsMixin<FeedbackModel>;
-  public getReceivedFeedbacks!: HasManyGetAssociationsMixin<FeedbackModel>;
+  public getGivenFeedbacks?: HasManyGetAssociationsMixin<FeedbackModel>;
+  public getReceivedFeedbacks?: HasManyGetAssociationsMixin<FeedbackModel>;
 
   static initModel(sequelize: Sequelize) {
     UserModel.init(

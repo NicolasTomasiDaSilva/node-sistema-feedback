@@ -27,8 +27,8 @@ export class FeedbackModel extends Model<
   public updatedAt!: Date;
   public deletedAt!: Date | null;
 
-  public getGiver!: BelongsToGetAssociationMixin<UserModel>;
-  public getReceiver!: BelongsToGetAssociationMixin<UserModel>;
+  public getGiver?: BelongsToGetAssociationMixin<UserModel>;
+  public getReceiver?: BelongsToGetAssociationMixin<UserModel>;
   // public getChecklist!: BelongsToGetAssociationMixin<ChecklistModel>;
 
   static initModel(sequelize: Sequelize) {
@@ -73,7 +73,7 @@ export class FeedbackModel extends Model<
       },
       {
         sequelize,
-        tableName: "users",
+        tableName: "feedbacks",
         timestamps: true,
         paranoid: true,
       }

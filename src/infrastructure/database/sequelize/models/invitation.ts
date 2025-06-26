@@ -23,7 +23,7 @@ export class InvitationModel extends Model<
   public updatedAt!: Date;
   public deletedAt!: Date | null;
 
-  public getCompany!: BelongsToGetAssociationMixin<CompanyModel>;
+  public getCompany?: BelongsToGetAssociationMixin<CompanyModel>;
 
   static initModel(sequelize: Sequelize) {
     InvitationModel.init(

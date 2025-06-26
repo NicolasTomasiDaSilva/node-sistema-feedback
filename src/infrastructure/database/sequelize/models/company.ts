@@ -23,8 +23,8 @@ export class CompanyModel extends Model<
   public updatedAt!: Date;
   public deletedAt!: Date | null;
 
-  public getUsers!: HasManyGetAssociationsMixin<UserModel>;
-  public getInvitations!: HasManyGetAssociationsMixin<InvitationModel>;
+  public getUsers?: HasManyGetAssociationsMixin<UserModel>;
+  public getInvitations?: HasManyGetAssociationsMixin<InvitationModel>;
 
   static initModel(sequelize: Sequelize) {
     CompanyModel.init(

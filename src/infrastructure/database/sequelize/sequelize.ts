@@ -20,20 +20,27 @@ export class Database {
     await sequelize.authenticate();
     console.log("Connected to database");
 
-    const [{ CompanyModel }, { UserModel }, { InvitationModel }] =
-      await Promise.all([
-        import("./models/company"),
-        import("./models/user"),
-        import("./models/invitation"),
-      ]);
+    const [
+      { CompanyModel },
+      { UserModel },
+      { InvitationModel },
+      { FeedbackModel },
+    ] = await Promise.all([
+      import("./models/company"),
+      import("./models/user"),
+      import("./models/invitation"),
+      import("./models/feedback"),
+    ]);
 
     CompanyModel.initModel(sequelize);
     UserModel.initModel(sequelize);
     InvitationModel.initModel(sequelize);
+    FeedbackModel.initModel(sequelize);
 
     CompanyModel.associate();
     UserModel.associate();
     InvitationModel.associate();
+    FeedbackModel.associate();
 
     await sequelize.sync({
       alter: true,
