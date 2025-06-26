@@ -1,4 +1,4 @@
-import { CreationAttributes } from "sequelize";
+import { InferAttributes } from "sequelize";
 import { Invitation } from "../../../../domain/entities/invitation";
 import { InvitationModel } from "../models/invitation";
 
@@ -16,9 +16,11 @@ export class InvitationMapper {
     });
   }
 
-  static toPersistence(
-    entity: Invitation
-  ): CreationAttributes<InvitationModel> {
+  static toEntityList(models: InvitationModel[]): Invitation[] {
+    return models.map((m) => this.toEntity(m));
+  }
+
+  static toPersistence(entity: Invitation): InferAttributes<InvitationModel> {
     return {
       id: entity.id,
       companyId: entity.companyId,
@@ -29,5 +31,11 @@ export class InvitationMapper {
       updatedAt: entity.updatedAt,
       deletedAt: entity.deletedAt,
     };
+  }
+
+  static toPersistenceList(
+    entities: Invitation[]
+  ): InferAttributes<InvitationModel>[] {
+    return entities.map((e) => this.toPersistence(e));
   }
 }

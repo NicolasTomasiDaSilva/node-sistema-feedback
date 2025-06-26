@@ -1,10 +1,7 @@
-import { CreationAttributes } from "sequelize";
+import { InferAttributes } from "sequelize";
 import { Feedback } from "../../../../domain/entities/feedback";
 import { FeedbackModel } from "../models/feedback";
 
-/**
- * Responsável apenas por converter FeedbackModel (ORM) em entidade de domínio Feedback.
- */
 export class FeedbackMapper {
   static toEntity(model: FeedbackModel): Feedback {
     return Feedback.fromPersistence({
@@ -25,7 +22,7 @@ export class FeedbackMapper {
     return models.map((m) => this.toEntity(m));
   }
 
-  static toPersistence(entity: Feedback): CreationAttributes<FeedbackModel> {
+  static toPersistence(entity: Feedback): InferAttributes<FeedbackModel> {
     return {
       id: entity.id,
       giverId: entity.giverId,
@@ -39,5 +36,11 @@ export class FeedbackMapper {
       updatedAt: entity.updatedAt,
       deletedAt: entity.deletedAt,
     };
+  }
+
+  static toPersistenceList(
+    entities: Feedback[]
+  ): InferAttributes<FeedbackModel>[] {
+    return entities.map((e) => this.toPersistence(e));
   }
 }
