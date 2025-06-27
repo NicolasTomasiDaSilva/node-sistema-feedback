@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { makeInviteUserController } from "../../main/factories/controllers/make-invite-user-controller";
-import { expressRouteAdapter } from "../../main/adapters/express-route-adapter";
+
 import { makeLoginController } from "../../main/factories/controllers/make-login-controller";
+import { expressRouteAdapter } from "../../infrastructure/adapters/express-route-adapter";
 
 const userRoutes = Router();
 
