@@ -16,7 +16,7 @@ import { HttpResponse } from "../types/htpp-response";
 import { HttpRequest } from "../types/http-request";
 
 export class ControllerErrorDecorator implements IController {
-  constructor(private controller: IController) {}
+  constructor(private readonly controller: IController) {}
   async handle(request: HttpRequest): Promise<HttpResponse> {
     try {
       return await this.controller.handle(request);

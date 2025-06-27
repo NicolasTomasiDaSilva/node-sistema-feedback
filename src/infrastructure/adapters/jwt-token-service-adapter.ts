@@ -44,16 +44,11 @@ export class JwtTokenServiceAdapter implements ITokenService {
     return { accessToken, refreshToken };
   }
 
-  verifyToken(token: string): TokenPayloadDTO | false {
+  verifyToken(token: string): TokenPayloadDTO {
     try {
-      const decoded = verify(token, this.secret) as TokenPayloadDTO;
-      const { id, companyId, role } = decoded;
-      if (!id || !companyId || !role) {
-        return false;
-      }
-      return { id, companyId, role };
-    } catch {
-      return false;
+      return verify(token, this.secret) as TokenPayloadDTO;
+    } catch (error) {
+      throw error;
     }
   }
 }

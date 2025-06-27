@@ -13,7 +13,7 @@ async function bootstrap() {
     });
 
     process.on("SIGINT", async () => {
-      console.log("🛑 Encerrando servidor...");
+      console.log("👋 SIGINT signal received: closing HTTP server");
       await Database.disconnect();
       process.exit(0);
     });

@@ -20,9 +20,12 @@ export class ForbiddenError extends Error {
 }
 
 export class BadRequestError extends Error {
-  constructor(message: string = "Bad Request") {
+  details?: any;
+  constructor(message: string = "Bad Request", details?: any) {
     super(message);
+
     this.name = this.constructor.name;
+    this.details = details ?? undefined;
   }
 }
 
