@@ -8,5 +8,5 @@ export const inviteUserSchema = z.object({
     .min(3)
     .max(50)
     .regex(/^[a-zA-ZÀ-ÿ\s]+$/),
-  role: z.nativeEnum(RoleEnum),
+  role: z.enum([RoleEnum.employee, RoleEnum.supevisor] as const),
 });

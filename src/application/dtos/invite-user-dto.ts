@@ -1,8 +1,8 @@
 import { RoleEnum } from "../../domain/enums/role-enum";
+import { AuthenticatedUserDTO } from "./authenticated-user-dto";
 
 export interface InviteUserDTO {
-  userId: string;
-  companyId: string;
+  currentUser: AuthenticatedUserDTO;
   name: string;
-  role: RoleEnum;
+  role: RoleEnum.supevisor | RoleEnum.employee;
 }
