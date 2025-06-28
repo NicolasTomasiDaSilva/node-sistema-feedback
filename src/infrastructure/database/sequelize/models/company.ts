@@ -69,5 +69,11 @@ export class CompanyModel extends Model<
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
+    CompanyModel.hasMany(InvitationModel, {
+      foreignKey: "companyId",
+      as: "checklists",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    });
   }
 }

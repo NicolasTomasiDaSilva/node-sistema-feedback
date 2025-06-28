@@ -1,3 +1,4 @@
+import { ChecklistItem } from "./checklist-item";
 import { Entity } from "./entity";
 
 interface ChecklistProps {
@@ -7,11 +8,13 @@ interface ChecklistProps {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
+  items?: ChecklistItem[] | undefined;
 }
 
 export class Checklist extends Entity {
   private readonly _companyId: string;
   private _title: string;
+  private _items: ChecklistItem[] | undefined;
 
   constructor(props: ChecklistProps) {
     super({
@@ -22,6 +25,7 @@ export class Checklist extends Entity {
     });
     this._companyId = props.companyId;
     this._title = props.title;
+    this._items = props.items;
   }
 
   static create(
@@ -45,5 +49,8 @@ export class Checklist extends Entity {
   }
   get title(): string {
     return this._title;
+  }
+  get items(): ChecklistItem[] | undefined {
+    return this._items;
   }
 }
