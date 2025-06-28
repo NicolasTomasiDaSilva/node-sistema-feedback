@@ -6,7 +6,7 @@ import { z } from "zod";
 import { RoleEnum } from "../../domain/enums/role-enum";
 import { IInviteUserUseCase } from "../../application/protocols/use-cases/invite-user-use-case";
 import { InviteUserDTO } from "../../application/dtos/invite-user-dto";
-import { BadRequestError } from "../../domain/errors/errors";
+import { BadRequestError, NotFoundError } from "../../domain/errors/errors";
 
 export const inviteUserSchema = z.object({
   name: z
@@ -22,11 +22,23 @@ export class InviteUserController implements IController {
   constructor(private readonly inviteUserUseCase: IInviteUserUseCase) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
+    const id = request.user?.id;
+    const companyId = request.user?.companyId;
+    if (!id) {
+      throw new NotFoundError("User not found");
+    }
+    if (!companyId) {
+      throw new NotFoundError("Company not found");
+    }
+
     const result = inviteUserSchema.safeParse(request.body);
     if (!result.success) {
       throw new BadRequestError(undefined, result.error.flatten());
     }
+
     const dto: InviteUserDTO = {
+      userId: id,
+      companyId: companyId,
       name: result.data.name,
       role: result.data.role,
     };

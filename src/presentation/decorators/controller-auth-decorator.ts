@@ -6,14 +6,11 @@ import { HttpResponse } from "../types/htpp-response";
 import { RoleEnum } from "../../domain/enums/role-enum";
 
 export class ControllerAuthDecorator implements IController {
-  private readonly requiredRolesSet: Set<RoleEnum>;
   constructor(
     private readonly tokenService: ITokenService,
     private readonly controller: IController,
-    private readonly requiredRoles: RoleEnum[] = []
-  ) {
-    this.requiredRolesSet = new Set(requiredRoles);
-  }
+    private readonly requiredRoles: RoleEnum[]
+  ) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const authHeader = request.headers?.authorization;
