@@ -34,29 +34,31 @@ async function main() {
         deletedAt: null,
       },
     });
+
     await UserModel.findOrCreate({
-      where: { email: "manager@gmail.com" },
+      where: { email: "supervisor@gmail.com" },
       defaults: {
         id: uuidv4(),
         companyId: company.id,
-        name: "manager name",
-        email: "manager@gmail.com",
-        cpf: "00000000000",
+        name: "supervisor name",
+        email: "supervisor@gmail.com",
+        cpf: "00000000001",
         role: RoleEnum.supervisor,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
       },
     });
+
     await UserModel.findOrCreate({
-      where: { email: "manager@gmail.com" },
+      where: { email: "employee@gmail.com" },
       defaults: {
         id: uuidv4(),
         companyId: company.id,
-        name: "manager name",
-        email: "manager@gmail.com",
-        cpf: "00000000000",
-        role: RoleEnum.manager,
+        name: "employee name",
+        email: "employee@gmail.com",
+        cpf: "00000000002",
+        role: RoleEnum.employee,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
