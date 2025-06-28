@@ -24,11 +24,12 @@ export class InviteUserController implements IController {
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const currentUser = getCurrentUser(request);
 
-    const { name, role } = this.bodyValidator.validate(request.body);
+    const { name, phone, role } = this.bodyValidator.validate(request.body);
 
     const dto: InviteUserDTO = {
       currentUser: currentUser,
       name: name,
+      phone: phone,
       role: role,
     };
     return created((await this.inviteUserUseCase.execute(dto)).toJSON());

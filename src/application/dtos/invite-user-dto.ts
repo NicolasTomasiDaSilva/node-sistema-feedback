@@ -4,5 +4,6 @@ import { AuthenticatedUserDTO } from "./authenticated-user-dto";
 export interface InviteUserDTO {
   currentUser: AuthenticatedUserDTO;
   name: string;
+  phone: string;
   role: RoleEnum.supevisor | RoleEnum.employee;
 }
