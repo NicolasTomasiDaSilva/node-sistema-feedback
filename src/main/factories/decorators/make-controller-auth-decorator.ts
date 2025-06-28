@@ -7,9 +7,6 @@ export function makeControllerAuthDecorator(
   controller: IController,
   roles: RoleEnum[]
 ): IController {
-  return new ControllerAuthDecorator(
-    new JwtTokenServiceAdapter(),
-    controller,
-    roles
-  );
+  const tokenAdapter = new JwtTokenServiceAdapter();
+  return new ControllerAuthDecorator(tokenAdapter, controller, roles);
 }
