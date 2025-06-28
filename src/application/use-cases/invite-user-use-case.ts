@@ -15,7 +15,7 @@ export class InviteUserUseCase implements IInviteUserUseCase {
       id: this.uuidGenerator.generate(),
       name: data.name,
       role: data.role,
-      companyId: this.uuidGenerator.generate(),
+      companyId: data.currentUser.companyId,
       isAccepted: false,
     });
 

@@ -47,6 +47,19 @@ export class Invitation extends Entity {
     return new Invitation(props);
   }
 
+  toJSON() {
+    return {
+      id: this.id,
+      companyId: this.companyId,
+      name: this.name,
+      role: this.role,
+      isAccepted: this.isAccepted,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      deletedAt: this.deletedAt,
+    };
+  }
+
   get companyId(): string {
     return this._companyId;
   }

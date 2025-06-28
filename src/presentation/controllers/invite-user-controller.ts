@@ -1,4 +1,9 @@
-import { badRequest, ok, serverError } from "../helpers/http-responses";
+import {
+  badRequest,
+  created,
+  ok,
+  serverError,
+} from "../helpers/http-responses";
 import { IController } from "../protocols/controller";
 import { HttpRequest } from "../types/http-request";
 import { HttpResponse } from "../types/htpp-response";
@@ -26,6 +31,6 @@ export class InviteUserController implements IController {
       name: name,
       role: role,
     };
-    return ok(await this.inviteUserUseCase.execute(dto));
+    return created((await this.inviteUserUseCase.execute(dto)).toJSON());
   }
 }
