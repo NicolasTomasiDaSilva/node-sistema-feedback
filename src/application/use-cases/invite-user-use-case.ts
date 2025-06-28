@@ -32,6 +32,8 @@ export class InviteUserUseCase implements IInviteUserUseCase {
       isAccepted: false,
     });
 
+    const invitationAcceptUrl: string = `http://localhost:3000/accept-invitation/${invitation.id}`;
+
     return this.invitationRepository.create(invitation);
   }
 }
