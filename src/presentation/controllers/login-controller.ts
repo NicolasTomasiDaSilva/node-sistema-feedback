@@ -7,6 +7,7 @@ import { z } from "zod";
 import { LoginDTO } from "../../application/dtos/login-dto";
 import { ILoginUseCase } from "../../application/protocols/use-cases/login-use-case";
 import { BadRequestError } from "../../domain/errors/errors";
+import { IValidator } from "../protocols/validate";
 
 export const loginSchema = z.object({
   email: z.string().trim().email(),
@@ -14,16 +15,16 @@ export const loginSchema = z.object({
 });
 
 export class LoginController implements IController {
-  constructor(private readonly loginUseCase: ILoginUseCase) {}
+  constructor(
+    private readonly loginUseCase: ILoginUseCase,
+    private readonly bodyValidator: IValidator<LoginDTO>
+  ) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
-    const result = loginSchema.safeParse(request.body);
-    if (!result.success) {
-      throw new BadRequestError(undefined, result.error.flatten());
-    }
+    const { email, code } = this.bodyValidator.validate(request.body);
     const dto: LoginDTO = {
-      email: result.data.email,
-      code: result.data.code,
+      email,
+      code,
     };
     return ok(await this.loginUseCase.execute(dto));
   }

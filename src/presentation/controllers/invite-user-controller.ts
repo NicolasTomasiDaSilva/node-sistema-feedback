@@ -7,6 +7,7 @@ import { RoleEnum } from "../../domain/enums/role-enum";
 import { IInviteUserUseCase } from "../../application/protocols/use-cases/invite-user-use-case";
 import { InviteUserDTO } from "../../application/dtos/invite-user-dto";
 import { BadRequestError, NotFoundError } from "../../domain/errors/errors";
+import { IValidator } from "../protocols/validate";
 
 export const inviteUserSchema = z.object({
   name: z
@@ -19,7 +20,12 @@ export const inviteUserSchema = z.object({
 });
 
 export class InviteUserController implements IController {
-  constructor(private readonly inviteUserUseCase: IInviteUserUseCase) {}
+  constructor(
+    private readonly inviteUserUseCase: IInviteUserUseCase,
+    private readonly bodyValidator: IValidator<
+      Pick<InviteUserDTO, "name" | "role">
+    >
+  ) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const id = request.user?.id;
@@ -31,16 +37,13 @@ export class InviteUserController implements IController {
       throw new NotFoundError("Company not found");
     }
 
-    const result = inviteUserSchema.safeParse(request.body);
-    if (!result.success) {
-      throw new BadRequestError(undefined, result.error.flatten());
-    }
+    const { name, role } = this.bodyValidator.validate(request.body);
 
     const dto: InviteUserDTO = {
       userId: id,
       companyId: companyId,
-      name: result.data.name,
-      role: result.data.role,
+      name: name,
+      role: role,
     };
     return ok(await this.inviteUserUseCase.execute(dto));
   }
