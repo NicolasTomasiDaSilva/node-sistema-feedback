@@ -12,11 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ControllerAuthDecorator = void 0;
 const errors_1 = require("../../domain/errors/errors");
 class ControllerAuthDecorator {
-    constructor(tokenService, controller, requiredRoles = []) {
+    constructor(tokenService, controller, requiredRoles) {
         this.tokenService = tokenService;
         this.controller = controller;
         this.requiredRoles = requiredRoles;
-        this.requiredRolesSet = new Set(requiredRoles);
     }
     handle(request) {
         return __awaiter(this, void 0, void 0, function* () {

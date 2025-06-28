@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JwtTokenServiceAdapter = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
+const errors_1 = require("../../domain/errors/errors");
 class JwtTokenServiceAdapter {
     constructor() {
         if (!process.env.JWT_SECRET) {
@@ -34,7 +35,7 @@ class JwtTokenServiceAdapter {
             return (0, jsonwebtoken_1.verify)(token, this.secret);
         }
         catch (error) {
-            throw error;
+            throw new errors_1.UnauthorizedError("Invalid or expired token");
         }
     }
 }

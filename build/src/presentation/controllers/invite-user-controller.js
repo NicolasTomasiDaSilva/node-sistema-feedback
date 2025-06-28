@@ -9,33 +9,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InviteUserController = exports.inviteUserSchema = void 0;
+exports.InviteUserController = void 0;
 const http_responses_1 = require("../helpers/http-responses");
-const zod_1 = require("zod");
-const role_enum_1 = require("../../domain/enums/role-enum");
 const errors_1 = require("../../domain/errors/errors");
-exports.inviteUserSchema = zod_1.z.object({
-    name: zod_1.z
-        .string()
-        .trim()
-        .min(3)
-        .max(50)
-        .regex(/^[a-zA-ZÀ-ÿ\s]+$/),
-    role: zod_1.z.nativeEnum(role_enum_1.RoleEnum),
-});
 class InviteUserController {
-    constructor(inviteUserUseCase) {
+    constructor(inviteUserUseCase, bodyValidator) {
         this.inviteUserUseCase = inviteUserUseCase;
+        this.bodyValidator = bodyValidator;
     }
     handle(request) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = exports.inviteUserSchema.safeParse(request.body);
-            if (!result.success) {
-                throw new errors_1.BadRequestError(undefined, result.error.flatten());
+            var _a, _b;
+            const id = (_a = request.user) === null || _a === void 0 ? void 0 : _a.id;
+            const companyId = (_b = request.user) === null || _b === void 0 ? void 0 : _b.companyId;
+            if (!id) {
+                throw new errors_1.NotFoundError("User not found");
             }
+            if (!companyId) {
+                throw new errors_1.NotFoundError("Company not found");
+            }
+            const { name, role } = this.bodyValidator.validate(request.body);
             const dto = {
-                name: result.data.name,
-                role: result.data.role,
+                userId: id,
+                companyId: companyId,
+                name: name,
+                role: role,
             };
             return (0, http_responses_1.ok)(yield this.inviteUserUseCase.execute(dto));
         });

@@ -9,28 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LoginController = exports.loginSchema = void 0;
+exports.LoginController = void 0;
 const http_responses_1 = require("../helpers/http-responses");
-const zod_1 = require("zod");
-const errors_1 = require("../../domain/errors/errors");
-exports.loginSchema = zod_1.z.object({
-    email: zod_1.z.string().trim().email(),
-    code: zod_1.z.string().trim().min(4).max(4),
-});
 class LoginController {
-    constructor(loginUseCase) {
+    constructor(loginUseCase, bodyValidator) {
         this.loginUseCase = loginUseCase;
+        this.bodyValidator = bodyValidator;
     }
     handle(request) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = exports.loginSchema.safeParse(request.body);
-            if (!result.success) {
-                throw new errors_1.BadRequestError(undefined, result.error.flatten());
-            }
-            const dto = {
-                email: result.data.email,
-                code: result.data.code,
-            };
+            const dto = this.bodyValidator.validate(request.body);
             return (0, http_responses_1.ok)(yield this.loginUseCase.execute(dto));
         });
     }
