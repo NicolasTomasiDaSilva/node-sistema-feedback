@@ -1,6 +1,6 @@
 import { User } from "../../../domain/entities/user";
 import { AuthTokensDTO } from "../../dtos/auth-tokens";
-import { TokenPayloadDTO } from "../../dtos/token-payload-dto";
+import { TokenPayloadDTO } from "../../dtos/authenticated-user-dto";
 
 export interface ITokenService {
   generateTokens(user: User): AuthTokensDTO;

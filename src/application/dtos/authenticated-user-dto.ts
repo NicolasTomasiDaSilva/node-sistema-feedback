@@ -1,6 +1,6 @@
 import { RoleEnum } from "../../domain/enums/role-enum";
 
-export interface TokenPayloadDTO {
+export interface AuthenticatedUserDTO {
   id: string;
   companyId: string;
   role: RoleEnum;

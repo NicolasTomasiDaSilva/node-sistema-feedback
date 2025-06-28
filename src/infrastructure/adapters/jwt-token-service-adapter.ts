@@ -3,7 +3,8 @@ import { RoleEnum } from "../../domain/enums/role-enum";
 import { ITokenService } from "../../application/protocols/services/token-service";
 import { User } from "../../domain/entities/user";
 import { AuthTokensDTO } from "../../application/dtos/auth-tokens";
-import { TokenPayloadDTO } from "../../application/dtos/token-payload-dto";
+import { AuthenticatedUserDTO } from "../../application/dtos/authenticated-user-dto";
+import { UnauthorizedError } from "../../domain/errors/errors";
 
 export class JwtTokenServiceAdapter implements ITokenService {
   private readonly secret: string;
@@ -32,7 +33,7 @@ export class JwtTokenServiceAdapter implements ITokenService {
   }
 
   generateTokens(user: User): AuthTokensDTO {
-    const payload: TokenPayloadDTO = {
+    const payload: AuthenticatedUserDTO = {
       id: user.id,
       companyId: user.companyId,
       role: user.role,
@@ -44,11 +45,11 @@ export class JwtTokenServiceAdapter implements ITokenService {
     return { accessToken, refreshToken };
   }
 
-  verifyToken(token: string): TokenPayloadDTO {
+  verifyToken(token: string): AuthenticatedUserDTO {
     try {
-      return verify(token, this.secret) as TokenPayloadDTO;
+      return verify(token, this.secret) as AuthenticatedUserDTO;
     } catch (error) {
-      throw error;
+      throw new UnauthorizedError("Invalid or expired token");
     }
   }
 }
