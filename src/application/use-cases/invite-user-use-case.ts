@@ -16,7 +16,7 @@ export class InviteUserUseCase implements IInviteUserUseCase {
     if (data.currentUser.role !== RoleEnum.manager) {
       throw new ForbiddenError("Only managers can invite users");
     }
-    if (![RoleEnum.supevisor, RoleEnum.employee].includes(data.role)) {
+    if (![RoleEnum.supervisor, RoleEnum.employee].includes(data.role)) {
       throw new ForbiddenError(
         `Invited role must be 'supervisor' or 'employee'`
       );
@@ -27,6 +27,7 @@ export class InviteUserUseCase implements IInviteUserUseCase {
       name: data.name,
       role: data.role,
       phone: data.phone,
+      cpf: data.cpf,
       companyId: data.currentUser.companyId,
       isAccepted: false,
     });

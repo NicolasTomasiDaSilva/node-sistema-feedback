@@ -1,4 +1,3 @@
-import { RoleEnum } from "../enums/role-enum";
 import { Entity } from "./entity";
 import { Invitation } from "./invitation";
 import { Settings } from "./settings";

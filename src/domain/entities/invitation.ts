@@ -5,6 +5,7 @@ interface InvitationProps {
   id: string;
   companyId: string;
   name: string;
+  cpf: string;
   phone: string | null;
   role: RoleEnum;
   isAccepted: boolean;
@@ -17,6 +18,7 @@ export class Invitation extends Entity {
   private readonly _companyId: string;
   private _name: string;
   private _phone: string | null;
+  private _cpf: string;
   private _role: RoleEnum;
   private _isAccepted: boolean;
 
@@ -30,6 +32,7 @@ export class Invitation extends Entity {
     this._companyId = props.companyId;
     this._name = props.name;
     this._phone = props.phone;
+    this._cpf = props.cpf;
     this._role = props.role;
     this._isAccepted = props.isAccepted;
   }
@@ -56,6 +59,7 @@ export class Invitation extends Entity {
       companyId: this.companyId,
       name: this.name,
       phone: this.phone,
+      cpf: this.cpf,
       role: this.role,
       isAccepted: this.isAccepted,
       createdAt: this.createdAt,
@@ -73,6 +77,10 @@ export class Invitation extends Entity {
 
   get phone(): string | null {
     return this._phone;
+  }
+
+  get cpf(): string {
+    return this._cpf;
   }
   get role(): RoleEnum {
     return this._role;

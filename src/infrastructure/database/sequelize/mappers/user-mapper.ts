@@ -10,6 +10,7 @@ export class UserMapper {
       companyId: model.companyId,
       email: model.email,
       name: model.name,
+      cpf: model.cpf,
       role: model.role,
       feedbacks: model.receivedFeedbacks
         ? FeedbackMapper.toEntityList(model.receivedFeedbacks)
@@ -30,6 +31,7 @@ export class UserMapper {
       companyId: entity.companyId,
       email: entity.email,
       name: entity.name,
+      cpf: entity.cpf,
       role: entity.role,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,

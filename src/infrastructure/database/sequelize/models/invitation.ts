@@ -18,6 +18,7 @@ export class InvitationModel extends Model<
   public companyId!: string;
   public name!: string;
   public phone!: string | null;
+  public cpf!: string;
   public role!: RoleEnum;
   public isAccepted!: boolean;
   public createdAt!: Date;
@@ -45,6 +46,10 @@ export class InvitationModel extends Model<
         phone: {
           type: DataTypes.STRING,
           allowNull: true,
+        },
+        cpf: {
+          type: DataTypes.STRING,
+          allowNull: false,
         },
         role: {
           type: DataTypes.ENUM(...Object.values(RoleEnum)),

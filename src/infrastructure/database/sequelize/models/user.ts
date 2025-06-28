@@ -20,6 +20,7 @@ export class UserModel extends Model<
   public id!: string;
   public companyId!: string;
   public name!: string;
+  public cpf!: string;
   public email!: string;
   public role!: RoleEnum;
   public createdAt!: Date;
@@ -44,6 +45,10 @@ export class UserModel extends Model<
           allowNull: false,
         },
         name: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        cpf: {
           type: DataTypes.STRING,
           allowNull: false,
         },

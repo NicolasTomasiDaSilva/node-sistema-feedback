@@ -6,6 +6,7 @@ interface UserProps {
   id: string;
   companyId: string;
   name: string;
+  cpf: string;
   email: string;
   role: RoleEnum;
   createdAt: Date;
@@ -17,6 +18,7 @@ interface UserProps {
 export class User extends Entity {
   private readonly _companyId: string;
   private _name: string;
+  private _cpf: string;
   private _email: string;
   private _role: RoleEnum;
   private _feedbacks: Feedback[] | undefined;
@@ -30,6 +32,7 @@ export class User extends Entity {
     });
     this._companyId = props.companyId;
     this._name = props.name;
+    this._cpf = props.cpf;
     this._email = props.email;
     this._role = props.role;
     this._feedbacks = props.feedbacks;
@@ -54,9 +57,12 @@ export class User extends Entity {
   get companyId(): string {
     return this._companyId;
   }
-
   get name(): string {
     return this._name;
+  }
+
+  get cpf(): string {
+    return this._cpf;
   }
   get email(): string {
     return this._email;

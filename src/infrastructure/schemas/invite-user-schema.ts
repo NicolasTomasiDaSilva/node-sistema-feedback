@@ -9,5 +9,6 @@ export const inviteUserSchema = z.object({
     .max(50)
     .regex(/^[a-zA-ZÀ-ÿ\s]+$/),
   phone: z.string().trim().min(10).max(11).nullable(),
-  role: z.enum([RoleEnum.employee, RoleEnum.supevisor] as const),
+  cpf: z.string().trim().min(11).max(11),
+  role: z.enum([RoleEnum.employee, RoleEnum.supervisor] as const),
 });
