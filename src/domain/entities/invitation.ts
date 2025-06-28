@@ -5,7 +5,7 @@ interface InvitationProps {
   id: string;
   companyId: string;
   name: string;
-  phone: string;
+  phone: string | null;
   role: RoleEnum;
   isAccepted: boolean;
   createdAt: Date;
@@ -16,7 +16,7 @@ interface InvitationProps {
 export class Invitation extends Entity {
   private readonly _companyId: string;
   private _name: string;
-  private _phone: string;
+  private _phone: string | null;
   private _role: RoleEnum;
   private _isAccepted: boolean;
 
@@ -71,7 +71,7 @@ export class Invitation extends Entity {
     return this._name;
   }
 
-  get phone(): string {
+  get phone(): string | null {
     return this._phone;
   }
   get role(): RoleEnum {

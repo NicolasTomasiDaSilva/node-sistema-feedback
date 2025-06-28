@@ -12,6 +12,7 @@ class Invitation extends entity_1.Entity {
         });
         this._companyId = props.companyId;
         this._name = props.name;
+        this._phone = props.phone;
         this._role = props.role;
         this._isAccepted = props.isAccepted;
     }
@@ -22,11 +23,27 @@ class Invitation extends entity_1.Entity {
     static fromPersistence(props) {
         return new Invitation(props);
     }
+    toJSON() {
+        return {
+            id: this.id,
+            companyId: this.companyId,
+            name: this.name,
+            phone: this.phone,
+            role: this.role,
+            isAccepted: this.isAccepted,
+            createdAt: this.createdAt,
+            updatedAt: this.updatedAt,
+            deletedAt: this.deletedAt,
+        };
+    }
     get companyId() {
         return this._companyId;
     }
     get name() {
         return this._name;
+    }
+    get phone() {
+        return this._phone;
     }
     get role() {
         return this._role;

@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InviteUserController = void 0;
 const http_responses_1 = require("../helpers/http-responses");
-const errors_1 = require("../../domain/errors/errors");
+const get_current_user_1 = require("../guardars/get-current-user");
 class InviteUserController {
     constructor(inviteUserUseCase, bodyValidator) {
         this.inviteUserUseCase = inviteUserUseCase;
@@ -19,23 +19,15 @@ class InviteUserController {
     }
     handle(request) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b;
-            const id = (_a = request.user) === null || _a === void 0 ? void 0 : _a.id;
-            const companyId = (_b = request.user) === null || _b === void 0 ? void 0 : _b.companyId;
-            if (!id) {
-                throw new errors_1.NotFoundError("User not found");
-            }
-            if (!companyId) {
-                throw new errors_1.NotFoundError("Company not found");
-            }
-            const { name, role } = this.bodyValidator.validate(request.body);
+            const currentUser = (0, get_current_user_1.getCurrentUser)(request);
+            const { name, phone, role } = this.bodyValidator.validate(request.body);
             const dto = {
-                userId: id,
-                companyId: companyId,
+                currentUser: currentUser,
                 name: name,
+                phone: phone,
                 role: role,
             };
-            return (0, http_responses_1.ok)(yield this.inviteUserUseCase.execute(dto));
+            return (0, http_responses_1.created)((yield this.inviteUserUseCase.execute(dto)).toJSON());
         });
     }
 }

@@ -13,5 +13,6 @@ exports.inviteUserSchema = zod_1.default.object({
         .min(3)
         .max(50)
         .regex(/^[a-zA-ZÀ-ÿ\s]+$/),
-    role: zod_1.default.nativeEnum(role_enum_1.RoleEnum),
+    phone: zod_1.default.string().trim().min(10).max(11),
+    role: zod_1.default.enum([role_enum_1.RoleEnum.employee, role_enum_1.RoleEnum.supevisor]),
 });

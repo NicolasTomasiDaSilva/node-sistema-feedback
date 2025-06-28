@@ -20,6 +20,10 @@ class InvitationModel extends sequelize_1.Model {
                 type: sequelize_1.DataTypes.STRING,
                 allowNull: false,
             },
+            phone: {
+                type: sequelize_1.DataTypes.STRING,
+                allowNull: true,
+            },
             role: {
                 type: sequelize_1.DataTypes.ENUM(...Object.values(role_enum_1.RoleEnum)),
                 allowNull: false,
