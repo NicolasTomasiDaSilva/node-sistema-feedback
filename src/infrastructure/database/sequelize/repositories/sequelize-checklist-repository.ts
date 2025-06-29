@@ -1,4 +1,3 @@
-import { InferAttributes } from "sequelize";
 import { IChecklistRepository } from "../../../../application/protocols/repositories/checklist-repository";
 import { Checklist } from "../../../../domain/entities/checklist";
 import { ChecklistItemMapper } from "../mappers/checklist-item-mapper";

@@ -1,6 +1,8 @@
-import { InferAttributes } from "sequelize";
 import { Checklist } from "../../../../domain/entities/checklist";
-import { ChecklistModel } from "../models/checklist";
+import {
+  ChecklistAttributes,
+  ChecklistModel,
+} from "../models/checklist";
 import { ChecklistItemMapper } from "./checklist-item-mapper";
 
 export class ChecklistMapper {
@@ -22,7 +24,7 @@ export class ChecklistMapper {
     return models.map((m) => this.toEntity(m));
   }
 
-  static toPersistence(entity: Checklist): InferAttributes<ChecklistModel> {
+  static toPersistence(entity: Checklist): ChecklistAttributes {
     return {
       id: entity.id,
       companyId: entity.companyId,
@@ -35,7 +37,7 @@ export class ChecklistMapper {
 
   static toPersistenceList(
     entities: Checklist[]
-  ): InferAttributes<ChecklistModel>[] {
+  ): ChecklistAttributes[] {
     return entities.map((e) => this.toPersistence(e));
   }
 }

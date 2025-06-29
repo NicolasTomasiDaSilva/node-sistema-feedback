@@ -1,6 +1,5 @@
-import { InferAttributes } from "sequelize";
 import { Invitation } from "../../../../domain/entities/invitation";
-import { InvitationModel } from "../models/invitation";
+import { InvitationAttributes, InvitationModel } from "../models/invitation";
 
 export class InvitationMapper {
   static toEntity(model: InvitationModel): Invitation {
@@ -22,7 +21,7 @@ export class InvitationMapper {
     return models.map((m) => this.toEntity(m));
   }
 
-  static toPersistence(entity: Invitation): InferAttributes<InvitationModel> {
+  static toPersistence(entity: Invitation): InvitationAttributes {
     return {
       id: entity.id,
       companyId: entity.companyId,
@@ -39,7 +38,7 @@ export class InvitationMapper {
 
   static toPersistenceList(
     entities: Invitation[]
-  ): InferAttributes<InvitationModel>[] {
+  ): InvitationAttributes[] {
     return entities.map((e) => this.toPersistence(e));
   }
 }

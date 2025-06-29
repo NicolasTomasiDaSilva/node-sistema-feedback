@@ -1,6 +1,5 @@
-import { InferAttributes } from "sequelize";
 import { Feedback } from "../../../../domain/entities/feedback";
-import { FeedbackModel } from "../models/feedback";
+import { FeedbackAttributes, FeedbackModel } from "../models/feedback";
 
 export class FeedbackMapper {
   static toEntity(model: FeedbackModel): Feedback {
@@ -22,7 +21,7 @@ export class FeedbackMapper {
     return models.map((m) => this.toEntity(m));
   }
 
-  static toPersistence(entity: Feedback): InferAttributes<FeedbackModel> {
+  static toPersistence(entity: Feedback): FeedbackAttributes {
     return {
       id: entity.id,
       giverId: entity.giverId,
@@ -40,7 +39,7 @@ export class FeedbackMapper {
 
   static toPersistenceList(
     entities: Feedback[]
-  ): InferAttributes<FeedbackModel>[] {
+  ): FeedbackAttributes[] {
     return entities.map((e) => this.toPersistence(e));
   }
 }

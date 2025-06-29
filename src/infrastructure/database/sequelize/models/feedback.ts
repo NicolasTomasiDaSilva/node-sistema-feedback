@@ -1,8 +1,6 @@
 import {
   BelongsToGetAssociationMixin,
   DataTypes,
-  InferAttributes,
-  InferCreationAttributes,
   Model,
   Optional,
   Sequelize,
@@ -11,10 +9,24 @@ import { RoleEnum } from "../../../../domain/enums/role-enum";
 import { CompanyModel } from "./company";
 import { UserModel } from "./user";
 
-export class FeedbackModel extends Model<
-  InferAttributes<FeedbackModel>,
-  InferCreationAttributes<FeedbackModel>
-> {
+export interface FeedbackAttributes {
+  id: string;
+  giverId: string;
+  receiverId: string;
+  checklistId: string;
+  title: string;
+  description: string | null;
+  observation: string | null;
+  score: number;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
+
+export class FeedbackModel
+  extends Model<FeedbackAttributes>
+  implements FeedbackAttributes
+{
   public id!: string;
   public giverId!: string;
   public receiverId!: string;

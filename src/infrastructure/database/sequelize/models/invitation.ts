@@ -1,8 +1,6 @@
 import {
   BelongsToGetAssociationMixin,
   DataTypes,
-  InferAttributes,
-  InferCreationAttributes,
   Model,
   Sequelize,
 } from "sequelize";
@@ -10,10 +8,23 @@ import { Database } from "../sequelize";
 import { RoleEnum } from "../../../../domain/enums/role-enum";
 import { CompanyModel } from "./company";
 
-export class InvitationModel extends Model<
-  InferAttributes<InvitationModel>,
-  InferCreationAttributes<InvitationModel>
-> {
+export interface InvitationAttributes {
+  id: string;
+  companyId: string;
+  name: string;
+  phone: string | null;
+  cpf: string;
+  role: RoleEnum;
+  isAccepted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
+
+export class InvitationModel
+  extends Model<InvitationAttributes>
+  implements InvitationAttributes
+{
   public id!: string;
   public companyId!: string;
   public name!: string;
