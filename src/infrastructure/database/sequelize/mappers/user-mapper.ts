@@ -1,5 +1,4 @@
-import { CreationAttributes, InferAttributes } from "sequelize";
-import { UserModel } from "../models/user";
+import { UserModel, UserAttributes } from "../models/user";
 import { User } from "../../../../domain/entities/user";
 import { FeedbackMapper } from "./feedback-mapper";
 
@@ -25,7 +24,7 @@ export class UserMapper {
     return models.map((m) => this.toEntity(m));
   }
 
-  static toPersistence(entity: User): InferAttributes<UserModel> {
+  static toPersistence(entity: User): UserAttributes {
     return {
       id: entity.id,
       companyId: entity.companyId,
@@ -39,7 +38,7 @@ export class UserMapper {
     };
   }
 
-  static toPersistenceList(entities: User[]): InferAttributes<UserModel>[] {
+  static toPersistenceList(entities: User[]): UserAttributes[] {
     return entities.map((e) => this.toPersistence(e));
   }
 }

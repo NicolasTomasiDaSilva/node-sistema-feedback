@@ -17,6 +17,7 @@ export interface ChecklistAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
+  items?: ChecklistItemModel[] | undefined;
 }
 
 export class ChecklistModel
