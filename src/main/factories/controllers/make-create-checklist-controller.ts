@@ -11,7 +11,7 @@ export function makeCreateChecklistController(): IController {
   const validator = new ZodValidator(createChecklistSchema);
   const useCase = makeCreateChecklistUseCase();
   const controller = new CreateChecklistController(useCase, validator);
-  const requiredRoles: RoleEnum[] = [RoleEnum.manager];
+  const requiredRoles: RoleEnum[] = [RoleEnum.manager, RoleEnum.supervisor];
   return makeControllerErrorDecorator(
     makeControllerAuthDecorator(controller, requiredRoles)
   );

@@ -84,11 +84,5 @@ export class ChecklistItemModel
       foreignKey: "checklistId",
       as: "checklist",
     });
-    ChecklistItemModel.hasMany(FeedbackItemModel, {
-      foreignKey: "checklistItemId",
-      as: "feedbackItems",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-    });
   }
 }

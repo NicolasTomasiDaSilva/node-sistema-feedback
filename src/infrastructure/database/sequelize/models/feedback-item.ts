@@ -8,7 +8,6 @@ import {
   Sequelize,
 } from "sequelize";
 import { FeedbackModel } from "./feedback";
-import { ChecklistItemModel } from "./checklist-item";
 
 export interface FeedbackItemAttributes {
   /* ─────────── Colunas da tabela ─────────── */

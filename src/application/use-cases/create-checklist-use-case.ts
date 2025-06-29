@@ -14,8 +14,13 @@ export class CreateChecklistUseCase implements ICreateChecklistUseCase {
     private readonly uuidGenerator: IUuidGenerator
   ) {}
   execute(data: CreateChecklistDTO): Promise<Checklist> {
-    if (data.currentUser.role !== RoleEnum.manager) {
-      throw new ForbiddenError("Only managers can create checklists");
+    if (
+      data.currentUser.role !== RoleEnum.manager &&
+      data.currentUser.role !== RoleEnum.supervisor
+    ) {
+      throw new ForbiddenError(
+        "Only managers and supervisors can create Checklists"
+      );
     }
     if (!data.items.length) {
       throw new BadRequestError("Checklist must have at least one item");
