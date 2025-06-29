@@ -10,10 +10,19 @@ import {
 import { CompanyModel } from "./company";
 import { ChecklistItemModel } from "./checklist-item";
 
-export class ChecklistModel extends Model<
-  InferAttributes<ChecklistModel>,
-  InferCreationAttributes<ChecklistModel>
-> {
+export interface ChecklistAttributes {
+  id: string;
+  companyId: string;
+  title: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
+
+export class ChecklistModel
+  extends Model<ChecklistAttributes>
+  implements ChecklistAttributes
+{
   public id!: string;
   public companyId!: string;
   public title!: string;

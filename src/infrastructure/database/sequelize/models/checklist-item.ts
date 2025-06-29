@@ -8,10 +8,21 @@ import {
 } from "sequelize";
 import { CompanyModel } from "./company";
 
-export class ChecklistItemModel extends Model<
-  InferAttributes<ChecklistItemModel>,
-  InferCreationAttributes<ChecklistItemModel>
-> {
+export interface ChecklistItemAttributes {
+  id: string;
+  checklistId: string;
+  label: string;
+  description: string | null;
+  weight: number;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
+
+export class ChecklistItemModel
+  extends Model<ChecklistItemAttributes>
+  implements ChecklistItemAttributes
+{
   public id!: string;
   public checklistId!: string;
   public label!: string;

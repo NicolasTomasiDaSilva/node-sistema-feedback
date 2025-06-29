@@ -7,15 +7,23 @@ import {
   Optional,
   Sequelize,
 } from "sequelize";
-import { Database } from "../sequelize";
-import { RoleEnum } from "../../../../domain/enums/role-enum";
+
 import { UserModel } from "./user";
 import { InvitationModel } from "./invitation";
 
-export class CompanyModel extends Model<
-  InferAttributes<CompanyModel>,
-  InferCreationAttributes<CompanyModel>
-> {
+export interface CompanyAttributes {
+  id: string;
+  name: string;
+  cpfCnpj: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
+
+export class CompanyModel
+  extends Model<CompanyAttributes>
+  implements CompanyAttributes
+{
   public id!: string;
   public name!: string;
   public cpfCnpj!: string;

@@ -8,15 +8,24 @@ import {
   Optional,
   Sequelize,
 } from "sequelize";
-import { Database } from "../sequelize";
+
 import { RoleEnum } from "../../../../domain/enums/role-enum";
 import { CompanyModel } from "./company";
 import { FeedbackModel } from "./feedback";
 
-export class UserModel extends Model<
-  InferAttributes<UserModel>,
-  InferCreationAttributes<UserModel>
-> {
+export interface UserAttributes {
+  id: string;
+  companyId: string;
+  name: string;
+  cpf: string;
+  email: string;
+  role: RoleEnum;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
+
+export class UserModel extends Model<UserAttributes> implements UserAttributes {
   public id!: string;
   public companyId!: string;
   public name!: string;
