@@ -58,6 +58,23 @@ export class Feedback extends Entity {
     return new Feedback(props);
   }
 
+  toJSON() {
+    return {
+      id: this.id,
+      giverId: this._giverId,
+      receiverId: this._receiverId,
+      checklistId: this._checklistId,
+      title: this._title,
+      description: this._description,
+      observation: this._observation,
+      score: this._score,
+      checklist: this._checklist ? this._checklist.toJSON() : undefined,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      deletedAt: this.deletedAt,
+    };
+  }
+
   get giverId(): string {
     return this._giverId;
   }

@@ -54,6 +54,23 @@ export class User extends Entity {
     return new User(props);
   }
 
+  toJSON() {
+    return {
+      id: this.id,
+      companyId: this._companyId,
+      name: this._name,
+      cpf: this._cpf,
+      email: this._email,
+      role: this._role,
+      feedbacks: this._feedbacks
+        ? this._feedbacks.map((feedback) => feedback.toJSON())
+        : undefined,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      deletedAt: this.deletedAt,
+    };
+  }
+
   get companyId(): string {
     return this._companyId;
   }

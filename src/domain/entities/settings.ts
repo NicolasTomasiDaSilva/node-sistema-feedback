@@ -43,6 +43,18 @@ export class Settings extends Entity {
     return new Settings(props);
   }
 
+  toJSON() {
+    return {
+      id: this.id,
+      companyId: this._companyId,
+      primaryColor: this._primaryColor,
+      logoUrl: this._logoUrl,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      deletedAt: this.deletedAt,
+    };
+  }
+
   get companyId(): string {
     return this._companyId;
   }

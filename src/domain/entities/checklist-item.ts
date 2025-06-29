@@ -46,6 +46,16 @@ export class ChecklistItem extends Entity {
     return new ChecklistItem(props);
   }
 
+  toJSON() {
+    return {
+      id: this.id,
+      checklistId: this._checklistId,
+      label: this._label,
+      description: this._description,
+      weight: this._weight,
+    };
+  }
+
   get checklistId(): string {
     return this._checklistId;
   }

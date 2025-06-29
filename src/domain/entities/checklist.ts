@@ -44,6 +44,18 @@ export class Checklist extends Entity {
     return new Checklist(props);
   }
 
+  toJSON() {
+    return {
+      id: this.id,
+      companyId: this._companyId,
+      title: this._title,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      deletedAt: this.deletedAt,
+      items: this._items ? this._items.map((item) => item.toJSON()) : undefined,
+    };
+  }
+
   get companyId(): string {
     return this._companyId;
   }
