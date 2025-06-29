@@ -11,7 +11,7 @@ export function makeCreateFeedbackController(): IController {
   const validator = new ZodValidator(createFeedbackSchema);
   const useCase = makeCreateFeedbackUseCase();
   const controller = new CreateFeedbackController(useCase, validator);
-  const requiredRoles: RoleEnum[] = [RoleEnum.manager];
+  const requiredRoles: RoleEnum[] = [RoleEnum.manager, RoleEnum.supervisor];
   return makeControllerErrorDecorator(
     makeControllerAuthDecorator(controller, requiredRoles)
   );
