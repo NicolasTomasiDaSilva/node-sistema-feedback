@@ -13,6 +13,7 @@ export class ChecklistItemMapper {
       description: model.description,
       weight: model.weight,
       order: model.order,
+
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,

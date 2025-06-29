@@ -40,8 +40,6 @@ export class InvitationModel
   declare updatedAt: Date;
   declare deletedAt: Date | null;
 
-  declare getCompany?: BelongsToGetAssociationMixin<CompanyModel>;
-
   static initModel(sequelize: Sequelize) {
     InvitationModel.init(
       {

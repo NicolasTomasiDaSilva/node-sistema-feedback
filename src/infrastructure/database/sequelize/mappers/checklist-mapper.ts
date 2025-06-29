@@ -26,9 +26,6 @@ export class ChecklistMapper {
       id: entity.id,
       companyId: entity.companyId,
       title: entity.title,
-      items: entity.items
-        ? ChecklistItemMapper.toPersistenceList(entity.items)
-        : undefined,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       deletedAt: entity.deletedAt,

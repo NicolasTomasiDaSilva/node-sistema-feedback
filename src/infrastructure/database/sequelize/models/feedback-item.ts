@@ -15,7 +15,8 @@ export interface FeedbackItemAttributes {
   id: string;
   feedbackId: string;
   checklistItemId: string;
-  isChecked: boolean;
+  score: number;
+  observation: string | null;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
@@ -29,7 +30,8 @@ export class FeedbackItemModel
   declare id: string;
   declare feedbackId: string;
   declare checklistItemId: string;
-  declare isChecked: boolean;
+  declare score: number;
+  declare observation: string | null;
   declare createdAt: Date;
   declare updatedAt: Date;
   declare deletedAt: Date | null;
@@ -56,9 +58,13 @@ export class FeedbackItemModel
           type: DataTypes.UUID,
           allowNull: false,
         },
-        isChecked: {
-          type: DataTypes.BOOLEAN,
+        score: {
+          type: DataTypes.INTEGER,
           allowNull: false,
+        },
+        observation: {
+          type: DataTypes.STRING,
+          allowNull: true,
         },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE,

@@ -3,6 +3,8 @@ import {
   FeedbackItemAttributes,
   FeedbackItemModel,
 } from "../models/feedback-item";
+import { ChecklistItemMapper } from "./checklist-item-mapper";
+import { ChecklistMapper } from "./checklist-mapper";
 
 export class FeedbackItemMapper {
   static toEntity(model: FeedbackItemModel): FeedbackItem {
@@ -10,8 +12,9 @@ export class FeedbackItemMapper {
       id: model.id,
       feedbackId: model.feedbackId,
       checklistItemId: model.checklistItemId,
-      isChecked: model.isChecked,
-      checklistItem: model.chec
+      checklistItem: ChecklistItemMapper.toEntity(model.checklistItem),
+      observation: model.observation,
+      score: model.score,
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,
@@ -26,7 +29,9 @@ export class FeedbackItemMapper {
     return {
       id: entity.id,
       feedbackId: entity.feedbackId,
-
+      checklistItemId: entity.checklistItemId,
+      observation: entity.observation,
+      score: entity.score,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       deletedAt: entity.deletedAt,

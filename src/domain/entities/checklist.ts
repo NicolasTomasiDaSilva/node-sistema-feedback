@@ -65,4 +65,8 @@ export class Checklist extends Entity {
   get items(): ChecklistItem[] | undefined {
     return this._items;
   }
+
+  set items(items: ChecklistItem[] | undefined) {
+    this._items = items;
+  }
 }

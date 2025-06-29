@@ -12,7 +12,6 @@ export class FeedbackMapper {
       description: model.description,
       observation: model.observation,
       score: model.score,
-
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,

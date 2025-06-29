@@ -27,16 +27,19 @@ export class CreateChecklistUseCase implements ICreateChecklistUseCase {
       id: checklistId,
       companyId: data.currentUser.companyId,
       title: data.title,
-      items: data.items.map((item) =>
-        ChecklistItem.create({
+      items: data.items.map((item) => {
+        if (item.weight < 1 || item.weight > 5) {
+          throw new BadRequestError("Weight must be between 1 and 5");
+        }
+        return ChecklistItem.create({
           id: this.uuidGenerator.generate(),
           checklistId: checklistId,
           label: item.label,
           description: item.description,
           weight: item.weight,
           order: item.order,
-        })
-      ),
+        });
+      }),
     });
 
     return this.checklistRepository.create(checklist);

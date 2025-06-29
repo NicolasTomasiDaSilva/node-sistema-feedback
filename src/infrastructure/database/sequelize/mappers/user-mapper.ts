@@ -11,9 +11,6 @@ export class UserMapper {
       name: model.name,
       cpf: model.cpf,
       role: model.role,
-      feedbacks: model.receivedFeedbacks
-        ? FeedbackMapper.toEntityList(model.receivedFeedbacks)
-        : undefined,
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,

@@ -5,7 +5,8 @@ interface FeedbackItemProps {
   id: string;
   feedbackId: string;
   checklistItemId: string;
-  isChecked: boolean;
+  observation: string | null;
+  score: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
@@ -15,7 +16,8 @@ interface FeedbackItemProps {
 export class FeedbackItem extends Entity {
   private readonly _feedbackId: string;
   private readonly _checklistItemId: string;
-  private _isChecked: boolean;
+  private _observation: string | null;
+  private _score: number;
   private _checklistItem: ChecklistItem;
 
   private constructor(props: FeedbackItemProps) {
@@ -27,7 +29,8 @@ export class FeedbackItem extends Entity {
     });
     this._feedbackId = props.feedbackId;
     this._checklistItemId = props.checklistItemId;
-    this._isChecked = props.isChecked;
+    this._observation = props.observation;
+    this._score = props.score;
     this._checklistItem = props.checklistItem;
   }
 
@@ -52,11 +55,12 @@ export class FeedbackItem extends Entity {
       id: this.id,
       feedbackId: this._feedbackId,
       checklistItemId: this._checklistItemId,
+      observation: this._observation,
       label: this.label,
       description: this.description,
       weight: this.weight,
       order: this.order,
-      isChecked: this._isChecked,
+      isChecked: this._score,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,
@@ -70,8 +74,8 @@ export class FeedbackItem extends Entity {
   get checklistItemId(): string {
     return this._checklistItemId;
   }
-  get isChecked(): boolean {
-    return this._isChecked;
+  get score(): number {
+    return this._score;
   }
 
   get label(): string {
@@ -85,5 +89,9 @@ export class FeedbackItem extends Entity {
   }
   get order(): number {
     return this._checklistItem.order;
+  }
+
+  get observation(): string | null {
+    return this._observation;
   }
 }

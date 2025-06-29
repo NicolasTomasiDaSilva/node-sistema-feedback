@@ -37,11 +37,6 @@ export class UserModel extends Model<UserAttributes> implements UserAttributes {
   declare createdAt: Date;
   declare updatedAt: Date;
   declare deletedAt: Date | null;
-  declare receivedFeedbacks?: FeedbackModel[];
-  declare getCompany?: BelongsToGetAssociationMixin<CompanyModel>;
-
-  declare getGivenFeedbacks?: HasManyGetAssociationsMixin<FeedbackModel>;
-  declare getReceivedFeedbacks?: HasManyGetAssociationsMixin<FeedbackModel>;
 
   static initModel(sequelize: Sequelize) {
     UserModel.init(

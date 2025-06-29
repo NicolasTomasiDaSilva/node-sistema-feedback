@@ -1,6 +1,7 @@
 import {
   DataTypes,
   HasManyGetAssociationsMixin,
+  HasOneGetAssociationMixin,
   InferAttributes,
   InferCreationAttributes,
   Model,
@@ -31,8 +32,6 @@ export class CompanyModel
   declare createdAt: Date;
   declare updatedAt: Date;
   declare deletedAt: Date | null;
-  declare getUsers?: HasManyGetAssociationsMixin<UserModel>;
-  declare getInvitations?: HasManyGetAssociationsMixin<InvitationModel>;
 
   static initModel(sequelize: Sequelize) {
     CompanyModel.init(

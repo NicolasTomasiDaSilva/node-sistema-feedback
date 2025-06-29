@@ -3,6 +3,7 @@ import {
   DataTypes,
   HasManyGetAssociationsMixin,
   Model,
+  NonAttribute,
   Sequelize,
 } from "sequelize";
 import { CompanyModel } from "./company";
@@ -30,9 +31,11 @@ export class ChecklistModel
   declare updatedAt: Date;
   declare deletedAt: Date | null;
 
-  declare items?: ChecklistItemModel[] | undefined;
-  declare getCompany?: BelongsToGetAssociationMixin<CompanyModel>;
-  declare getItems?: HasManyGetAssociationsMixin<ChecklistItemModel>;
+  /* ── Associações (mixins lazy) ── */
+  declare getItems: HasManyGetAssociationsMixin<ChecklistItemModel>;
+
+  /* ── Propriedade carregada via include ── */
+  declare items?: NonAttribute<ChecklistItemModel[]>;
 
   static initModel(sequelize: Sequelize) {
     ChecklistModel.init(

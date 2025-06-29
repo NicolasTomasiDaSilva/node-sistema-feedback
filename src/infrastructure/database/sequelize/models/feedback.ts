@@ -3,11 +3,13 @@ import {
   DataTypes,
   HasManyGetAssociationsMixin,
   Model,
+  NonAttribute,
   Sequelize,
 } from "sequelize";
 
 import { UserModel } from "./user";
 import { FeedbackItemModel } from "./feedback-item";
+import { ChecklistModel } from "./checklist";
 
 export interface FeedbackAttributes {
   /* ─────────── Colunas da tabela ─────────── */
@@ -40,12 +42,12 @@ export class FeedbackModel
   declare createdAt: Date;
   declare updatedAt: Date;
   declare deletedAt: Date | null;
-  declare items?: FeedbackItemModel[] | undefined;
 
-  declare getItems?: HasManyGetAssociationsMixin<FeedbackItemModel>;
-  declare getGiver?: BelongsToGetAssociationMixin<UserModel>;
-  declare getReceiver?: BelongsToGetAssociationMixin<UserModel>;
-  // declare getChecklist!: BelongsToGetAssociationMixin<ChecklistModel>;
+  /* ── Associações (mixins lazy) ── */
+  declare getItems: HasManyGetAssociationsMixin<FeedbackItemModel>;
+
+  /* ── Propriedade carregada via include ── */
+  declare items?: NonAttribute<FeedbackItemModel[]>;
 
   static initModel(sequelize: Sequelize) {
     FeedbackModel.init(
@@ -104,15 +106,15 @@ export class FeedbackModel
       foreignKey: "receiverId",
       as: "receiver",
     });
+    FeedbackModel.belongsTo(ChecklistModel, {
+      foreignKey: "checklistId",
+      as: "checklist",
+    });
     FeedbackModel.hasMany(FeedbackItemModel, {
       foreignKey: "feedbackId",
       as: "items",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
-    // FeedbackModel.belongsTo(UserModel, {
-    //   foreignKey: "checklistId",
-    //   as: "checklist",
-    // });
   }
 }
