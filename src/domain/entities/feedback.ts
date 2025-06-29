@@ -94,4 +94,7 @@ export class Feedback extends Entity {
   get items(): FeedbackItem[] | undefined {
     return this._items;
   }
+  set items(items: FeedbackItem[] | undefined) {
+    this._items = items;
+  }
 }
