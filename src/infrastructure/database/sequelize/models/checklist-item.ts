@@ -6,7 +6,9 @@ import {
   Model,
   Sequelize,
 } from "sequelize";
-import { CompanyModel } from "./company";
+
+import { ChecklistModel } from "./checklist";
+import { FeedbackItemModel } from "./feedback-item";
 
 export interface ChecklistItemAttributes {
   id: string;
@@ -14,6 +16,7 @@ export interface ChecklistItemAttributes {
   label: string;
   description: string | null;
   weight: number;
+  order: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
@@ -28,10 +31,10 @@ export class ChecklistItemModel
   public label!: string;
   public description!: string | null;
   public weight!: number;
+  public order!: number;
   public createdAt!: Date;
   public updatedAt!: Date;
   public deletedAt!: Date | null;
-  public getChecklist?: BelongsToGetAssociationMixin<ChecklistItemModel>;
 
   static initModel(sequelize: Sequelize) {
     ChecklistItemModel.init(
@@ -57,6 +60,10 @@ export class ChecklistItemModel
           type: DataTypes.INTEGER,
           allowNull: false,
         },
+        order: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE,
         deletedAt: { type: DataTypes.DATE, allowNull: true },
@@ -71,9 +78,15 @@ export class ChecklistItemModel
   }
 
   static associate() {
-    ChecklistItemModel.belongsTo(CompanyModel, {
+    ChecklistItemModel.belongsTo(ChecklistModel, {
       foreignKey: "checklistId",
       as: "checklist",
+    });
+    ChecklistItemModel.hasMany(FeedbackItemModel, {
+      foreignKey: "checklistItemId",
+      as: "feedbackItems",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     });
   }
 }

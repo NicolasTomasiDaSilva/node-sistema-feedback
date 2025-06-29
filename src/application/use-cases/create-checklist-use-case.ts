@@ -34,6 +34,7 @@ export class CreateChecklistUseCase implements ICreateChecklistUseCase {
           label: item.label,
           description: item.description,
           weight: item.weight,
+          order: item.order,
         })
       ),
     });

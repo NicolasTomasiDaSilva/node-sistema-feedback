@@ -11,7 +11,7 @@ export abstract class Entity {
   private _updatedAt: Date;
   private _deletedAt: Date | null;
 
-  constructor({ id, createdAt, updatedAt, deletedAt }: EntityProps) {
+  protected constructor({ id, createdAt, updatedAt, deletedAt }: EntityProps) {
     this._id = id;
     this._createdAt = createdAt;
     this._updatedAt = updatedAt;

@@ -1,6 +1,7 @@
 import { RoleEnum } from "../enums/role-enum";
 import { Checklist } from "./checklist";
 import { Entity } from "./entity";
+import { FeedbackItem } from "./feedback-tem";
 
 interface FeedbackProps {
   id: string;
@@ -15,6 +16,7 @@ interface FeedbackProps {
   updatedAt: Date;
   deletedAt: Date | null;
   checklist?: Checklist | undefined;
+  items?: FeedbackItem[] | undefined;
 }
 
 export class Feedback extends Entity {
@@ -26,7 +28,8 @@ export class Feedback extends Entity {
   private _observation: string | null;
   private _score: number;
   private _checklist: Checklist | undefined;
-  constructor(props: FeedbackProps) {
+  private _items: FeedbackItem[] | undefined;
+  private constructor(props: FeedbackProps) {
     super({
       id: props.id,
       createdAt: props.createdAt,
@@ -41,6 +44,7 @@ export class Feedback extends Entity {
     this._description = props.description;
     this._observation = props.observation;
     this._score = props.score;
+    this._items = props.items;
   }
   static create(
     props: Omit<FeedbackProps, "createdAt" | "updatedAt" | "deletedAt">
@@ -69,6 +73,7 @@ export class Feedback extends Entity {
       observation: this._observation,
       score: this._score,
       checklist: this._checklist ? this._checklist.toJSON() : undefined,
+      items: this._items ? this._items.map((item) => item.toJSON()) : undefined,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,
@@ -84,9 +89,6 @@ export class Feedback extends Entity {
   get checklistId(): string {
     return this._checklistId;
   }
-  get checklist(): Checklist | undefined {
-    return this._checklist;
-  }
   get title(): string {
     return this._title;
   }
@@ -98,5 +100,11 @@ export class Feedback extends Entity {
   }
   get score(): number {
     return this._score;
+  }
+  get checklist(): Checklist | undefined {
+    return this._checklist;
+  }
+  get items(): FeedbackItem[] | undefined {
+    return this._items;
   }
 }

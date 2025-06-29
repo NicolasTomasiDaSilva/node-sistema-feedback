@@ -23,7 +23,7 @@ export class User extends Entity {
   private _role: RoleEnum;
   private _feedbacks: Feedback[] | undefined;
 
-  constructor(props: UserProps) {
+  private constructor(props: UserProps) {
     super({
       id: props.id,
       createdAt: props.createdAt,

@@ -1,11 +1,13 @@
 import {
   BelongsToGetAssociationMixin,
   DataTypes,
+  HasManyGetAssociationsMixin,
   Model,
   Sequelize,
 } from "sequelize";
 
 import { UserModel } from "./user";
+import { FeedbackItemModel } from "./feedback-item";
 
 export interface FeedbackAttributes {
   id: string;
@@ -19,6 +21,7 @@ export interface FeedbackAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
+  items?: FeedbackItemModel[] | undefined;
 }
 
 export class FeedbackModel
@@ -36,7 +39,9 @@ export class FeedbackModel
   public createdAt!: Date;
   public updatedAt!: Date;
   public deletedAt!: Date | null;
+  public items?: FeedbackItemModel[] | undefined;
 
+  public getItems?: HasManyGetAssociationsMixin<FeedbackItemModel>;
   public getGiver?: BelongsToGetAssociationMixin<UserModel>;
   public getReceiver?: BelongsToGetAssociationMixin<UserModel>;
   // public getChecklist!: BelongsToGetAssociationMixin<ChecklistModel>;
@@ -97,6 +102,12 @@ export class FeedbackModel
     FeedbackModel.belongsTo(UserModel, {
       foreignKey: "receiverId",
       as: "receiver",
+    });
+    FeedbackModel.hasMany(FeedbackItemModel, {
+      foreignKey: "feedbackId",
+      as: "items",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     });
     // FeedbackModel.belongsTo(UserModel, {
     //   foreignKey: "checklistId",

@@ -6,6 +6,7 @@ interface ChecklistItemProps {
   label: string;
   description: string | null;
   weight: number;
+  order: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
@@ -16,8 +17,9 @@ export class ChecklistItem extends Entity {
   private _label: string;
   private _description: string | null;
   private _weight: number;
+  private _order: number;
 
-  constructor(props: ChecklistItemProps) {
+  private constructor(props: ChecklistItemProps) {
     super({
       id: props.id,
       createdAt: props.createdAt,
@@ -28,6 +30,7 @@ export class ChecklistItem extends Entity {
     this._label = props.label;
     this._description = props.description;
     this._weight = props.weight;
+    this._order = props.order;
   }
 
   static create(
@@ -53,6 +56,7 @@ export class ChecklistItem extends Entity {
       label: this._label,
       description: this._description,
       weight: this._weight,
+      order: this._order,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,
@@ -70,5 +74,8 @@ export class ChecklistItem extends Entity {
   }
   get weight(): number {
     return this._weight;
+  }
+  get order(): number {
+    return this._order;
   }
 }

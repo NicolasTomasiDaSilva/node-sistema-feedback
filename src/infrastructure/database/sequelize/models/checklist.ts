@@ -2,8 +2,6 @@ import {
   BelongsToGetAssociationMixin,
   DataTypes,
   HasManyGetAssociationsMixin,
-  InferAttributes,
-  InferCreationAttributes,
   Model,
   Sequelize,
 } from "sequelize";

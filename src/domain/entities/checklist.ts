@@ -16,7 +16,7 @@ export class Checklist extends Entity {
   private _title: string;
   private _items: ChecklistItem[] | undefined;
 
-  constructor(props: ChecklistProps) {
+  private constructor(props: ChecklistProps) {
     super({
       id: props.id,
       createdAt: props.createdAt,
