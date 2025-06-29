@@ -8,7 +8,7 @@ interface ChecklistProps {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  items?: ChecklistItem[] | undefined;
+  items: ChecklistItem[] | undefined;
 }
 
 export class Checklist extends Entity {

@@ -1,13 +1,12 @@
 import { RoleEnum } from "../enums/role-enum";
 import { Checklist } from "./checklist";
 import { Entity } from "./entity";
-import { FeedbackItem } from "./feedback-tem";
+import { FeedbackItem } from "./feedback-item";
 
 interface FeedbackProps {
   id: string;
   giverId: string;
   receiverId: string;
-  checklistId: string;
   title: string;
   description: string | null;
   observation: string | null;
@@ -15,19 +14,16 @@ interface FeedbackProps {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  checklist?: Checklist | undefined;
-  items?: FeedbackItem[] | undefined;
+  items: FeedbackItem[] | undefined;
 }
 
 export class Feedback extends Entity {
   private readonly _giverId: string;
   private readonly _receiverId: string;
-  private readonly _checklistId: string;
   private _title: string;
   private _description: string | null;
   private _observation: string | null;
   private _score: number;
-  private _checklist: Checklist | undefined;
   private _items: FeedbackItem[] | undefined;
   private constructor(props: FeedbackProps) {
     super({
@@ -38,8 +34,6 @@ export class Feedback extends Entity {
     });
     this._giverId = props.giverId;
     this._receiverId = props.receiverId;
-    this._checklistId = props.checklistId;
-    this._checklist = props.checklist;
     this._title = props.title;
     this._description = props.description;
     this._observation = props.observation;
@@ -67,12 +61,10 @@ export class Feedback extends Entity {
       id: this.id,
       giverId: this._giverId,
       receiverId: this._receiverId,
-      checklistId: this._checklistId,
       title: this._title,
       description: this._description,
       observation: this._observation,
       score: this._score,
-      checklist: this._checklist ? this._checklist.toJSON() : undefined,
       items: this._items ? this._items.map((item) => item.toJSON()) : undefined,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
@@ -86,9 +78,6 @@ export class Feedback extends Entity {
   get receiverId(): string {
     return this._receiverId;
   }
-  get checklistId(): string {
-    return this._checklistId;
-  }
   get title(): string {
     return this._title;
   }
@@ -101,9 +90,7 @@ export class Feedback extends Entity {
   get score(): number {
     return this._score;
   }
-  get checklist(): Checklist | undefined {
-    return this._checklist;
-  }
+
   get items(): FeedbackItem[] | undefined {
     return this._items;
   }

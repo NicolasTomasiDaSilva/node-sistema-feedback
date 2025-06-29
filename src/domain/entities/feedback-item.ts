@@ -4,21 +4,25 @@ import { Entity } from "./entity";
 interface FeedbackItemProps {
   id: string;
   feedbackId: string;
-  checklistItemId: string;
   observation: string | null;
   score: number;
+  label: string;
+  description: string | null;
+  weight: number;
+  order: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  checklistItem: ChecklistItem;
 }
 
 export class FeedbackItem extends Entity {
   private readonly _feedbackId: string;
-  private readonly _checklistItemId: string;
   private _observation: string | null;
   private _score: number;
-  private _checklistItem: ChecklistItem;
+  private _label: string;
+  private _description: string | null;
+  private _weight: number;
+  private _order: number;
 
   private constructor(props: FeedbackItemProps) {
     super({
@@ -28,10 +32,12 @@ export class FeedbackItem extends Entity {
       deletedAt: props.deletedAt,
     });
     this._feedbackId = props.feedbackId;
-    this._checklistItemId = props.checklistItemId;
     this._observation = props.observation;
     this._score = props.score;
-    this._checklistItem = props.checklistItem;
+    this._label = props.label;
+    this._description = props.description;
+    this._weight = props.weight;
+    this._order = props.order;
   }
 
   static create(
@@ -54,13 +60,12 @@ export class FeedbackItem extends Entity {
     return {
       id: this.id,
       feedbackId: this._feedbackId,
-      checklistItemId: this._checklistItemId,
       observation: this._observation,
-      label: this.label,
-      description: this.description,
-      weight: this.weight,
-      order: this.order,
-      isChecked: this._score,
+      score: this._score,
+      label: this._label,
+      description: this._description,
+      weight: this._weight,
+      order: this._order,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,
@@ -71,24 +76,21 @@ export class FeedbackItem extends Entity {
     return this._feedbackId;
   }
 
-  get checklistItemId(): string {
-    return this._checklistItemId;
-  }
   get score(): number {
     return this._score;
   }
 
   get label(): string {
-    return this._checklistItem.label;
+    return this._label;
   }
   get description(): string | null {
-    return this._checklistItem.description;
+    return this._description;
   }
   get weight(): number {
-    return this._checklistItem.weight;
+    return this._weight;
   }
   get order(): number {
-    return this._checklistItem.order;
+    return this._order;
   }
 
   get observation(): string | null {

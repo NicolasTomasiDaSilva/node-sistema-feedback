@@ -12,7 +12,7 @@ interface UserProps {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  feedbacks?: Feedback[] | undefined;
+  feedbacks: Feedback[] | undefined;
 }
 
 export class User extends Entity {

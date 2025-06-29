@@ -16,7 +16,6 @@ export interface FeedbackAttributes {
   id: string;
   giverId: string;
   receiverId: string;
-  checklistId: string;
   title: string;
   description: string | null;
   observation: string | null;
@@ -34,7 +33,6 @@ export class FeedbackModel
   declare id: string;
   declare giverId: string;
   declare receiverId: string;
-  declare checklistId: string;
   declare title: string;
   declare description: string | null;
   declare observation: string | null;
@@ -55,10 +53,6 @@ export class FeedbackModel
         id: {
           type: DataTypes.UUID,
           primaryKey: true,
-          allowNull: false,
-        },
-        checklistId: {
-          type: DataTypes.UUID,
           allowNull: false,
         },
         giverId: {
@@ -105,10 +99,6 @@ export class FeedbackModel
     FeedbackModel.belongsTo(UserModel, {
       foreignKey: "receiverId",
       as: "receiver",
-    });
-    FeedbackModel.belongsTo(ChecklistModel, {
-      foreignKey: "checklistId",
-      as: "checklist",
     });
     FeedbackModel.hasMany(FeedbackItemModel, {
       foreignKey: "feedbackId",

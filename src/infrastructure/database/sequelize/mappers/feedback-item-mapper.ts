@@ -1,4 +1,4 @@
-import { FeedbackItem } from "../../../../domain/entities/feedback-tem";
+import { FeedbackItem } from "../../../../domain/entities/feedback-item";
 import {
   FeedbackItemAttributes,
   FeedbackItemModel,

@@ -10,7 +10,7 @@ interface CompanyProps {
   updatedAt: Date;
   deletedAt: Date | null;
   settings: Settings | undefined;
-  invitations?: Invitation[] | undefined;
+  invitations: Invitation[] | undefined;
 }
 
 export class Company extends Entity {
