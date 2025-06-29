@@ -1,21 +1,13 @@
-import {
-  badRequest,
-  created,
-  ok,
-  serverError,
-} from "../helpers/http-responses";
+import { created } from "../helpers/http-responses";
 import { IController } from "../protocols/controller";
 import { HttpRequest } from "../types/http-request";
 import { HttpResponse } from "../types/htpp-response";
-import { IInviteUserUseCase } from "../../application/protocols/use-cases/invite-user-use-case";
-import { InviteUserDTO } from "../../application/dtos/invite-user-dto";
-import { NotFoundError } from "../../domain/errors/errors";
 import { IValidator } from "../protocols/validate";
 import { getCurrentUser } from "../guardars/get-current-user";
 import { CreateChecklistDTO } from "../../application/dtos/checklist/create-checklist-dto";
 import { ICreateChecklistUseCase } from "../../application/protocols/use-cases/create-checklist-use-case";
 
-export class InviteUserController implements IController {
+export class CreateChecklistController implements IController {
   constructor(
     private readonly createChecklistUseCase: ICreateChecklistUseCase,
     private readonly bodyValidator: IValidator<

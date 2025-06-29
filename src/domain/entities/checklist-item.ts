@@ -53,6 +53,9 @@ export class ChecklistItem extends Entity {
       label: this._label,
       description: this._description,
       weight: this._weight,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      deletedAt: this.deletedAt,
     };
   }
 
