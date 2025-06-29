@@ -40,6 +40,17 @@ export class Checklist extends Entity {
     });
   }
 
+  toJSON() {
+    return {
+      id: this.id,
+      title: this.title,
+      items: this.items ? this.items.map((item) => item.toJSON()) : undefined,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      deletedAt: this.deletedAt,
+    };
+  }
+
   static fromPersistence(props: ChecklistProps): Checklist {
     return new Checklist(props);
   }
