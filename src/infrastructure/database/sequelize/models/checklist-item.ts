@@ -63,7 +63,7 @@ export class ChecklistItemModel
       },
       {
         sequelize,
-        tableName: "checklists",
+        tableName: "checklist_items",
         timestamps: true,
         paranoid: true,
       }

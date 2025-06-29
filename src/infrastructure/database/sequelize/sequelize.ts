@@ -25,22 +25,30 @@ export class Database {
       { UserModel },
       { InvitationModel },
       { FeedbackModel },
+      { ChecklistModel },
+      { ChecklistItemModel },
     ] = await Promise.all([
       import("./models/company"),
       import("./models/user"),
       import("./models/invitation"),
       import("./models/feedback"),
+      import("./models/checklist"),
+      import("./models/checklist-item"),
     ]);
 
     CompanyModel.initModel(sequelize);
     UserModel.initModel(sequelize);
     InvitationModel.initModel(sequelize);
     FeedbackModel.initModel(sequelize);
+    ChecklistModel.initModel(sequelize);
+    ChecklistItemModel.initModel(sequelize);
 
     CompanyModel.associate();
     UserModel.associate();
     InvitationModel.associate();
     FeedbackModel.associate();
+    ChecklistModel.associate();
+    ChecklistItemModel.associate();
 
     await sequelize.sync({
       alter: true,
