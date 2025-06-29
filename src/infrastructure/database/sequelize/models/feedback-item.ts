@@ -37,7 +37,7 @@ export class FeedbackItemModel
   /* ── Associações (mixins lazy) ── */
   declare getChecklistItem: BelongsToGetAssociationMixin<ChecklistItemModel>;
 
-  /* ── Propriedade carregada via include (eager) ── */
+  /* ── Propriedade carregada via include ── */
   declare checklistItem: NonAttribute<ChecklistItemModel>;
 
   static initModel(sequelize: Sequelize) {
@@ -69,7 +69,6 @@ export class FeedbackItemModel
         tableName: "feedback_items",
         timestamps: true,
         paranoid: true,
-        /** ★ Tudo que for find* já inclui ChecklistItem */
         defaultScope: {
           include: [{ model: ChecklistItemModel, as: "checklistItem" }],
         },
