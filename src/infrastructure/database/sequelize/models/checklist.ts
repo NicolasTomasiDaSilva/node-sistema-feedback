@@ -8,7 +8,7 @@ import {
   Sequelize,
 } from "sequelize";
 import { CompanyModel } from "./company";
-import { ChecklistItemModel } from "./checklist-item";
+import { ChecklistItemAttributes, ChecklistItemModel } from "./checklist-item";
 
 export interface ChecklistAttributes {
   id: string;
@@ -17,7 +17,7 @@ export interface ChecklistAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  items?: ChecklistItemModel[] | undefined;
+  items?: ChecklistItemAttributes[] | undefined;
 }
 
 export class ChecklistModel
