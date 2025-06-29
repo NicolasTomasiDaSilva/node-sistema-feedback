@@ -5,8 +5,8 @@ import { InvitationModel } from "../models/invitation";
 
 export class SequelizeInvitationRepository implements IInvitationRepository {
   async create(data: Invitation): Promise<Invitation> {
-    return InvitationMapper.toEntity(
-      await InvitationModel.create(InvitationMapper.toPersistence(data))
-    );
+    const model = InvitationMapper.toPersistence(data);
+    const created = await InvitationModel.create(model);
+    return InvitationMapper.toEntity(created);
   }
 }
