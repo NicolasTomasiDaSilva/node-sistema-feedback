@@ -14,6 +14,6 @@ export const createFeedbackSchema = z.object({
   receiverId: z.string().uuid(),
   description: z.string().trim().min(1).max(50).nullable(),
   observation: z.string().trim().min(1).max(50).nullable(),
-  score: z.number().min(1).max(10),
+  score: z.number().min(1).max(100),
   items: z.array(createFeedbackItemSchema),
 });
