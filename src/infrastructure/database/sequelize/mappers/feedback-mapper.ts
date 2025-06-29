@@ -1,5 +1,6 @@
 import { Feedback } from "../../../../domain/entities/feedback";
 import { FeedbackAttributes, FeedbackModel } from "../models/feedback";
+import { FeedbackItemMapper } from "./feedback-item-mapper";
 
 export class FeedbackMapper {
   static toEntity(model: FeedbackModel): Feedback {
@@ -7,7 +8,6 @@ export class FeedbackMapper {
       id: model.id,
       giverId: model.giverId,
       receiverId: model.receiverId,
-      checklistId: model.checklistId,
       title: model.title,
       description: model.description,
       observation: model.observation,
@@ -15,6 +15,9 @@ export class FeedbackMapper {
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,
+      items: model.items
+        ? FeedbackItemMapper.toEntityList(model.items)
+        : undefined,
     });
   }
   static toEntityList(models: FeedbackModel[]): Feedback[] {
@@ -26,7 +29,6 @@ export class FeedbackMapper {
       id: entity.id,
       giverId: entity.giverId,
       receiverId: entity.receiverId,
-      checklistId: entity.checklistId,
       title: entity.title,
       description: entity.description,
       observation: entity.observation,

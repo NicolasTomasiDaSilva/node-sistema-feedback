@@ -12,7 +12,6 @@ interface UserProps {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  feedbacks: Feedback[] | undefined;
 }
 
 export class User extends Entity {
@@ -21,7 +20,6 @@ export class User extends Entity {
   private _cpf: string;
   private _email: string;
   private _role: RoleEnum;
-  private _feedbacks: Feedback[] | undefined;
 
   private constructor(props: UserProps) {
     super({
@@ -35,7 +33,6 @@ export class User extends Entity {
     this._cpf = props.cpf;
     this._email = props.email;
     this._role = props.role;
-    this._feedbacks = props.feedbacks;
   }
 
   static create(
@@ -62,9 +59,6 @@ export class User extends Entity {
       cpf: this._cpf,
       email: this._email,
       role: this._role,
-      feedbacks: this._feedbacks
-        ? this._feedbacks.map((feedback) => feedback.toJSON())
-        : undefined,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,
@@ -87,8 +81,5 @@ export class User extends Entity {
 
   get role(): RoleEnum {
     return this._role;
-  }
-  get feedbacks(): Feedback[] | undefined {
-    return this._feedbacks;
   }
 }

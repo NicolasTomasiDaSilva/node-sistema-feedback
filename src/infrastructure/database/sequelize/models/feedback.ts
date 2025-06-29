@@ -9,7 +9,6 @@ import {
 
 import { UserModel } from "./user";
 import { FeedbackItemModel } from "./feedback-item";
-import { ChecklistModel } from "./checklist";
 
 export interface FeedbackAttributes {
   /* ─────────── Colunas da tabela ─────────── */

@@ -14,9 +14,12 @@ export interface FeedbackItemAttributes {
   /* ─────────── Colunas da tabela ─────────── */
   id: string;
   feedbackId: string;
-  checklistItemId: string;
   score: number;
   observation: string | null;
+  label: string;
+  description: string | null;
+  weight: number;
+  order: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
@@ -29,18 +32,15 @@ export class FeedbackItemModel
   /* ─────────── Colunas da tabela ─────────── */
   declare id: string;
   declare feedbackId: string;
-  declare checklistItemId: string;
   declare score: number;
   declare observation: string | null;
+  declare label: string;
+  declare description: string | null;
+  declare weight: number;
+  declare order: number;
   declare createdAt: Date;
   declare updatedAt: Date;
   declare deletedAt: Date | null;
-
-  /* ── Associações (mixins lazy) ── */
-  declare getChecklistItem: BelongsToGetAssociationMixin<ChecklistItemModel>;
-
-  /* ── Propriedade carregada via include ── */
-  declare checklistItem: NonAttribute<ChecklistItemModel>;
 
   static initModel(sequelize: Sequelize) {
     FeedbackItemModel.init(
@@ -54,10 +54,6 @@ export class FeedbackItemModel
           type: DataTypes.UUID,
           allowNull: false,
         },
-        checklistItemId: {
-          type: DataTypes.UUID,
-          allowNull: false,
-        },
         score: {
           type: DataTypes.INTEGER,
           allowNull: false,
@@ -65,6 +61,22 @@ export class FeedbackItemModel
         observation: {
           type: DataTypes.STRING,
           allowNull: true,
+        },
+        label: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        description: {
+          type: DataTypes.STRING,
+          allowNull: true,
+        },
+        weight: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
+        order: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
         },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE,
@@ -75,9 +87,6 @@ export class FeedbackItemModel
         tableName: "feedback_items",
         timestamps: true,
         paranoid: true,
-        defaultScope: {
-          include: [{ model: ChecklistItemModel, as: "checklistItem" }],
-        },
       }
     );
   }
@@ -86,10 +95,6 @@ export class FeedbackItemModel
     FeedbackItemModel.belongsTo(FeedbackModel, {
       foreignKey: "feedbackId",
       as: "feedback",
-    });
-    FeedbackItemModel.belongsTo(ChecklistItemModel, {
-      foreignKey: "checklistItemId",
-      as: "checklistItem",
     });
   }
 }
