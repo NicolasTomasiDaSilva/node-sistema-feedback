@@ -13,6 +13,7 @@ import { RoleEnum } from "../../../../domain/enums/role-enum";
 import { CompanyModel } from "./company";
 import { FeedbackModel } from "./feedback";
 
+/* ─────────── Colunas da tabela ─────────── */
 export interface UserAttributes {
   id: string;
   companyId: string;
@@ -26,20 +27,21 @@ export interface UserAttributes {
 }
 
 export class UserModel extends Model<UserAttributes> implements UserAttributes {
-  public id!: string;
-  public companyId!: string;
-  public name!: string;
-  public cpf!: string;
-  public email!: string;
-  public role!: RoleEnum;
-  public createdAt!: Date;
-  public updatedAt!: Date;
-  public deletedAt!: Date | null;
-  public receivedFeedbacks?: FeedbackModel[];
-  public getCompany?: BelongsToGetAssociationMixin<CompanyModel>;
+  /* ─────────── Colunas da tabela ─────────── */
+  declare id: string;
+  declare companyId: string;
+  declare name: string;
+  declare cpf: string;
+  declare email: string;
+  declare role: RoleEnum;
+  declare createdAt: Date;
+  declare updatedAt: Date;
+  declare deletedAt: Date | null;
+  declare receivedFeedbacks?: FeedbackModel[];
+  declare getCompany?: BelongsToGetAssociationMixin<CompanyModel>;
 
-  public getGivenFeedbacks?: HasManyGetAssociationsMixin<FeedbackModel>;
-  public getReceivedFeedbacks?: HasManyGetAssociationsMixin<FeedbackModel>;
+  declare getGivenFeedbacks?: HasManyGetAssociationsMixin<FeedbackModel>;
+  declare getReceivedFeedbacks?: HasManyGetAssociationsMixin<FeedbackModel>;
 
   static initModel(sequelize: Sequelize) {
     UserModel.init(

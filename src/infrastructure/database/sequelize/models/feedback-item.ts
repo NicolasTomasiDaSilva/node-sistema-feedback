@@ -4,15 +4,14 @@ import {
   InferAttributes,
   InferCreationAttributes,
   Model,
+  NonAttribute,
   Sequelize,
 } from "sequelize";
-import { CompanyModel } from "./company";
 import { FeedbackModel } from "./feedback";
-import { Checklist } from "../../../../domain/entities/checklist";
-import { ChecklistItem } from "../../../../domain/entities/checklist-item";
 import { ChecklistItemModel } from "./checklist-item";
 
 export interface FeedbackItemAttributes {
+  /* ─────────── Colunas da tabela ─────────── */
   id: string;
   feedbackId: string;
   checklistItemId: string;
@@ -20,22 +19,26 @@ export interface FeedbackItemAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  checklistItem?: ChecklistItemModel;
 }
 
 export class FeedbackItemModel
   extends Model<FeedbackItemAttributes>
   implements FeedbackItemAttributes
 {
-  public id!: string;
-  public feedbackId!: string;
-  public checklistItemId!: string;
-  public isChecked!: boolean;
-  public createdAt!: Date;
-  public updatedAt!: Date;
-  public deletedAt!: Date | null;
-  public checklistItem?: ChecklistItemModel;
-  public getChecklistItem!: BelongsToGetAssociationMixin<ChecklistItemModel>;
+  /* ─────────── Colunas da tabela ─────────── */
+  declare id: string;
+  declare feedbackId: string;
+  declare checklistItemId: string;
+  declare isChecked: boolean;
+  declare createdAt: Date;
+  declare updatedAt: Date;
+  declare deletedAt: Date | null;
+
+  /* ── Associações (mixins lazy) ── */
+  declare getChecklistItem: BelongsToGetAssociationMixin<ChecklistItemModel>;
+
+  /* ── Propriedade carregada via include (eager) ── */
+  declare checklistItem: NonAttribute<ChecklistItemModel>;
 
   static initModel(sequelize: Sequelize) {
     FeedbackItemModel.init(
@@ -66,6 +69,10 @@ export class FeedbackItemModel
         tableName: "feedback_items",
         timestamps: true,
         paranoid: true,
+        /** ★ Tudo que for find* já inclui ChecklistItem */
+        defaultScope: {
+          include: [{ model: ChecklistItemModel, as: "checklistItem" }],
+        },
       }
     );
   }

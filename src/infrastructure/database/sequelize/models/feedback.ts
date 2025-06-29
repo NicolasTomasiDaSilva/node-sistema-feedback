@@ -10,6 +10,7 @@ import { UserModel } from "./user";
 import { FeedbackItemModel } from "./feedback-item";
 
 export interface FeedbackAttributes {
+  /* ─────────── Colunas da tabela ─────────── */
   id: string;
   giverId: string;
   receiverId: string;
@@ -21,30 +22,30 @@ export interface FeedbackAttributes {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  items?: FeedbackItemModel[] | undefined;
 }
 
 export class FeedbackModel
   extends Model<FeedbackAttributes>
   implements FeedbackAttributes
 {
-  public id!: string;
-  public giverId!: string;
-  public receiverId!: string;
-  public checklistId!: string;
-  public title!: string;
-  public description!: string | null;
-  public observation!: string | null;
-  public score!: number;
-  public createdAt!: Date;
-  public updatedAt!: Date;
-  public deletedAt!: Date | null;
-  public items?: FeedbackItemModel[] | undefined;
+  /* ─────────── Colunas da tabela ─────────── */
+  declare id: string;
+  declare giverId: string;
+  declare receiverId: string;
+  declare checklistId: string;
+  declare title: string;
+  declare description: string | null;
+  declare observation: string | null;
+  declare score: number;
+  declare createdAt: Date;
+  declare updatedAt: Date;
+  declare deletedAt: Date | null;
+  declare items?: FeedbackItemModel[] | undefined;
 
-  public getItems?: HasManyGetAssociationsMixin<FeedbackItemModel>;
-  public getGiver?: BelongsToGetAssociationMixin<UserModel>;
-  public getReceiver?: BelongsToGetAssociationMixin<UserModel>;
-  // public getChecklist!: BelongsToGetAssociationMixin<ChecklistModel>;
+  declare getItems?: HasManyGetAssociationsMixin<FeedbackItemModel>;
+  declare getGiver?: BelongsToGetAssociationMixin<UserModel>;
+  declare getReceiver?: BelongsToGetAssociationMixin<UserModel>;
+  // declare getChecklist!: BelongsToGetAssociationMixin<ChecklistModel>;
 
   static initModel(sequelize: Sequelize) {
     FeedbackModel.init(

@@ -12,6 +12,7 @@ import { UserModel } from "./user";
 import { InvitationModel } from "./invitation";
 
 export interface CompanyAttributes {
+  /* ─────────── Colunas da tabela ─────────── */
   id: string;
   name: string;
   cpfCnpj: string;
@@ -24,15 +25,14 @@ export class CompanyModel
   extends Model<CompanyAttributes>
   implements CompanyAttributes
 {
-  public id!: string;
-  public name!: string;
-  public cpfCnpj!: string;
-  public createdAt!: Date;
-  public updatedAt!: Date;
-  public deletedAt!: Date | null;
-
-  public getUsers?: HasManyGetAssociationsMixin<UserModel>;
-  public getInvitations?: HasManyGetAssociationsMixin<InvitationModel>;
+  declare id: string;
+  declare name: string;
+  declare cpfCnpj: string;
+  declare createdAt: Date;
+  declare updatedAt: Date;
+  declare deletedAt: Date | null;
+  declare getUsers?: HasManyGetAssociationsMixin<UserModel>;
+  declare getInvitations?: HasManyGetAssociationsMixin<InvitationModel>;
 
   static initModel(sequelize: Sequelize) {
     CompanyModel.init(

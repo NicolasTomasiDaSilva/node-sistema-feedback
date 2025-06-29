@@ -15,7 +15,7 @@ export class Settings extends Entity {
   private readonly _companyId;
   private _primaryColor: string;
   private _logoUrl: string | null;
-  constructor(props: SettingsProps) {
+  private constructor(props: SettingsProps) {
     super({
       id: props.id,
       createdAt: props.createdAt,

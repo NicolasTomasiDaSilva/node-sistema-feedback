@@ -11,7 +11,7 @@ export class FeedbackItemMapper {
       feedbackId: model.feedbackId,
       checklistItemId: model.checklistItemId,
       isChecked: model.isChecked,
-      checklistItem: model.checklistItem,
+      checklistItem: model.chec
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,

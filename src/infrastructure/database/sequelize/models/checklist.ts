@@ -9,28 +9,30 @@ import { CompanyModel } from "./company";
 import { ChecklistItemAttributes, ChecklistItemModel } from "./checklist-item";
 
 export interface ChecklistAttributes {
+  /* ─────────── Colunas da tabela ─────────── */
   id: string;
   companyId: string;
   title: string;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  items?: ChecklistItemAttributes[] | undefined;
 }
 
 export class ChecklistModel
   extends Model<ChecklistAttributes>
   implements ChecklistAttributes
 {
-  public id!: string;
-  public companyId!: string;
-  public title!: string;
-  public createdAt!: Date;
-  public updatedAt!: Date;
-  public deletedAt!: Date | null;
-  public items?: ChecklistItemModel[] | undefined;
-  public getCompany?: BelongsToGetAssociationMixin<CompanyModel>;
-  public getItems?: HasManyGetAssociationsMixin<ChecklistItemModel>;
+  /* ─────────── Colunas da tabela ─────────── */
+  declare id: string;
+  declare companyId: string;
+  declare title: string;
+  declare createdAt: Date;
+  declare updatedAt: Date;
+  declare deletedAt: Date | null;
+
+  declare items?: ChecklistItemModel[] | undefined;
+  declare getCompany?: BelongsToGetAssociationMixin<CompanyModel>;
+  declare getItems?: HasManyGetAssociationsMixin<ChecklistItemModel>;
 
   static initModel(sequelize: Sequelize) {
     ChecklistModel.init(

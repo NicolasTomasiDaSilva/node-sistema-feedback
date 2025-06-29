@@ -11,6 +11,7 @@ import { ChecklistModel } from "./checklist";
 import { FeedbackItemModel } from "./feedback-item";
 
 export interface ChecklistItemAttributes {
+  /* ─────────── Colunas da tabela ─────────── */
   id: string;
   checklistId: string;
   label: string;
@@ -26,15 +27,16 @@ export class ChecklistItemModel
   extends Model<ChecklistItemAttributes>
   implements ChecklistItemAttributes
 {
-  public id!: string;
-  public checklistId!: string;
-  public label!: string;
-  public description!: string | null;
-  public weight!: number;
-  public order!: number;
-  public createdAt!: Date;
-  public updatedAt!: Date;
-  public deletedAt!: Date | null;
+  /* ─────────── Colunas da tabela ─────────── */
+  declare id: string;
+  declare checklistId: string;
+  declare label: string;
+  declare description: string | null;
+  declare weight: number;
+  declare order: number;
+  declare createdAt: Date;
+  declare updatedAt: Date;
+  declare deletedAt: Date | null;
 
   static initModel(sequelize: Sequelize) {
     ChecklistItemModel.init(

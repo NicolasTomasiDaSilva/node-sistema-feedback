@@ -10,6 +10,7 @@ import { Database } from "../sequelize";
 import { RoleEnum } from "../../../../domain/enums/role-enum";
 import { CompanyModel } from "./company";
 
+/* ─────────── Colunas da tabela ─────────── */
 export interface InvitationAttributes {
   id: string;
   companyId: string;
@@ -27,18 +28,19 @@ export class InvitationModel
   extends Model<InvitationAttributes>
   implements InvitationAttributes
 {
-  public id!: string;
-  public companyId!: string;
-  public name!: string;
-  public phone!: string | null;
-  public cpf!: string;
-  public role!: RoleEnum;
-  public isAccepted!: boolean;
-  public createdAt!: Date;
-  public updatedAt!: Date;
-  public deletedAt!: Date | null;
+  /* ─────────── Colunas da tabela ─────────── */
+  declare id: string;
+  declare companyId: string;
+  declare name: string;
+  declare phone: string | null;
+  declare cpf: string;
+  declare role: RoleEnum;
+  declare isAccepted: boolean;
+  declare createdAt: Date;
+  declare updatedAt: Date;
+  declare deletedAt: Date | null;
 
-  public getCompany?: BelongsToGetAssociationMixin<CompanyModel>;
+  declare getCompany?: BelongsToGetAssociationMixin<CompanyModel>;
 
   static initModel(sequelize: Sequelize) {
     InvitationModel.init(
