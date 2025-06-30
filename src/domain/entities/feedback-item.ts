@@ -1,4 +1,3 @@
-import { ChecklistItem } from "./template-feedback-item";
 import { Entity } from "./entity";
 
 interface FeedbackItemProps {
