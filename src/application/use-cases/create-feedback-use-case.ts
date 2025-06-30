@@ -34,6 +34,7 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
       id: feedbackId,
       giverId: data.currentUser.id,
       receiverId: data.receiverId,
+      companyId: data.currentUser.companyId,
       description: data.description,
       observation: data.observation,
       score: data.score,

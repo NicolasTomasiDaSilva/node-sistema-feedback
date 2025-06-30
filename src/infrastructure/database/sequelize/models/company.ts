@@ -11,6 +11,7 @@ import {
 
 import { UserModel } from "./user";
 import { InvitationModel } from "./invitation";
+import { FeedbackModel } from "./feedback";
 
 export interface CompanyAttributes {
   /* ─────────── Colunas da tabela ─────────── */
@@ -79,6 +80,12 @@ export class CompanyModel
     CompanyModel.hasMany(InvitationModel, {
       foreignKey: "companyId",
       as: "checklists",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    });
+    CompanyModel.hasMany(FeedbackModel, {
+      foreignKey: "companyId",
+      as: "feedbacks",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });

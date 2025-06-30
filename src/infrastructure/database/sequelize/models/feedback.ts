@@ -9,12 +9,14 @@ import {
 
 import { UserModel } from "./user";
 import { FeedbackItemModel } from "./feedback-item";
+import { CompanyModel } from "./company";
 
 export interface FeedbackAttributes {
   /* ─────────── Colunas da tabela ─────────── */
   id: string;
   giverId: string;
   receiverId: string;
+  companyId: string;
   title: string;
   description: string | null;
   observation: string | null;
@@ -32,6 +34,7 @@ export class FeedbackModel
   declare id: string;
   declare giverId: string;
   declare receiverId: string;
+  declare companyId: string;
   declare title: string;
   declare description: string | null;
   declare observation: string | null;
@@ -59,6 +62,10 @@ export class FeedbackModel
           allowNull: false,
         },
         receiverId: {
+          type: DataTypes.UUID,
+          allowNull: false,
+        },
+        companyId: {
           type: DataTypes.UUID,
           allowNull: false,
         },
@@ -98,6 +105,10 @@ export class FeedbackModel
     FeedbackModel.belongsTo(UserModel, {
       foreignKey: "receiverId",
       as: "receiver",
+    });
+    FeedbackModel.belongsTo(CompanyModel, {
+      foreignKey: "companyId",
+      as: "company",
     });
     FeedbackModel.hasMany(FeedbackItemModel, {
       foreignKey: "feedbackId",
