@@ -3,8 +3,8 @@ import {
   FeedbackItemAttributes,
   FeedbackItemModel,
 } from "../models/feedback-item";
-import { ChecklistItemMapper } from "./checklist-item-mapper";
-import { ChecklistMapper } from "./checklist-mapper";
+import { ChecklistItemMapper } from "./template-feedback-item-mapper";
+import { ChecklistMapper } from "./template-feedback-mapper";
 
 export class FeedbackItemMapper {
   static toEntity(model: FeedbackItemModel): FeedbackItem {

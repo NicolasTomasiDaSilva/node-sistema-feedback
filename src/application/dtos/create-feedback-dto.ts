@@ -1,4 +1,4 @@
-import { AuthenticatedUserDTO } from "../authenticated-user-dto";
+import { AuthenticatedUserDTO } from "./authenticated-user-dto";
 
 export interface CreateFeedbackDTO {
   currentUser: AuthenticatedUserDTO;

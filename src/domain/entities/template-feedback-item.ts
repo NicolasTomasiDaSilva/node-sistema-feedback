@@ -1,8 +1,8 @@
 import { Entity } from "./entity";
 
-interface ChecklistItemProps {
+interface TemplateFeedbackItemProps {
   id: string;
-  checklistId: string;
+  templateFeedbackId: string;
   label: string;
   description: string | null;
   weight: number;
@@ -12,21 +12,21 @@ interface ChecklistItemProps {
   deletedAt: Date | null;
 }
 
-export class ChecklistItem extends Entity {
-  private readonly _checklistId: string;
+export class TemplateFeedbackItem extends Entity {
+  private readonly _templateFeedbackId: string;
   private _label: string;
   private _description: string | null;
   private _weight: number;
   private _order: number;
 
-  private constructor(props: ChecklistItemProps) {
+  private constructor(props: TemplateFeedbackItemProps) {
     super({
       id: props.id,
       createdAt: props.createdAt,
       updatedAt: props.updatedAt,
       deletedAt: props.deletedAt,
     });
-    this._checklistId = props.checklistId;
+    this._templateFeedbackId = props.templateFeedbackId;
     this._label = props.label;
     this._description = props.description;
     this._weight = props.weight;
@@ -34,10 +34,13 @@ export class ChecklistItem extends Entity {
   }
 
   static create(
-    props: Omit<ChecklistItemProps, "createdAt" | "updatedAt" | "deletedAt">
+    props: Omit<
+      TemplateFeedbackItemProps,
+      "createdAt" | "updatedAt" | "deletedAt"
+    >
   ) {
     const now = new Date();
-    return new ChecklistItem({
+    return new TemplateFeedbackItem({
       ...props,
       createdAt: now,
       updatedAt: now,
@@ -45,14 +48,16 @@ export class ChecklistItem extends Entity {
     });
   }
 
-  static fromPersistence(props: ChecklistItemProps): ChecklistItem {
-    return new ChecklistItem(props);
+  static fromPersistence(
+    props: TemplateFeedbackItemProps
+  ): TemplateFeedbackItem {
+    return new TemplateFeedbackItem(props);
   }
 
   toJSON() {
     return {
       id: this.id,
-      checklistId: this._checklistId,
+      templateFeedbackId: this._templateFeedbackId,
       label: this._label,
       description: this._description,
       weight: this._weight,
@@ -63,8 +68,8 @@ export class ChecklistItem extends Entity {
     };
   }
 
-  get checklistId(): string {
-    return this._checklistId;
+  get templateFeedbackId(): string {
+    return this._templateFeedbackId;
   }
   get label(): string {
     return this._label;

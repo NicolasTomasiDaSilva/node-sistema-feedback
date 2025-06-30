@@ -3,7 +3,7 @@ import { FeedbackItem } from "../../domain/entities/feedback-item";
 import { Invitation } from "../../domain/entities/invitation";
 import { RoleEnum } from "../../domain/enums/role-enum";
 import { BadRequestError, ForbiddenError } from "../../domain/errors/errors";
-import { CreateFeedbackDTO } from "../dtos/feedback/create-feedback-dto";
+import { CreateFeedbackDTO } from "../dtos/create-feedback-dto";
 import { IFeedbackRepository } from "../protocols/repositories/feedback-repository";
 import { ICreateFeedbackUseCase } from "../protocols/use-cases/create-feedback-use-case";
 
@@ -20,7 +20,7 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
       data.currentUser.role !== RoleEnum.supervisor
     ) {
       throw new ForbiddenError(
-        "Only managers and supervisors can create Feedbacks"
+        "Only managers and supervisors can create Feedback"
       );
     }
 

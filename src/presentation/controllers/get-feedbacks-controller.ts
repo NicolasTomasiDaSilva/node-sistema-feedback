@@ -4,7 +4,7 @@ import { HttpRequest } from "../types/http-request";
 import { HttpResponse } from "../types/htpp-response";
 import { IValidator } from "../protocols/validate";
 import { getCurrentUser } from "../guardars/get-current-user";
-import { GetFeedbacksDTO } from "../../application/dtos/feedback/get-feedbacks-dto";
+import { GetFeedbacksDTO } from "../../application/dtos/get-feedbacks-dto";
 import { IGetFeedbacksUseCase } from "../../application/protocols/use-cases/get-feedbacks-use-case";
 
 export class GetFeedbacksController implements IController {

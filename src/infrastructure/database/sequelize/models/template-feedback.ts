@@ -7,9 +7,9 @@ import {
   Sequelize,
 } from "sequelize";
 import { CompanyModel } from "./company";
-import { ChecklistItemAttributes, ChecklistItemModel } from "./checklist-item";
+import { TemplateFeedbackItemModel } from "./template-feedback-item";
 
-export interface ChecklistAttributes {
+export interface TemplateFeedbackAttributes {
   /* ─────────── Colunas da tabela ─────────── */
   id: string;
   companyId: string;
@@ -19,9 +19,9 @@ export interface ChecklistAttributes {
   deletedAt: Date | null;
 }
 
-export class ChecklistModel
-  extends Model<ChecklistAttributes>
-  implements ChecklistAttributes
+export class TemplateFeedbackModel
+  extends Model<TemplateFeedbackAttributes>
+  implements TemplateFeedbackAttributes
 {
   /* ─────────── Colunas da tabela ─────────── */
   declare id: string;
@@ -32,13 +32,13 @@ export class ChecklistModel
   declare deletedAt: Date | null;
 
   /* ── Associações (mixins lazy) ── */
-  declare getItems: HasManyGetAssociationsMixin<ChecklistItemModel>;
+  declare getItems: HasManyGetAssociationsMixin<TemplateFeedbackItemModel>;
 
   /* ── Propriedade carregada via include ── */
-  declare items?: NonAttribute<ChecklistItemModel[]>;
+  declare items?: NonAttribute<TemplateFeedbackItemModel[]>;
 
   static initModel(sequelize: Sequelize) {
-    ChecklistModel.init(
+    TemplateFeedbackModel.init(
       {
         id: {
           type: DataTypes.UUID,
@@ -59,7 +59,7 @@ export class ChecklistModel
       },
       {
         sequelize,
-        tableName: "checklists",
+        tableName: "template_feedbacks",
         timestamps: true,
         paranoid: true,
       }
@@ -67,12 +67,12 @@ export class ChecklistModel
   }
 
   static associate() {
-    ChecklistModel.belongsTo(CompanyModel, {
+    TemplateFeedbackModel.belongsTo(CompanyModel, {
       foreignKey: "companyId",
       as: "company",
     });
-    ChecklistModel.hasMany(ChecklistItemModel, {
-      foreignKey: "checklistId",
+    TemplateFeedbackModel.hasMany(TemplateFeedbackItemModel, {
+      foreignKey: "templateFeedbackId",
       as: "items",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",

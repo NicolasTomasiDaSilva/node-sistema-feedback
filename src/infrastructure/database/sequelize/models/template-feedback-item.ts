@@ -7,13 +7,12 @@ import {
   Sequelize,
 } from "sequelize";
 
-import { ChecklistModel } from "./checklist";
-import { FeedbackItemModel } from "./feedback-item";
+import { TemplateFeedbackModel } from "./template-feedback";
 
-export interface ChecklistItemAttributes {
+export interface TemplateFeedbackItemAttributes {
   /* ─────────── Colunas da tabela ─────────── */
   id: string;
-  checklistId: string;
+  templateFeedbackId: string;
   label: string;
   description: string | null;
   weight: number;
@@ -23,13 +22,13 @@ export interface ChecklistItemAttributes {
   deletedAt: Date | null;
 }
 
-export class ChecklistItemModel
-  extends Model<ChecklistItemAttributes>
-  implements ChecklistItemAttributes
+export class TemplateFeedbackItemModel
+  extends Model<TemplateFeedbackItemAttributes>
+  implements TemplateFeedbackItemAttributes
 {
   /* ─────────── Colunas da tabela ─────────── */
   declare id: string;
-  declare checklistId: string;
+  declare templateFeedbackId: string;
   declare label: string;
   declare description: string | null;
   declare weight: number;
@@ -39,14 +38,14 @@ export class ChecklistItemModel
   declare deletedAt: Date | null;
 
   static initModel(sequelize: Sequelize) {
-    ChecklistItemModel.init(
+    TemplateFeedbackItemModel.init(
       {
         id: {
           type: DataTypes.UUID,
           primaryKey: true,
           allowNull: false,
         },
-        checklistId: {
+        templateFeedbackId: {
           type: DataTypes.UUID,
           allowNull: false,
         },
@@ -72,7 +71,7 @@ export class ChecklistItemModel
       },
       {
         sequelize,
-        tableName: "checklist_items",
+        tableName: "template_feedback_items",
         timestamps: true,
         paranoid: true,
       }
@@ -80,9 +79,9 @@ export class ChecklistItemModel
   }
 
   static associate() {
-    ChecklistItemModel.belongsTo(ChecklistModel, {
-      foreignKey: "checklistId",
-      as: "checklist",
+    TemplateFeedbackItemModel.belongsTo(TemplateFeedbackModel, {
+      foreignKey: "templateFeedbackId",
+      as: "templateFeedback",
     });
   }
 }

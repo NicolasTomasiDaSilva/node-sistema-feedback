@@ -4,14 +4,14 @@ import { HttpRequest } from "../types/http-request";
 import { HttpResponse } from "../types/htpp-response";
 import { IValidator } from "../protocols/validate";
 import { getCurrentUser } from "../guardars/get-current-user";
-import { CreateChecklistDTO } from "../../application/dtos/checklist/create-checklist-dto";
-import { ICreateChecklistUseCase } from "../../application/protocols/use-cases/create-checklist-use-case";
+import { ICreateTemplateFeedbackUseCase } from "../../application/protocols/use-cases/create-template-feedback-use-case";
+import { CreateTemplateFeedbackDTO } from "../../application/dtos/create-template-feedback-dto";
 
-export class CreateChecklistController implements IController {
+export class CreateTemplateFeedbackController implements IController {
   constructor(
-    private readonly createChecklistUseCase: ICreateChecklistUseCase,
+    private readonly createTemplateFeedbackUseCase: ICreateTemplateFeedbackUseCase,
     private readonly bodyValidator: IValidator<
-      Omit<CreateChecklistDTO, "currentUser">
+      Omit<CreateTemplateFeedbackDTO, "currentUser">
     >
   ) {}
 
@@ -20,10 +20,12 @@ export class CreateChecklistController implements IController {
 
     const data = this.bodyValidator.validate(request.body);
 
-    const dto: CreateChecklistDTO = {
+    const dto: CreateTemplateFeedbackDTO = {
       currentUser: currentUser,
       ...data,
     };
-    return created((await this.createChecklistUseCase.execute(dto)).toJSON());
+    return created(
+      (await this.createTemplateFeedbackUseCase.execute(dto)).toJSON()
+    );
   }
 }

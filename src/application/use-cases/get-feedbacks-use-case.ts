@@ -1,5 +1,5 @@
 import { Feedback } from "../../domain/entities/feedback";
-import { GetFeedbacksDTO } from "../dtos/feedback/get-feedbacks-dto";
+import { GetFeedbacksDTO } from "../dtos/get-feedbacks-dto";
 import { IFeedbackRepository } from "../protocols/repositories/feedback-repository";
 import { IGetFeedbacksUseCase } from "../protocols/use-cases/get-feedbacks-use-case";
 

@@ -1,22 +1,22 @@
-import { ChecklistItem } from "./checklist-item";
+import { TemplateFeedbackItem } from "./template-feedback-item";
 import { Entity } from "./entity";
 
-interface ChecklistProps {
+interface TemplateFeedbackProps {
   id: string;
   companyId: string;
   title: string;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  items: ChecklistItem[] | undefined;
+  items: TemplateFeedbackItem[] | undefined;
 }
 
-export class Checklist extends Entity {
+export class TemplateFeedback extends Entity {
   private readonly _companyId: string;
   private _title: string;
-  private _items: ChecklistItem[] | undefined;
+  private _items: TemplateFeedbackItem[] | undefined;
 
-  private constructor(props: ChecklistProps) {
+  private constructor(props: TemplateFeedbackProps) {
     super({
       id: props.id,
       createdAt: props.createdAt,
@@ -29,10 +29,10 @@ export class Checklist extends Entity {
   }
 
   static create(
-    props: Omit<ChecklistProps, "createdAt" | "updatedAt" | "deletedAt">
+    props: Omit<TemplateFeedbackProps, "createdAt" | "updatedAt" | "deletedAt">
   ) {
     const now = new Date();
-    return new Checklist({
+    return new TemplateFeedback({
       ...props,
       createdAt: now,
       updatedAt: now,
@@ -40,8 +40,8 @@ export class Checklist extends Entity {
     });
   }
 
-  static fromPersistence(props: ChecklistProps): Checklist {
-    return new Checklist(props);
+  static fromPersistence(props: TemplateFeedbackProps): TemplateFeedback {
+    return new TemplateFeedback(props);
   }
 
   toJSON() {
@@ -62,11 +62,11 @@ export class Checklist extends Entity {
   get title(): string {
     return this._title;
   }
-  get items(): ChecklistItem[] | undefined {
+  get items(): TemplateFeedbackItem[] | undefined {
     return this._items;
   }
 
-  set items(items: ChecklistItem[] | undefined) {
+  set items(items: TemplateFeedbackItem[] | undefined) {
     this._items = items;
   }
 }

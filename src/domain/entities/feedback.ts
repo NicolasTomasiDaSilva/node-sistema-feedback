@@ -1,5 +1,5 @@
 import { RoleEnum } from "../enums/role-enum";
-import { Checklist } from "./checklist";
+import { Checklist } from "./template-feedback";
 import { Entity } from "./entity";
 import { FeedbackItem } from "./feedback-item";
 

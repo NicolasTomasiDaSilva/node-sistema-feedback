@@ -1,14 +1,12 @@
 import { Router } from "express";
 import { expressRouteAdapter } from "../../infrastructure/adapters/express-route-adapter";
-import { makeGetFeedbacksController } from "../../main/factories/controllers/make-get-feedbacks-controller";
 import { makeCreateTemplateFeedbackController } from "../../main/factories/controllers/make-create-template-feedback-controller";
 
-const feedbackRoutes = Router();
+const templateFeedbackRoutes = Router();
 
-feedbackRoutes.post(
+templateFeedbackRoutes.post(
   "/",
   expressRouteAdapter(makeCreateTemplateFeedbackController())
 );
-feedbackRoutes.get("/", expressRouteAdapter(makeGetFeedbacksController()));
 
-export { feedbackRoutes };
+export { templateFeedbackRoutes };
