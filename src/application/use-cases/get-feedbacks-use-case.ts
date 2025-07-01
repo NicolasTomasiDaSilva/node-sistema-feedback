@@ -8,7 +8,7 @@ export class GetFeedbacksUseCase implements IGetFeedbacksUseCase {
   constructor(private readonly feedbackRepository: IFeedbackRepository) {}
 
   execute(data: GetFeedbacksDTO): Promise<Feedback[]> {
-    const { currentUser, page, perPage } = data;
+    const { currentUser, page, perPage, receiverName } = data;
     if (
       currentUser.role === RoleEnum.manager ||
       currentUser.role === RoleEnum.supervisor
@@ -17,6 +17,7 @@ export class GetFeedbacksUseCase implements IGetFeedbacksUseCase {
         companyId: currentUser.companyId,
         page: page ?? 1,
         perPage: perPage ?? 5,
+        receiverName,
       });
     }
     return this.feedbackRepository.find({
@@ -24,6 +25,7 @@ export class GetFeedbacksUseCase implements IGetFeedbacksUseCase {
       page: page ?? 1,
       perPage: perPage ?? 5,
       receiverId: currentUser.id,
+      receiverName,
     });
   }
 }

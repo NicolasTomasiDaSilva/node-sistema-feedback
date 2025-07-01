@@ -7,10 +7,12 @@ export interface IFeedbackRepository {
     page,
     perPage,
     receiverId,
+    receiverName,
   }: {
     companyId: string;
     page: number;
     perPage: number;
     receiverId?: string;
+    receiverName?: string;
   }): Promise<Feedback[]>;
 }

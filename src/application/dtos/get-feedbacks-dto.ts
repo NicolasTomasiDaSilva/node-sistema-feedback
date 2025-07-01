@@ -4,4 +4,5 @@ export interface GetFeedbacksDTO {
   currentUser: AuthenticatedUserDTO;
   page?: number;
   perPage?: number;
+  receiverName?: string;
 }
