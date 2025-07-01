@@ -27,18 +27,20 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
     return Feedback;
   }
 
-  async findManyByRole(
-    companyId: string,
-    userId: string,
-    role: RoleEnum,
-    page: number,
-    perPage: number
-  ): Promise<Feedback[]> {
-    const where: any = { companyId };
-    if (role === RoleEnum.supervisor) {
-      where.giverId = userId;
-    } else if (role === RoleEnum.employee) {
-      where.receiverId = userId;
+  async find({
+    companyId,
+    page,
+    perPage,
+    receiverId,
+  }: {
+    companyId: string;
+    page: number;
+    perPage: number;
+    receiverId?: string;
+  }): Promise<Feedback[]> {
+    let where: any = { companyId: companyId };
+    if (receiverId) {
+      where.receiverId = receiverId;
     }
 
     const models = await FeedbackModel.findAll({

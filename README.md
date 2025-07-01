@@ -1,0 +1,1 @@
+Estou fazendo sistema de feedback, ele ira servir varios segmentos onde tera 3 tipos de acesso manager, supervisor e employee, manager e supervisor podem criar templates de feedback, e selecionar um deles na hora de aplicar, managers e supervisores podem aplicar feedback a qualquer usuario da empresa, e employes podem apenas visualizar feedbacks dados a eles
