@@ -7,17 +7,12 @@ import {
 export class FeedbackItemMapper {
   static toEntity(model: FeedbackItemModel): FeedbackItem {
     return FeedbackItem.fromPersistence({
-      id: model.id,
-      feedbackId: model.feedbackId,
       observation: model.observation,
       score: model.score,
       label: model.label,
       description: model.description,
       weight: model.weight,
       order: model.order,
-      createdAt: model.createdAt,
-      updatedAt: model.updatedAt,
-      deletedAt: model.deletedAt,
     });
   }
 

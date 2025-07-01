@@ -28,15 +28,7 @@ export class FeedbackItem {
     return new FeedbackItem(props);
   }
 
-  static fromPersistence(
-    props: FeedbackItemProps & {
-      id: string;
-      feedbackId: string;
-      createdAt: Date;
-      updatedAt: Date;
-      deletedAt: Date | null;
-    }
-  ): FeedbackItem {
+  static fromPersistence(props: FeedbackItemProps): FeedbackItem {
     return new FeedbackItem({
       observation: props.observation,
       score: props.score,

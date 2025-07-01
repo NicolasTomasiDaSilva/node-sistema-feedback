@@ -7,15 +7,10 @@ import {
 export class TemplateFeedbackItemMapper {
   static toEntity(model: TemplateFeedbackItemModel): TemplateFeedbackItem {
     return TemplateFeedbackItem.fromPersistence({
-      id: model.id,
-      templateFeedbackId: model.templateFeedbackId,
       label: model.label,
       description: model.description,
       weight: model.weight,
       order: model.order,
-      createdAt: model.createdAt,
-      updatedAt: model.updatedAt,
-      deletedAt: model.deletedAt,
     });
   }
 

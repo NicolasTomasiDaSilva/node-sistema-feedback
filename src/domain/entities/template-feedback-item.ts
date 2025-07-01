@@ -23,13 +23,7 @@ export class TemplateFeedbackItem {
   }
 
   static fromPersistence(
-    props: TemplateFeedbackItemProps & {
-      id: string;
-      templateFeedbackId: string;
-      createdAt: Date;
-      updatedAt: Date;
-      deletedAt: Date | null;
-    }
+    props: TemplateFeedbackItemProps
   ): TemplateFeedbackItem {
     return new TemplateFeedbackItem({
       label: props.label,
