@@ -4,10 +4,13 @@ import { TemplateFeedbackItemMapper } from "../mappers/template-feedback-item-ma
 import { TemplateFeedbackMapper } from "../mappers/template-feedback-mapper";
 import { TemplateFeedbackModel } from "../models/template-feedback";
 import { TemplateFeedbackItemModel } from "../models/template-feedback-item";
+import { IUuidGenerator } from "../../../../application/protocols/uuid-generator";
 
 export class SequelizeTemplateFeedbackRepository
   implements ITemplateFeedbackRepository
 {
+  constructor(private readonly uuidGenerator: IUuidGenerator) {}
+
   async create(data: TemplateFeedback): Promise<TemplateFeedback> {
     const templateFeedbackModel = TemplateFeedbackMapper.toPersistence(data);
     const createdTemplateFeedback = await TemplateFeedbackModel.create(
@@ -20,7 +23,16 @@ export class SequelizeTemplateFeedbackRepository
 
     if (data.items) {
       const templateFeedbackItemsModels = data.items.map((item) => {
-        return TemplateFeedbackItemMapper.toPersistence(item);
+        const persistenceData = TemplateFeedbackItemMapper.toPersistence(item);
+        const now = new Date();
+        return {
+          ...persistenceData,
+          id: this.uuidGenerator.generate(),
+          templateFeedbackId: createdTemplateFeedback.id,
+          createdAt: now,
+          updatedAt: now,
+          deletedAt: null,
+        };
       });
       const createdTemplateFeedbackItems =
         await TemplateFeedbackItemModel.bulkCreate(templateFeedbackItemsModels);

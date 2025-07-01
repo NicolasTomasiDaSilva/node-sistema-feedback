@@ -25,23 +25,28 @@ export class FeedbackItemMapper {
     return models.map((m) => this.toEntity(m));
   }
 
-  static toPersistence(entity: FeedbackItem): FeedbackItemAttributes {
+  static toPersistence(
+    entity: FeedbackItem
+  ): Omit<
+    FeedbackItemAttributes,
+    "id" | "feedbackId" | "createdAt" | "updatedAt" | "deletedAt"
+  > {
     return {
-      id: entity.id,
-      feedbackId: entity.feedbackId,
       observation: entity.observation,
       score: entity.score,
       label: entity.label,
       description: entity.description,
       weight: entity.weight,
       order: entity.order,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-      deletedAt: entity.deletedAt,
     };
   }
 
-  static toPersistenceList(entities: FeedbackItem[]): FeedbackItemAttributes[] {
+  static toPersistenceList(
+    entities: FeedbackItem[]
+  ): Omit<
+    FeedbackItemAttributes,
+    "id" | "feedbackId" | "createdAt" | "updatedAt" | "deletedAt"
+  >[] {
     return entities.map((e) => this.toPersistence(e));
   }
 }

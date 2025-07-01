@@ -27,23 +27,24 @@ export class TemplateFeedbackItemMapper {
 
   static toPersistence(
     entity: TemplateFeedbackItem
-  ): TemplateFeedbackItemAttributes {
+  ): Omit<
+    TemplateFeedbackItemAttributes,
+    "id" | "templateFeedbackId" | "createdAt" | "updatedAt" | "deletedAt"
+  > {
     return {
-      id: entity.id,
-      templateFeedbackId: entity.templateFeedbackId,
       label: entity.label,
       description: entity.description,
       weight: entity.weight,
       order: entity.order,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-      deletedAt: entity.deletedAt,
     };
   }
 
   static toPersistenceList(
     entities: TemplateFeedbackItem[]
-  ): TemplateFeedbackItemAttributes[] {
+  ): Omit<
+    TemplateFeedbackItemAttributes,
+    "id" | "templateFeedbackId" | "createdAt" | "updatedAt" | "deletedAt"
+  >[] {
     return entities.map((e) => this.toPersistence(e));
   }
 }

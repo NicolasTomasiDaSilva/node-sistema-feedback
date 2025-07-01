@@ -44,8 +44,6 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
           throw new BadRequestError("Weight must be between 1 and 5");
         }
         return FeedbackItem.create({
-          id: this.uuidGenerator.generate(),
-          feedbackId: feedbackId,
           label: item.label,
           description: item.description,
           observation: item.observation,

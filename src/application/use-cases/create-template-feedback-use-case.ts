@@ -42,8 +42,6 @@ export class CreateTemplateFeedbackUseCase
           throw new BadRequestError("Weight must be between 1 and 5");
         }
         return TemplateFeedbackItem.create({
-          id: this.uuidGenerator.generate(),
-          templateFeedbackId: templateFeedbackId,
           label: item.label,
           description: item.description,
           weight: item.weight,

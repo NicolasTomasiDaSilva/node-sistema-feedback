@@ -1,21 +1,13 @@
-import { Entity } from "./entity";
-
 interface FeedbackItemProps {
-  id: string;
-  feedbackId: string;
   observation: string | null;
   score: number;
   label: string;
   description: string | null;
   weight: number;
   order: number;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
 }
 
-export class FeedbackItem extends Entity {
-  private readonly _feedbackId: string;
+export class FeedbackItem {
   private _observation: string | null;
   private _score: number;
   private _label: string;
@@ -24,13 +16,6 @@ export class FeedbackItem extends Entity {
   private _order: number;
 
   private constructor(props: FeedbackItemProps) {
-    super({
-      id: props.id,
-      createdAt: props.createdAt,
-      updatedAt: props.updatedAt,
-      deletedAt: props.deletedAt,
-    });
-    this._feedbackId = props.feedbackId;
     this._observation = props.observation;
     this._score = props.score;
     this._label = props.label;
@@ -39,40 +24,38 @@ export class FeedbackItem extends Entity {
     this._order = props.order;
   }
 
-  static create(
-    props: Omit<FeedbackItemProps, "createdAt" | "updatedAt" | "deletedAt">
-  ) {
-    const now = new Date();
-    return new FeedbackItem({
-      ...props,
-      createdAt: now,
-      updatedAt: now,
-      deletedAt: null,
-    });
+  static create(props: FeedbackItemProps): FeedbackItem {
+    return new FeedbackItem(props);
   }
 
-  static fromPersistence(props: FeedbackItemProps): FeedbackItem {
-    return new FeedbackItem(props);
+  static fromPersistence(
+    props: FeedbackItemProps & {
+      id: string;
+      feedbackId: string;
+      createdAt: Date;
+      updatedAt: Date;
+      deletedAt: Date | null;
+    }
+  ): FeedbackItem {
+    return new FeedbackItem({
+      observation: props.observation,
+      score: props.score,
+      label: props.label,
+      description: props.description,
+      weight: props.weight,
+      order: props.order,
+    });
   }
 
   toJSON() {
     return {
-      id: this.id,
-      feedbackId: this._feedbackId,
       observation: this._observation,
       score: this._score,
       label: this._label,
       description: this._description,
       weight: this._weight,
       order: this._order,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-      deletedAt: this.deletedAt,
     };
-  }
-
-  get feedbackId(): string {
-    return this._feedbackId;
   }
 
   get score(): number {
@@ -82,12 +65,15 @@ export class FeedbackItem extends Entity {
   get label(): string {
     return this._label;
   }
+
   get description(): string | null {
     return this._description;
   }
+
   get weight(): number {
     return this._weight;
   }
+
   get order(): number {
     return this._order;
   }

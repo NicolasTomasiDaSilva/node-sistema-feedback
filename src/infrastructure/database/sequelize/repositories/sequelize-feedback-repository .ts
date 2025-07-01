@@ -5,8 +5,11 @@ import { FeedbackItemMapper } from "../mappers/feedback-item-mapper";
 import { FeedbackMapper } from "../mappers/feedback-mapper";
 import { FeedbackModel } from "../models/feedback";
 import { FeedbackItemModel } from "../models/feedback-item";
+import { IUuidGenerator } from "../../../../application/protocols/uuid-generator";
 
 export class SequelizeFeedbackRepository implements IFeedbackRepository {
+  constructor(private readonly uuidGenerator: IUuidGenerator) {}
+
   async create(data: Feedback): Promise<Feedback> {
     const feedbackModel = FeedbackMapper.toPersistence(data);
     const createdFeedback = await FeedbackModel.create(feedbackModel);
@@ -15,7 +18,16 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
 
     if (data.items) {
       const FeedbackItemsModels = data.items.map((item) => {
-        return FeedbackItemMapper.toPersistence(item);
+        const persistenceData = FeedbackItemMapper.toPersistence(item);
+        const now = new Date();
+        return {
+          ...persistenceData,
+          id: this.uuidGenerator.generate(),
+          feedbackId: createdFeedback.id,
+          createdAt: now,
+          updatedAt: now,
+          deletedAt: null,
+        };
       });
       const createdFeedbackItems = await FeedbackItemModel.bulkCreate(
         FeedbackItemsModels
