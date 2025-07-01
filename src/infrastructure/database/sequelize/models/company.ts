@@ -12,6 +12,7 @@ import {
 import { UserModel } from "./user";
 import { InvitationModel } from "./invitation";
 import { FeedbackModel } from "./feedback";
+import { TemplateFeedbackModel } from "./template-feedback";
 
 export interface CompanyAttributes {
   /* ─────────── Colunas da tabela ─────────── */
@@ -77,9 +78,9 @@ export class CompanyModel
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
-    CompanyModel.hasMany(InvitationModel, {
+    CompanyModel.hasMany(TemplateFeedbackModel, {
       foreignKey: "companyId",
-      as: "checklists",
+      as: "templateFeedbacks",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
