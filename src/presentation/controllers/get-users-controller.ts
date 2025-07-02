@@ -4,25 +4,25 @@ import { HttpRequest } from "../types/http-request";
 import { HttpResponse } from "../types/htpp-response";
 import { IValidator } from "../protocols/validate";
 import { getCurrentUser } from "../guardars/get-current-user";
-import { GetFeedbacksDTO } from "../../application/dtos/get-feedbacks-dto";
-import { IGetFeedbacksUseCase } from "../../application/protocols/use-cases/get-feedbacks-use-case";
+import { GetUsersDTO } from "../../application/dtos/get-users-dto";
+import { IGetUsersUseCase } from "../../application/protocols/use-cases/get-users-use-case";
 
-export class GetFeedbacksController implements IController {
+export class GetUsersController implements IController {
   constructor(
-    private readonly getFeedbacksUseCase: IGetFeedbacksUseCase,
+    private readonly getUsersUseCase: IGetUsersUseCase,
     private readonly queryValidator: IValidator<
-      Omit<GetFeedbacksDTO, "currentUser">
+      Omit<GetUsersDTO, "currentUser">
     >
   ) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const currentUser = getCurrentUser(request);
     const data = this.queryValidator.validate(request.query);
-    const dto: GetFeedbacksDTO = {
+    const dto: GetUsersDTO = {
       currentUser,
       ...data,
     };
-    const feedbacks = await this.getFeedbacksUseCase.execute(dto);
-    return ok(feedbacks.map((f) => f.toJSON()));
+    const users = await this.getUsersUseCase.execute(dto);
+    return ok(users.map((user) => user.toJSON()));
   }
 }
