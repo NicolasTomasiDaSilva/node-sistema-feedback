@@ -29,7 +29,12 @@ export class TemplateFeedback extends Entity {
   }
 
   static create(
-    props: Omit<TemplateFeedbackProps, "createdAt" | "updatedAt" | "deletedAt">
+    props: Omit<
+      TemplateFeedbackProps,
+      "createdAt" | "updatedAt" | "deletedAt"
+    > & {
+      items: TemplateFeedbackItem[];
+    }
   ) {
     const now = new Date();
     return new TemplateFeedback({

@@ -43,7 +43,9 @@ export class Feedback extends Entity {
     this._items = props.items;
   }
   static create(
-    props: Omit<FeedbackProps, "createdAt" | "updatedAt" | "deletedAt">
+    props: Omit<FeedbackProps, "createdAt" | "updatedAt" | "deletedAt"> & {
+      items: FeedbackItem[];
+    }
   ): Feedback {
     const now = new Date();
     return new Feedback({
