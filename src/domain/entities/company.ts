@@ -1,5 +1,4 @@
 import { Entity } from "./entity";
-import { Invitation } from "./invitation";
 import { Settings } from "./settings";
 
 interface CompanyProps {
@@ -10,20 +9,17 @@ interface CompanyProps {
   updatedAt: Date;
   deletedAt: Date | null;
   settings: Settings | undefined;
-  invitations: Invitation[] | undefined;
 }
 
 export class Company extends Entity {
   private _name: string;
   private _cpfCnpj: string;
   private _settings: Settings | undefined;
-  private _invitations: Invitation[] | undefined;
   private constructor({
     id,
     name,
     cpfCnpj,
     settings,
-    invitations,
     createdAt,
     updatedAt,
     deletedAt,
@@ -32,7 +28,6 @@ export class Company extends Entity {
     this._name = name;
     this._cpfCnpj = cpfCnpj;
     this._settings = settings;
-    this._invitations = invitations;
   }
 
   static create(
@@ -57,9 +52,6 @@ export class Company extends Entity {
       name: this._name,
       cpfCnpj: this._cpfCnpj,
       settings: this._settings ? this._settings.toJSON() : undefined,
-      invitations: this._invitations
-        ? this._invitations.map((invitation) => invitation.toJSON())
-        : undefined,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,
@@ -74,8 +66,5 @@ export class Company extends Entity {
   }
   get settings(): Settings | undefined {
     return this._settings;
-  }
-  get invitations(): Invitation[] | undefined {
-    return this._invitations;
   }
 }
