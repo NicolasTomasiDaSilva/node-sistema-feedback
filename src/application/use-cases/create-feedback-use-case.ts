@@ -15,10 +15,8 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
     private readonly uuidGenerator: IUuidGenerator
   ) {}
   execute(data: CreateFeedbackDTO): Promise<Feedback> {
-    if (
-      data.currentUser.role !== RoleEnum.manager &&
-      data.currentUser.role !== RoleEnum.supervisor
-    ) {
+    const requiredRoles: RoleEnum[] = [RoleEnum.manager, RoleEnum.supervisor];
+    if (!requiredRoles.includes(data.currentUser.role)) {
       throw new ForbiddenError(
         "Only managers and supervisors can create Feedback"
       );

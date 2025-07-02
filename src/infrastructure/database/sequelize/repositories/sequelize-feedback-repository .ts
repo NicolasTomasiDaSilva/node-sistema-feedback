@@ -41,7 +41,7 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
     return Feedback;
   }
 
-  async find({
+  async findAll({
     companyId,
     page,
     perPage,

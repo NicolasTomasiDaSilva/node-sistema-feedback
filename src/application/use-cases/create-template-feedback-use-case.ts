@@ -17,10 +17,8 @@ export class CreateTemplateFeedbackUseCase
     private readonly uuidGenerator: IUuidGenerator
   ) {}
   execute(data: CreateTemplateFeedbackDTO): Promise<TemplateFeedback> {
-    if (
-      data.currentUser.role !== RoleEnum.manager &&
-      data.currentUser.role !== RoleEnum.supervisor
-    ) {
+    const requiredRoles: RoleEnum[] = [RoleEnum.manager, RoleEnum.supervisor];
+    if (!requiredRoles.includes(data.currentUser.role)) {
       throw new ForbiddenError(
         "Only managers and supervisors can create Template Feedback"
       );

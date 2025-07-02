@@ -13,14 +13,14 @@ export class GetFeedbacksUseCase implements IGetFeedbacksUseCase {
       currentUser.role === RoleEnum.manager ||
       currentUser.role === RoleEnum.supervisor
     ) {
-      return this.feedbackRepository.find({
+      return this.feedbackRepository.findAll({
         companyId: currentUser.companyId,
         page: page ?? 1,
         perPage: perPage ?? 5,
         receiverName,
       });
     }
-    return this.feedbackRepository.find({
+    return this.feedbackRepository.findAll({
       companyId: currentUser.companyId,
       page: page ?? 1,
       perPage: perPage ?? 5,
