@@ -10,7 +10,6 @@ export class TemplateFeedbackMapper {
   static toEntity(model: TemplateFeedbackModel): TemplateFeedback {
     return TemplateFeedback.fromPersistence({
       id: model.id,
-      companyId: model.companyId,
       title: model.title,
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
@@ -28,7 +27,7 @@ export class TemplateFeedbackMapper {
   static toPersistence(entity: TemplateFeedback): TemplateFeedbackAttributes {
     return {
       id: entity.id,
-      companyId: entity.companyId,
+      companyId: "", // Será preenchido pelo repositório
       title: entity.title,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,

@@ -11,8 +11,12 @@ export class SequelizeTemplateFeedbackRepository
 {
   constructor(private readonly uuidGenerator: IUuidGenerator) {}
 
-  async create(data: TemplateFeedback): Promise<TemplateFeedback> {
+  async create(
+    data: TemplateFeedback,
+    companyId: string
+  ): Promise<TemplateFeedback> {
     const templateFeedbackModel = TemplateFeedbackMapper.toPersistence(data);
+    templateFeedbackModel.companyId = companyId;
     const createdTemplateFeedback = await TemplateFeedbackModel.create(
       templateFeedbackModel
     );

@@ -6,7 +6,6 @@ interface FeedbackProps {
   id: string;
   giverId: string;
   receiverId: string;
-  companyId: string;
   title: string;
   description: string | null;
   observation: string | null;
@@ -20,7 +19,6 @@ interface FeedbackProps {
 export class Feedback extends Entity {
   private readonly _giverId: string;
   private readonly _receiverId: string;
-  private readonly _companyId: string;
   private _title: string;
   private _description: string | null;
   private _observation: string | null;
@@ -35,7 +33,6 @@ export class Feedback extends Entity {
     });
     this._giverId = props.giverId;
     this._receiverId = props.receiverId;
-    this._companyId = props.companyId;
     this._title = props.title;
     this._description = props.description;
     this._observation = props.observation;
@@ -65,7 +62,6 @@ export class Feedback extends Entity {
       id: this.id,
       giverId: this._giverId,
       receiverId: this._receiverId,
-      companyId: this._companyId,
       title: this._title,
       description: this._description,
       observation: this._observation,
@@ -82,9 +78,6 @@ export class Feedback extends Entity {
   }
   get receiverId(): string {
     return this._receiverId;
-  }
-  get companyId(): string {
-    return this._companyId;
   }
   get title(): string {
     return this._title;

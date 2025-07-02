@@ -33,7 +33,6 @@ export class CreateTemplateFeedbackUseCase
 
     const templateFeedback = TemplateFeedback.create({
       id: templateFeedbackId,
-      companyId: data.currentUser.companyId,
       title: data.title,
       items: data.items.map((item) => {
         if (item.weight < 1 || item.weight > 5) {
@@ -48,6 +47,9 @@ export class CreateTemplateFeedbackUseCase
       }),
     });
 
-    return this.templateFeedbackRepository.create(templateFeedback);
+    return this.templateFeedbackRepository.create(
+      templateFeedback,
+      data.currentUser.companyId
+    );
   }
 }

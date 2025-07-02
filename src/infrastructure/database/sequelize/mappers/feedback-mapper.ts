@@ -8,7 +8,6 @@ export class FeedbackMapper {
       id: model.id,
       giverId: model.giverId,
       receiverId: model.receiverId,
-      companyId: model.companyId,
       title: model.title,
       description: model.description,
       observation: model.observation,
@@ -30,7 +29,7 @@ export class FeedbackMapper {
       id: entity.id,
       giverId: entity.giverId,
       receiverId: entity.receiverId,
-      companyId: entity.companyId,
+      companyId: "", // Será preenchido pelo repositório
       title: entity.title,
       description: entity.description,
       observation: entity.observation,

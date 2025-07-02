@@ -1,7 +1,7 @@
 import { Feedback } from "../../../domain/entities/feedback";
 
 export interface IFeedbackRepository {
-  create(data: Feedback): Promise<Feedback>;
+  create(data: Feedback, companyId: string): Promise<Feedback>;
   findAll({
     companyId,
     page,

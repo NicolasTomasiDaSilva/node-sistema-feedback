@@ -12,8 +12,9 @@ import { Op } from "sequelize";
 export class SequelizeFeedbackRepository implements IFeedbackRepository {
   constructor(private readonly uuidGenerator: IUuidGenerator) {}
 
-  async create(data: Feedback): Promise<Feedback> {
+  async create(data: Feedback, companyId: string): Promise<Feedback> {
     const feedbackModel = FeedbackMapper.toPersistence(data);
+    feedbackModel.companyId = companyId;
     const createdFeedback = await FeedbackModel.create(feedbackModel);
 
     const Feedback = FeedbackMapper.toEntity(createdFeedback);
