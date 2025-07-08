@@ -1,7 +1,8 @@
+import { IGetUsersUseCase } from "../../../application/protocols/use-cases/get-users-use-case";
 import { GetUsersUseCase } from "../../../application/use-cases/get-users-use-case";
-import { makeUserRepository } from "../repositories/make-user-repository";
+import { makeUnitOfWork } from "../repositories/make-unit-of-work";
 
-export const makeGetUsersUseCase = (): GetUsersUseCase => {
-  const userRepository = makeUserRepository();
-  return new GetUsersUseCase(userRepository);
-};
+export function makeGetUsersUseCase(): IGetUsersUseCase {
+  const unitOfWork = makeUnitOfWork();
+  return new GetUsersUseCase(unitOfWork);
+}

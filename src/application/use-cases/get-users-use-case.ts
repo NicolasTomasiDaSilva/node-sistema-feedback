@@ -5,11 +5,12 @@ import { GetUsersDTO } from "../dtos/get-users-dto";
 import { IUserRepository } from "../protocols/repositories/user-repository";
 
 import { IGetUsersUseCase } from "../protocols/use-cases/get-users-use-case";
+import { IUnitOfWork } from "../protocols/repositories/unit-of-work";
 
 export class GetUsersUseCase implements IGetUsersUseCase {
-  constructor(private readonly userRepository: IUserRepository) {}
+  constructor(private readonly unitOfWork: IUnitOfWork) {}
 
-  execute(data: GetUsersDTO): Promise<User[]> {
+  async execute(data: GetUsersDTO): Promise<User[]> {
     const { currentUser, page, perPage, name } = data;
 
     const requiredRoles: RoleEnum[] = [RoleEnum.manager, RoleEnum.supervisor];
@@ -17,7 +18,7 @@ export class GetUsersUseCase implements IGetUsersUseCase {
       throw new ForbiddenError("Only managers and supervisors can get users");
     }
 
-    return this.userRepository.findAll({
+    return this.unitOfWork.getUserRepository().findAll({
       companyId: currentUser.companyId,
       page: page ?? 1,
       perPage: perPage ?? 5,

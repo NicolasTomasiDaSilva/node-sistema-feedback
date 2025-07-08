@@ -6,15 +6,17 @@ import { BadRequestError, ForbiddenError } from "../../domain/errors/errors";
 import { CreateFeedbackDTO } from "../dtos/create-feedback-dto";
 import { IFeedbackRepository } from "../protocols/repositories/feedback-repository";
 import { ICreateFeedbackUseCase } from "../protocols/use-cases/create-feedback-use-case";
+import { IUnitOfWork } from "../protocols/repositories/unit-of-work";
 
 import { IUuidGenerator } from "../protocols/uuid-generator";
 
 export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
   constructor(
-    private readonly FeedbackRepository: IFeedbackRepository,
+    private readonly unitOfWork: IUnitOfWork,
     private readonly uuidGenerator: IUuidGenerator
   ) {}
-  execute(data: CreateFeedbackDTO): Promise<Feedback> {
+
+  async execute(data: CreateFeedbackDTO): Promise<Feedback> {
     const requiredRoles: RoleEnum[] = [RoleEnum.manager, RoleEnum.supervisor];
     if (!requiredRoles.includes(data.currentUser.role)) {
       throw new ForbiddenError(
@@ -51,6 +53,18 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
       }),
     });
 
-    return this.FeedbackRepository.create(feedback, data.currentUser.companyId);
+    try {
+      await this.unitOfWork.start();
+
+      const createdFeedback = await this.unitOfWork
+        .getFeedbackRepository()
+        .create(feedback, data.currentUser.companyId);
+
+      await this.unitOfWork.commit();
+      return createdFeedback;
+    } catch (error) {
+      await this.unitOfWork.rollback();
+      throw error;
+    }
   }
 }

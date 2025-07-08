@@ -2,9 +2,11 @@ import { IUserRepository } from "../../../../application/protocols/repositories/
 import { User } from "../../../../domain/entities/user";
 import { UserMapper } from "../mappers/user-mapper";
 import { UserModel } from "../models/user";
-import { Op } from "sequelize";
+import { Op, Transaction } from "sequelize";
 
 export class SequelizeUserRepository implements IUserRepository {
+  constructor(private transaction?: Transaction) {}
+
   async findAll({
     companyId,
     page,
@@ -29,6 +31,7 @@ export class SequelizeUserRepository implements IUserRepository {
       limit: perPage,
       offset: (page - 1) * perPage,
       order: [["name", "ASC"]],
+      transaction: this.transaction,
     });
 
     return models.map((model) => UserMapper.toEntity(model));
@@ -37,6 +40,7 @@ export class SequelizeUserRepository implements IUserRepository {
   async findByEmail(email: string): Promise<User | null> {
     const model = await UserModel.findOne({
       where: { email },
+      transaction: this.transaction,
     });
     return model ? UserMapper.toEntity(model) : null;
   }

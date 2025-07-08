@@ -5,11 +5,15 @@ import { TemplateFeedbackMapper } from "../mappers/template-feedback-mapper";
 import { TemplateFeedbackModel } from "../models/template-feedback";
 import { TemplateFeedbackItemModel } from "../models/template-feedback-item";
 import { IUuidGenerator } from "../../../../application/protocols/uuid-generator";
+import { Transaction } from "sequelize";
 
 export class SequelizeTemplateFeedbackRepository
   implements ITemplateFeedbackRepository
 {
-  constructor(private readonly uuidGenerator: IUuidGenerator) {}
+  constructor(
+    private readonly uuidGenerator: IUuidGenerator,
+    private transaction?: Transaction
+  ) {}
 
   async create(
     data: TemplateFeedback,
@@ -18,7 +22,8 @@ export class SequelizeTemplateFeedbackRepository
     const templateFeedbackModel = TemplateFeedbackMapper.toPersistence(data);
     templateFeedbackModel.companyId = companyId;
     const createdTemplateFeedback = await TemplateFeedbackModel.create(
-      templateFeedbackModel
+      templateFeedbackModel,
+      { transaction: this.transaction }
     );
 
     const templateFeedback = TemplateFeedbackMapper.toEntity(
@@ -39,7 +44,12 @@ export class SequelizeTemplateFeedbackRepository
         };
       });
       const createdTemplateFeedbackItems =
-        await TemplateFeedbackItemModel.bulkCreate(templateFeedbackItemsModels);
+        await TemplateFeedbackItemModel.bulkCreate(
+          templateFeedbackItemsModels,
+          {
+            transaction: this.transaction,
+          }
+        );
 
       templateFeedback.items = TemplateFeedbackItemMapper.toEntityList(
         createdTemplateFeedbackItems

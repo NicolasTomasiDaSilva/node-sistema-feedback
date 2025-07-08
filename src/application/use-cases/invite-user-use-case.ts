@@ -5,14 +5,16 @@ import { InviteUserDTO } from "../dtos/invite-user-dto";
 import { IInvitationRepository } from "../protocols/repositories/invite-repository";
 
 import { IInviteUserUseCase } from "../protocols/use-cases/invite-user-use-case";
+import { IUnitOfWork } from "../protocols/repositories/unit-of-work";
 import { IUuidGenerator } from "../protocols/uuid-generator";
 
 export class InviteUserUseCase implements IInviteUserUseCase {
   constructor(
-    private readonly invitationRepository: IInvitationRepository,
+    private readonly unitOfWork: IUnitOfWork,
     private readonly uuidGenerator: IUuidGenerator
   ) {}
-  execute(data: InviteUserDTO): Promise<Invitation> {
+
+  async execute(data: InviteUserDTO): Promise<Invitation> {
     if (data.currentUser.role !== RoleEnum.manager) {
       throw new ForbiddenError("Only managers can invite users");
     }
@@ -34,6 +36,18 @@ export class InviteUserUseCase implements IInviteUserUseCase {
 
     const invitationAcceptUrl: string = `http://localhost:3000/accept-invitation/${invitation.id}`;
 
-    return this.invitationRepository.create(invitation);
+    try {
+      await this.unitOfWork.start();
+
+      const createdInvitation = await this.unitOfWork
+        .getInvitationRepository()
+        .create(invitation);
+
+      await this.unitOfWork.commit();
+      return createdInvitation;
+    } catch (error) {
+      await this.unitOfWork.rollback();
+      throw error;
+    }
   }
 }

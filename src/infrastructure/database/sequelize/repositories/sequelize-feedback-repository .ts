@@ -7,15 +7,20 @@ import { FeedbackModel } from "../models/feedback";
 import { FeedbackItemModel } from "../models/feedback-item";
 import { UserModel } from "../models/user";
 import { IUuidGenerator } from "../../../../application/protocols/uuid-generator";
-import { Op } from "sequelize";
+import { Op, Transaction } from "sequelize";
 
 export class SequelizeFeedbackRepository implements IFeedbackRepository {
-  constructor(private readonly uuidGenerator: IUuidGenerator) {}
+  constructor(
+    private readonly uuidGenerator: IUuidGenerator,
+    private transaction?: Transaction
+  ) {}
 
   async create(data: Feedback, companyId: string): Promise<Feedback> {
     const feedbackModel = FeedbackMapper.toPersistence(data);
     feedbackModel.companyId = companyId;
-    const createdFeedback = await FeedbackModel.create(feedbackModel);
+    const createdFeedback = await FeedbackModel.create(feedbackModel, {
+      transaction: this.transaction,
+    });
 
     const Feedback = FeedbackMapper.toEntity(createdFeedback);
 
@@ -33,7 +38,8 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
         };
       });
       const createdFeedbackItems = await FeedbackItemModel.bulkCreate(
-        FeedbackItemsModels
+        FeedbackItemsModels,
+        { transaction: this.transaction }
       );
 
       Feedback.items = FeedbackItemMapper.toEntityList(createdFeedbackItems);
@@ -82,6 +88,7 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
       limit: perPage,
       offset: (page - 1) * perPage,
       order: [["createdAt", "DESC"]],
+      transaction: this.transaction,
     });
 
     return FeedbackMapper.toEntityList(models);
