@@ -69,4 +69,18 @@ export class TemplateFeedback extends Entity {
   get items(): TemplateFeedbackItem[] | undefined {
     return this._items;
   }
+
+  set items(items: TemplateFeedbackItem[]) {
+    if (items.length < 1 || items.length > 10) {
+      throw new BadRequestError(
+        "Template Feedback must have between 1 and 10 items"
+      );
+    }
+    this._items = items;
+    this.updated();
+  }
+  set title(title: string) {
+    this._title = title;
+    this.updated();
+  }
 }

@@ -41,7 +41,16 @@ export class UpdateTemplateFeedbackUseCase
         throw new NotFoundError("Template Feedback not found");
       }
 
-      // Atualizar no repositório
+      existingTemplateFeedback.title = data.title;
+      existingTemplateFeedback.items = data.items.map((item) =>
+        TemplateFeedbackItem.create({
+          label: item.label,
+          description: item.description,
+          weight: item.weight,
+          order: item.order,
+        })
+      );
+
       const result = await this.unitOfWork
         .getTemplateFeedbackRepository()
         .update(existingTemplateFeedback, data.currentUser.companyId);

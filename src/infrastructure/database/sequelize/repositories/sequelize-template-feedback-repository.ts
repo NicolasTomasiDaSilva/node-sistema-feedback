@@ -74,20 +74,13 @@ export class SequelizeTemplateFeedbackRepository
     data: TemplateFeedback,
     companyId: string
   ): Promise<TemplateFeedback> {
-    // Atualizar o template feedback principal
     const templateFeedbackModel = TemplateFeedbackMapper.toPersistence(data);
     templateFeedbackModel.companyId = companyId;
 
-    await TemplateFeedbackModel.update(
-      {
-        title: templateFeedbackModel.title,
-        updatedAt: new Date(),
-      },
-      {
-        where: { id: data.id, companyId },
-        transaction: this.transaction,
-      }
-    );
+    await TemplateFeedbackModel.update(data, {
+      where: { id: data.id, companyId },
+      transaction: this.transaction,
+    });
 
     // Deletar todos os itens existentes
     await TemplateFeedbackItemModel.destroy({
@@ -115,7 +108,6 @@ export class SequelizeTemplateFeedbackRepository
       });
     }
 
-    // Retornar o template feedback atualizado
     const updatedTemplateFeedbackModel = await TemplateFeedbackModel.findOne({
       where: { id: data.id, companyId },
       include: [{ model: TemplateFeedbackItemModel, as: "items" }],
