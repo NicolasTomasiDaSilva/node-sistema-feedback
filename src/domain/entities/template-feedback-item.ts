@@ -1,3 +1,5 @@
+import { BadRequestError } from "../errors/errors";
+
 interface TemplateFeedbackItemProps {
   label: string;
   description: string | null;
@@ -12,6 +14,9 @@ export class TemplateFeedbackItem {
   private _order: number;
 
   private constructor(props: TemplateFeedbackItemProps) {
+    if (props.weight < 1 || props.weight > 5) {
+      throw new BadRequestError("Weight must be between 1 and 5");
+    }
     this._label = props.label;
     this._description = props.description;
     this._weight = props.weight;

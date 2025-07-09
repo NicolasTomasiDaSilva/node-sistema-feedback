@@ -1,3 +1,5 @@
+import { BadRequestError } from "../errors/errors";
+
 interface FeedbackItemProps {
   observation: string | null;
   score: number;
@@ -16,6 +18,9 @@ export class FeedbackItem {
   private _order: number;
 
   private constructor(props: FeedbackItemProps) {
+    if (props.weight < 1 || props.weight > 5) {
+      throw new BadRequestError("Weight must be between 1 and 5");
+    }
     this._observation = props.observation;
     this._score = props.score;
     this._label = props.label;
