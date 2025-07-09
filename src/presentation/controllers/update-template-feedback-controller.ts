@@ -1,11 +1,11 @@
-import { IController } from "../protocols/controller";
-import { HttpRequest } from "../types/http-request";
-import { HttpResponse } from "../types/htpp-response";
-import { IUpdateTemplateFeedbackUseCase } from "../../application/protocols/use-cases/update-template-feedback-use-case";
 import { UpdateTemplateFeedbackDTO } from "../../application/dtos/update-template-feedback-dto";
-import { ok, serverError } from "../helpers/http-responses";
+import { IUpdateTemplateFeedbackUseCase } from "../../application/protocols/use-cases/update-template-feedback-use-case";
 import { getCurrentUser } from "../guardars/get-current-user";
+import { ok } from "../helpers/http-responses";
+import { IController } from "../protocols/controller";
 import { IValidator } from "../protocols/validate";
+import { HttpResponse } from "../types/htpp-response";
+import { HttpRequest } from "../types/http-request";
 
 export class UpdateTemplateFeedbackController implements IController {
   constructor(
@@ -16,21 +16,15 @@ export class UpdateTemplateFeedbackController implements IController {
   ) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
-    try {
-      const currentUser = getCurrentUser(request);
+    const currentUser = getCurrentUser(request);
 
-      const data = this.bodyValidator.validate(request.body);
+    const data = this.bodyValidator.validate(request.body);
 
-      const dto: UpdateTemplateFeedbackDTO = {
-        currentUser: currentUser,
-        ...data,
-      };
+    const dto: UpdateTemplateFeedbackDTO = {
+      currentUser: currentUser,
+      ...data,
+    };
 
-      return ok(
-        (await this.updateTemplateFeedbackUseCase.execute(dto)).toJSON()
-      );
-    } catch (error) {
-      return serverError(error);
-    }
+    return ok((await this.updateTemplateFeedbackUseCase.execute(dto)).toJSON());
   }
 }

@@ -1,8 +1,8 @@
 import { AuthenticatedUserDTO } from "./authenticated-user-dto";
 
 export interface UpdateTemplateFeedbackDTO {
-  id: string;
   currentUser: AuthenticatedUserDTO;
+  id: string;
   title: string;
   items: UpdateTemplateFeedbackItemDTO[];
 }

@@ -7,9 +7,8 @@ import {
   NotFoundError,
 } from "../../domain/errors/errors";
 import { UpdateTemplateFeedbackDTO } from "../dtos/update-template-feedback-dto";
-import { ITemplateFeedbackRepository } from "../protocols/repositories/template-feedback-repository";
-import { IUpdateTemplateFeedbackUseCase } from "../protocols/use-cases/update-template-feedback-use-case";
 import { IUnitOfWork } from "../protocols/repositories/unit-of-work";
+import { IUpdateTemplateFeedbackUseCase } from "../protocols/use-cases/update-template-feedback-use-case";
 
 export class UpdateTemplateFeedbackUseCase
   implements IUpdateTemplateFeedbackUseCase

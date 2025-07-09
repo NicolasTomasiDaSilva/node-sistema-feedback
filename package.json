@@ -4,7 +4,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/main/main.ts",
+    "dev:debug": "ts-node-dev --respawn --transpile-only --inspect src/main/main.ts",
+    "debug": "node --inspect --require ts-node/register --require dotenv/config src/main/main.ts",
     "build": "tsc",
+    "start": "node dist/main/main.js",
     "db:migrate": "node --require ts-node/register --require dotenv/config ./node_modules/.bin/sequelize-cli db:migrate",
     "db-undo": "node --require ts-node/register --require dotenv/config ./node_modules/.bin/sequelize-cli db:migrate:undo",
     "seed": "node --require ts-node/register --require dotenv/config ./src/scripts/seed.ts"

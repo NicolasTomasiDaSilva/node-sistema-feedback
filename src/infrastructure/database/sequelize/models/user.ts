@@ -1,13 +1,4 @@
-import {
-  BelongsToGetAssociationMixin,
-  DataTypes,
-  HasManyGetAssociationsMixin,
-  InferAttributes,
-  InferCreationAttributes,
-  Model,
-  Optional,
-  Sequelize,
-} from "sequelize";
+import { DataTypes, Model, Sequelize } from "sequelize";
 
 import { RoleEnum } from "../../../../domain/enums/role-enum";
 import { CompanyModel } from "./company";
