@@ -25,11 +25,6 @@ export class CreateTemplateFeedbackUseCase
         "Only managers and supervisors can create Template Feedback"
       );
     }
-    if (!data.items.length) {
-      throw new BadRequestError(
-        "Template Feedback must have at least one item"
-      );
-    }
 
     const templateFeedbackId = this.uuidGenerator.generate();
 

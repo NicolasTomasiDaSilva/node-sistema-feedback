@@ -24,15 +24,7 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
       );
     }
 
-    if (!data.items.length) {
-      throw new BadRequestError("Feedback must have at least one item");
-    }
-
     const feedbackId = this.uuidGenerator.generate();
-
-    if (data.score < 1 || data.score > 100) {
-      throw new BadRequestError("Score must be between 1 and 100");
-    }
 
     const feedback = Feedback.create({
       id: feedbackId,

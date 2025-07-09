@@ -17,6 +17,11 @@ export class TemplateFeedback extends Entity {
 
   private constructor(props: TemplateFeedbackProps) {
     if (props.items) {
+      if (props.items.length < 1 || props.items.length > 10) {
+        throw new BadRequestError(
+          "Template Feedback must have between 1 and 10 items"
+        );
+      }
       props.items.forEach((item) => {
         if (item.weight < 1 || item.weight > 5) {
           throw new BadRequestError("Weight must be between 1 and 5");
