@@ -26,10 +26,6 @@ export class SequelizeTemplateFeedbackRepository
       { transaction: this.transaction }
     );
 
-    const templateFeedback = TemplateFeedbackMapper.toEntity(
-      createdTemplateFeedback
-    );
-
     if (data.items) {
       const templateFeedbackItemsModels = data.items.map((item) => {
         const persistenceData = TemplateFeedbackItemMapper.toPersistence(item);
@@ -51,11 +47,85 @@ export class SequelizeTemplateFeedbackRepository
           }
         );
 
-      templateFeedback.items = TemplateFeedbackItemMapper.toEntityList(
-        createdTemplateFeedbackItems
-      );
+      createdTemplateFeedback.items = createdTemplateFeedbackItems;
     }
 
-    return templateFeedback;
+    return TemplateFeedbackMapper.toEntity(createdTemplateFeedback);
+  }
+
+  async findById(
+    id: string,
+    companyId: string
+  ): Promise<TemplateFeedback | null> {
+    const templateFeedbackModel = await TemplateFeedbackModel.findOne({
+      where: { id, companyId },
+      include: [{ model: TemplateFeedbackItemModel, as: "items" }],
+      transaction: this.transaction,
+    });
+
+    if (!templateFeedbackModel) {
+      return null;
+    }
+
+    return TemplateFeedbackMapper.toEntity(templateFeedbackModel);
+  }
+
+  async update(
+    data: TemplateFeedback,
+    companyId: string
+  ): Promise<TemplateFeedback> {
+    // Atualizar o template feedback principal
+    const templateFeedbackModel = TemplateFeedbackMapper.toPersistence(data);
+    templateFeedbackModel.companyId = companyId;
+
+    await TemplateFeedbackModel.update(
+      {
+        title: templateFeedbackModel.title,
+        updatedAt: new Date(),
+      },
+      {
+        where: { id: data.id, companyId },
+        transaction: this.transaction,
+      }
+    );
+
+    // Deletar todos os itens existentes
+    await TemplateFeedbackItemModel.destroy({
+      where: { templateFeedbackId: data.id },
+      transaction: this.transaction,
+    });
+
+    // Criar os novos itens
+    if (data.items) {
+      const templateFeedbackItemsModels = data.items.map((item) => {
+        const persistenceData = TemplateFeedbackItemMapper.toPersistence(item);
+        const now = new Date();
+        return {
+          ...persistenceData,
+          id: this.uuidGenerator.generate(),
+          templateFeedbackId: data.id,
+          createdAt: now,
+          updatedAt: now,
+          deletedAt: null,
+        };
+      });
+
+      await TemplateFeedbackItemModel.bulkCreate(templateFeedbackItemsModels, {
+        transaction: this.transaction,
+      });
+    }
+
+    // Retornar o template feedback atualizado
+    const updatedTemplateFeedbackModel = await TemplateFeedbackModel.findOne({
+      where: { id: data.id, companyId },
+      include: [{ model: TemplateFeedbackItemModel, as: "items" }],
+      transaction: this.transaction,
+    });
+
+    if (!updatedTemplateFeedbackModel) {
+      throw new Error("Template Feedback not found after update");
+    }
+
+    return TemplateFeedbackMapper.toEntity(updatedTemplateFeedbackModel);
   }
 }

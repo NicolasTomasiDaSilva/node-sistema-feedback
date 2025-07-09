@@ -1,4 +1,5 @@
 import { RoleEnum } from "../enums/role-enum";
+import { BadRequestError } from "../errors/errors";
 import { Entity } from "./entity";
 import { FeedbackItem } from "./feedback-item";
 
@@ -25,6 +26,13 @@ export class Feedback extends Entity {
   private _score: number;
   private _items: FeedbackItem[] | undefined;
   private constructor(props: FeedbackProps) {
+    if (props.items) {
+      props.items.forEach((item) => {
+        if (item.weight < 1 || item.weight > 5) {
+          throw new BadRequestError("Weight must be between 1 and 5");
+        }
+      });
+    }
     super({
       id: props.id,
       createdAt: props.createdAt,
@@ -45,6 +53,7 @@ export class Feedback extends Entity {
     }
   ): Feedback {
     const now = new Date();
+
     return new Feedback({
       ...props,
       createdAt: now,
@@ -94,8 +103,5 @@ export class Feedback extends Entity {
 
   get items(): FeedbackItem[] | undefined {
     return this._items;
-  }
-  set items(items: FeedbackItem[] | undefined) {
-    this._items = items;
   }
 }

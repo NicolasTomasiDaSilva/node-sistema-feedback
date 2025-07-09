@@ -29,4 +29,7 @@ export abstract class Entity {
   get deletedAt(): Date | null {
     return this._deletedAt;
   }
+  updated() {
+    this._updatedAt = new Date();
+  }
 }

@@ -5,7 +5,7 @@ import { IController } from "../../presentation/protocols/controller";
 
 export function expressRouteAdapter(controller: IController) {
   return async (request: Request, response: Response) => {
-    const { body, query } = request;
+    const { body, query, params } = request;
     const headers: { [key: string]: string } = {};
     Object.entries(request.headers).forEach(([key, value]) => {
       if (typeof value === "string") {
@@ -18,6 +18,7 @@ export function expressRouteAdapter(controller: IController) {
       body: body,
       headers: headers,
       query: query,
+      params: params,
     };
     const res: HttpResponse = await controller.handle(req);
 

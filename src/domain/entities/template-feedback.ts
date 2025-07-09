@@ -1,5 +1,6 @@
 import { TemplateFeedbackItem } from "./template-feedback-item";
 import { Entity } from "./entity";
+import { BadRequestError } from "../errors/errors";
 
 interface TemplateFeedbackProps {
   id: string;
@@ -15,6 +16,13 @@ export class TemplateFeedback extends Entity {
   private _items: TemplateFeedbackItem[] | undefined;
 
   private constructor(props: TemplateFeedbackProps) {
+    if (props.items) {
+      props.items.forEach((item) => {
+        if (item.weight < 1 || item.weight > 5) {
+          throw new BadRequestError("Weight must be between 1 and 5");
+        }
+      });
+    }
     super({
       id: props.id,
       createdAt: props.createdAt,
@@ -61,9 +69,5 @@ export class TemplateFeedback extends Entity {
   }
   get items(): TemplateFeedbackItem[] | undefined {
     return this._items;
-  }
-
-  set items(items: TemplateFeedbackItem[] | undefined) {
-    this._items = items;
   }
 }

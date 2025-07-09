@@ -30,6 +30,10 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
 
     const feedbackId = this.uuidGenerator.generate();
 
+    if (data.score < 1 || data.score > 100) {
+      throw new BadRequestError("Score must be between 1 and 100");
+    }
+
     const feedback = Feedback.create({
       id: feedbackId,
       giverId: data.currentUser.id,
@@ -39,9 +43,6 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
       score: data.score,
       title: data.title,
       items: data.items.map((item) => {
-        if (item.weight < 1 || item.weight > 5) {
-          throw new BadRequestError("Weight must be between 1 and 5");
-        }
         return FeedbackItem.create({
           label: item.label,
           description: item.description,

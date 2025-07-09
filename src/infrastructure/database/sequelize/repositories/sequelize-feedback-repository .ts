@@ -22,8 +22,6 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
       transaction: this.transaction,
     });
 
-    const Feedback = FeedbackMapper.toEntity(createdFeedback);
-
     if (data.items) {
       const FeedbackItemsModels = data.items.map((item) => {
         const persistenceData = FeedbackItemMapper.toPersistence(item);
@@ -42,10 +40,9 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
         { transaction: this.transaction }
       );
 
-      Feedback.items = FeedbackItemMapper.toEntityList(createdFeedbackItems);
+      createdFeedback.items = createdFeedbackItems;
     }
-
-    return Feedback;
+    return FeedbackMapper.toEntity(createdFeedback);
   }
 
   async findAll({
