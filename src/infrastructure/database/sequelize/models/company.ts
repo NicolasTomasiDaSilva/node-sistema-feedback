@@ -1,18 +1,9 @@
-import {
-  DataTypes,
-  HasManyGetAssociationsMixin,
-  HasOneGetAssociationMixin,
-  InferAttributes,
-  InferCreationAttributes,
-  Model,
-  Optional,
-  Sequelize,
-} from "sequelize";
+import { DataTypes, Model, Sequelize } from "sequelize";
 
-import { UserModel } from "./user";
-import { InvitationModel } from "./invitation";
 import { FeedbackModel } from "./feedback";
+import { InvitationModel } from "./invitation";
 import { TemplateFeedbackModel } from "./template-feedback";
+import { UserModel } from "./user";
 
 export interface CompanyAttributes {
   /* ─────────── Colunas da tabela ─────────── */

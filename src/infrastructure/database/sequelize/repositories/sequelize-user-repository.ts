@@ -1,8 +1,8 @@
+import { Op, Transaction } from "sequelize";
 import { IUserRepository } from "../../../../application/protocols/repositories/user-repository";
 import { User } from "../../../../domain/entities/user";
 import { UserMapper } from "../mappers/user-mapper";
 import { UserModel } from "../models/user";
-import { Op, Transaction } from "sequelize";
 
 export class SequelizeUserRepository implements IUserRepository {
   constructor(private transaction?: Transaction) {}
@@ -40,6 +40,14 @@ export class SequelizeUserRepository implements IUserRepository {
   async findByEmail(email: string): Promise<User | null> {
     const model = await UserModel.findOne({
       where: { email },
+      transaction: this.transaction,
+    });
+    return model ? UserMapper.toEntity(model) : null;
+  }
+
+  async findById(id: string, companyId: string): Promise<User | null> {
+    const model = await UserModel.findOne({
+      where: { id, companyId },
       transaction: this.transaction,
     });
     return model ? UserMapper.toEntity(model) : null;

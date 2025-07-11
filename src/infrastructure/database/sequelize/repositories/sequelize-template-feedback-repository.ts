@@ -1,11 +1,11 @@
+import { Transaction } from "sequelize";
 import { ITemplateFeedbackRepository } from "../../../../application/protocols/repositories/template-feedback-repository";
+import { IUuidGenerator } from "../../../../application/protocols/uuid-generator";
 import { TemplateFeedback } from "../../../../domain/entities/template-feedback";
 import { TemplateFeedbackItemMapper } from "../mappers/template-feedback-item-mapper";
 import { TemplateFeedbackMapper } from "../mappers/template-feedback-mapper";
 import { TemplateFeedbackModel } from "../models/template-feedback";
 import { TemplateFeedbackItemModel } from "../models/template-feedback-item";
-import { IUuidGenerator } from "../../../../application/protocols/uuid-generator";
-import { Transaction } from "sequelize";
 
 export class SequelizeTemplateFeedbackRepository
   implements ITemplateFeedbackRepository
@@ -21,10 +21,9 @@ export class SequelizeTemplateFeedbackRepository
   ): Promise<TemplateFeedback> {
     const templateFeedbackModel = TemplateFeedbackMapper.toPersistence(data);
     templateFeedbackModel.companyId = companyId;
-    const createdTemplateFeedback = await TemplateFeedbackModel.create(
-      templateFeedbackModel,
-      { transaction: this.transaction }
-    );
+    await TemplateFeedbackModel.create(templateFeedbackModel, {
+      transaction: this.transaction,
+    });
 
     if (data.items) {
       const templateFeedbackItemsModels = data.items.map((item) => {
@@ -33,21 +32,26 @@ export class SequelizeTemplateFeedbackRepository
         return {
           ...persistenceData,
           id: this.uuidGenerator.generate(),
-          templateFeedbackId: createdTemplateFeedback.id,
+          templateFeedbackId: templateFeedbackModel.id,
           createdAt: now,
           updatedAt: now,
           deletedAt: null,
         };
       });
-      const createdTemplateFeedbackItems =
-        await TemplateFeedbackItemModel.bulkCreate(
-          templateFeedbackItemsModels,
-          {
-            transaction: this.transaction,
-          }
-        );
 
-      createdTemplateFeedback.items = createdTemplateFeedbackItems;
+      await TemplateFeedbackItemModel.bulkCreate(templateFeedbackItemsModels, {
+        transaction: this.transaction,
+      });
+    }
+
+    const createdTemplateFeedback = await TemplateFeedbackModel.findByPk(
+      templateFeedbackModel.id,
+      {
+        transaction: this.transaction,
+      }
+    );
+    if (!createdTemplateFeedback) {
+      throw new Error("Template Feedback not found");
     }
 
     return TemplateFeedbackMapper.toEntity(createdTemplateFeedback);

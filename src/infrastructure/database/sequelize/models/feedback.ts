@@ -7,9 +7,9 @@ import {
   Sequelize,
 } from "sequelize";
 
-import { UserModel } from "./user";
-import { FeedbackItemModel } from "./feedback-item";
 import { CompanyModel } from "./company";
+import { FeedbackItemModel } from "./feedback-item";
+import { UserModel } from "./user";
 
 export interface FeedbackAttributes {
   /* ─────────── Colunas da tabela ─────────── */
@@ -44,9 +44,11 @@ export class FeedbackModel
   declare deletedAt: Date | null;
 
   /* ── Associações (mixins lazy) ── */
+  declare getReceiver: BelongsToGetAssociationMixin<UserModel>;
   declare getItems: HasManyGetAssociationsMixin<FeedbackItemModel>;
 
   /* ── Propriedade carregada via include ── */
+  declare receiver: NonAttribute<UserModel>;
   declare items?: NonAttribute<FeedbackItemModel[]>;
 
   static initModel(sequelize: Sequelize) {

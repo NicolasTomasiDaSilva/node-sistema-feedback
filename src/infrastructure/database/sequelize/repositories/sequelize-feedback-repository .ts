@@ -1,13 +1,12 @@
+import { Op, Transaction } from "sequelize";
 import { IFeedbackRepository } from "../../../../application/protocols/repositories/feedback-repository";
+import { IUuidGenerator } from "../../../../application/protocols/uuid-generator";
 import { Feedback } from "../../../../domain/entities/feedback";
-import { RoleEnum } from "../../../../domain/enums/role-enum";
 import { FeedbackItemMapper } from "../mappers/feedback-item-mapper";
 import { FeedbackMapper } from "../mappers/feedback-mapper";
 import { FeedbackModel } from "../models/feedback";
 import { FeedbackItemModel } from "../models/feedback-item";
 import { UserModel } from "../models/user";
-import { IUuidGenerator } from "../../../../application/protocols/uuid-generator";
-import { Op, Transaction } from "sequelize";
 
 export class SequelizeFeedbackRepository implements IFeedbackRepository {
   constructor(
@@ -18,7 +17,7 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
   async create(data: Feedback, companyId: string): Promise<Feedback> {
     const feedbackModel = FeedbackMapper.toPersistence(data);
     feedbackModel.companyId = companyId;
-    const createdFeedback = await FeedbackModel.create(feedbackModel, {
+    await FeedbackModel.create(feedbackModel, {
       transaction: this.transaction,
     });
 
@@ -29,19 +28,24 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
         return {
           ...persistenceData,
           id: this.uuidGenerator.generate(),
-          feedbackId: createdFeedback.id,
+          feedbackId: feedbackModel.id,
           createdAt: now,
           updatedAt: now,
           deletedAt: null,
         };
       });
-      const createdFeedbackItems = await FeedbackItemModel.bulkCreate(
-        FeedbackItemsModels,
-        { transaction: this.transaction }
-      );
-
-      createdFeedback.items = createdFeedbackItems;
+      await FeedbackItemModel.bulkCreate(FeedbackItemsModels, {
+        transaction: this.transaction,
+      });
     }
+    const createdFeedback = await FeedbackModel.findByPk(feedbackModel.id, {
+      transaction: this.transaction,
+      include: [{ model: UserModel, as: "receiver" }],
+    });
+    if (!createdFeedback) {
+      throw new Error("Feedback not found");
+    }
+
     return FeedbackMapper.toEntity(createdFeedback);
   }
 

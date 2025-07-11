@@ -1,12 +1,12 @@
-import { RoleEnum } from "../enums/role-enum";
 import { BadRequestError } from "../errors/errors";
 import { Entity } from "./entity";
 import { FeedbackItem } from "./feedback-item";
+import { User } from "./user";
 
 interface FeedbackProps {
   id: string;
   giverId: string;
-  receiverId: string;
+  receiver: User;
   title: string;
   description: string | null;
   observation: string | null;
@@ -19,7 +19,7 @@ interface FeedbackProps {
 
 export class Feedback extends Entity {
   private readonly _giverId: string;
-  private readonly _receiverId: string;
+  private readonly _receiver: User;
   private _title: string;
   private _description: string | null;
   private _observation: string | null;
@@ -42,7 +42,7 @@ export class Feedback extends Entity {
       deletedAt: props.deletedAt,
     });
     this._giverId = props.giverId;
-    this._receiverId = props.receiverId;
+    this._receiver = props.receiver;
     this._title = props.title;
     this._description = props.description;
     this._observation = props.observation;
@@ -72,7 +72,7 @@ export class Feedback extends Entity {
     return {
       id: this.id,
       giverId: this._giverId,
-      receiverId: this._receiverId,
+      receiver: this._receiver.toJSON(),
       title: this._title,
       description: this._description,
       observation: this._observation,
@@ -87,8 +87,8 @@ export class Feedback extends Entity {
   get giverId(): string {
     return this._giverId;
   }
-  get receiverId(): string {
-    return this._receiverId;
+  get receiver(): User {
+    return this._receiver;
   }
   get title(): string {
     return this._title;

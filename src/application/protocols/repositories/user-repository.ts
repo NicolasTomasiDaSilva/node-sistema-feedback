@@ -13,4 +13,6 @@ export interface IUserRepository {
     name?: string;
   }): Promise<User[]>;
   findByEmail(email: string): Promise<User | null>;
+
+  findById(id: string, companyId: string): Promise<User | null>;
 }

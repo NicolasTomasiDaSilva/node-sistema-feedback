@@ -1,13 +1,14 @@
 import { Feedback } from "../../../../domain/entities/feedback";
 import { FeedbackAttributes, FeedbackModel } from "../models/feedback";
 import { FeedbackItemMapper } from "./feedback-item-mapper";
+import { UserMapper } from "./user-mapper";
 
 export class FeedbackMapper {
   static toEntity(model: FeedbackModel): Feedback {
     return Feedback.fromPersistence({
       id: model.id,
       giverId: model.giverId,
-      receiverId: model.receiverId,
+      receiver: UserMapper.toEntity(model.receiver),
       title: model.title,
       description: model.description,
       observation: model.observation,
@@ -28,7 +29,7 @@ export class FeedbackMapper {
     return {
       id: entity.id,
       giverId: entity.giverId,
-      receiverId: entity.receiverId,
+      receiverId: entity.receiver.id,
       companyId: "", // Será preenchido pelo repositório
       title: entity.title,
       description: entity.description,

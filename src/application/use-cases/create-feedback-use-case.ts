@@ -1,12 +1,11 @@
 import { Feedback } from "../../domain/entities/feedback";
 import { FeedbackItem } from "../../domain/entities/feedback-item";
-import { Invitation } from "../../domain/entities/invitation";
+import { User } from "../../domain/entities/user";
 import { RoleEnum } from "../../domain/enums/role-enum";
-import { BadRequestError, ForbiddenError } from "../../domain/errors/errors";
+import { ForbiddenError, NotFoundError } from "../../domain/errors/errors";
 import { CreateFeedbackDTO } from "../dtos/create-feedback-dto";
-import { IFeedbackRepository } from "../protocols/repositories/feedback-repository";
-import { ICreateFeedbackUseCase } from "../protocols/use-cases/create-feedback-use-case";
 import { IUnitOfWork } from "../protocols/repositories/unit-of-work";
+import { ICreateFeedbackUseCase } from "../protocols/use-cases/create-feedback-use-case";
 
 import { IUuidGenerator } from "../protocols/uuid-generator";
 
@@ -24,30 +23,37 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
       );
     }
 
-    const feedbackId = this.uuidGenerator.generate();
-
-    const feedback = Feedback.create({
-      id: feedbackId,
-      giverId: data.currentUser.id,
-      receiverId: data.receiverId,
-      description: data.description,
-      observation: data.observation,
-      score: data.score,
-      title: data.title,
-      items: data.items.map((item) => {
-        return FeedbackItem.create({
-          label: item.label,
-          description: item.description,
-          observation: item.observation,
-          score: item.score,
-          weight: item.weight,
-          order: item.order,
-        });
-      }),
-    });
-
     try {
       await this.unitOfWork.start();
+
+      const receiver: User | null = await this.unitOfWork
+        .getUserRepository()
+        .findById(data.receiverId, data.currentUser.companyId);
+
+      if (!receiver) {
+        throw new NotFoundError("Receiver not found");
+      }
+
+      const feedbackId = this.uuidGenerator.generate();
+      const feedback = Feedback.create({
+        id: feedbackId,
+        giverId: data.currentUser.id,
+        receiver: receiver,
+        description: data.description,
+        observation: data.observation,
+        score: data.score,
+        title: data.title,
+        items: data.items.map((item) => {
+          return FeedbackItem.create({
+            label: item.label,
+            description: item.description,
+            observation: item.observation,
+            score: item.score,
+            weight: item.weight,
+            order: item.order,
+          });
+        }),
+      });
 
       const createdFeedback = await this.unitOfWork
         .getFeedbackRepository()
@@ -56,6 +62,7 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
       await this.unitOfWork.commit();
       return createdFeedback;
     } catch (error) {
+      console.log(error);
       await this.unitOfWork.rollback();
       throw error;
     }
