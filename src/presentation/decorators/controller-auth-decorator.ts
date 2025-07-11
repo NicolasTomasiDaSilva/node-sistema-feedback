@@ -1,15 +1,13 @@
-import { IController } from "../protocols/controller";
-import { HttpRequest } from "../types/http-request";
 import { ITokenService } from "../../application/protocols/services/token-service";
-import { ForbiddenError, UnauthorizedError } from "../../domain/errors/errors";
+import { UnauthorizedError } from "../../domain/errors/errors";
+import { IController } from "../protocols/controller";
 import { HttpResponse } from "../types/htpp-response";
-import { RoleEnum } from "../../domain/enums/role-enum";
+import { HttpRequest } from "../types/http-request";
 
 export class ControllerAuthDecorator implements IController {
   constructor(
     private readonly tokenService: ITokenService,
-    private readonly controller: IController,
-    private readonly requiredRoles: RoleEnum[]
+    private readonly controller: IController
   ) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -33,15 +31,6 @@ export class ControllerAuthDecorator implements IController {
 
     request.user = payload;
 
-    const userRole = payload.role;
-
-    if (
-      this.requiredRoles.length === 0 ||
-      this.requiredRoles.includes(userRole)
-    ) {
-      return this.controller.handle(request);
-    }
-
-    throw new ForbiddenError("Insufficient permissions");
+    return this.controller.handle(request);
   }
 }

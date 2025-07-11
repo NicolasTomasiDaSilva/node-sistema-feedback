@@ -1,9 +1,9 @@
 import { Feedback } from "../../domain/entities/feedback";
 import { RoleEnum } from "../../domain/enums/role-enum";
 import { GetFeedbacksDTO } from "../dtos/get-feedbacks-dto";
-import { IFeedbackRepository } from "../protocols/repositories/feedback-repository";
-import { IGetFeedbacksUseCase } from "../protocols/use-cases/get-feedbacks-use-case";
+
 import { IUnitOfWork } from "../protocols/repositories/unit-of-work";
+import { IGetFeedbacksUseCase } from "../protocols/use-cases/get-feedbacks-use-case";
 
 export class GetFeedbacksUseCase implements IGetFeedbacksUseCase {
   constructor(private readonly unitOfWork: IUnitOfWork) {}

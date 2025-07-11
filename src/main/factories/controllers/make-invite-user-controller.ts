@@ -1,4 +1,3 @@
-import { RoleEnum } from "../../../domain/enums/role-enum";
 import { ZodValidator } from "../../../infrastructure/adapters/zod-adapter";
 import { inviteUserSchema } from "../../../infrastructure/schemas/invite-user-schema";
 import { InviteUserController } from "../../../presentation/controllers/invite-user-controller";
@@ -11,8 +10,5 @@ export function makeInviteUserController(): IController {
   const validator = new ZodValidator(inviteUserSchema);
   const useCase = makeInviteUserUseCase();
   const controller = new InviteUserController(useCase, validator);
-  const requiredRoles: RoleEnum[] = [RoleEnum.manager];
-  return makeControllerErrorDecorator(
-    makeControllerAuthDecorator(controller, requiredRoles)
-  );
+  return makeControllerErrorDecorator(makeControllerAuthDecorator(controller));
 }
