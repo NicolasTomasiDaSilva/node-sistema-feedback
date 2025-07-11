@@ -24,16 +24,16 @@ export class Database {
       { CompanyModel },
       { UserModel },
       { InvitationModel },
-      { TemplateFeedbackModel },
-      { TemplateFeedbackItemModel },
+      { TemplateModel },
+      { TemplateItemModel },
       { FeedbackModel },
       { FeedbackItemModel },
     ] = await Promise.all([
       import("./models/company"),
       import("./models/user"),
       import("./models/invitation"),
-      import("./models/template-feedback"),
-      import("./models/template-feedback-item"),
+      import("./models/template"),
+      import("./models/template-item"),
       import("./models/feedback"),
       import("./models/feedback-item"),
     ]);
@@ -43,14 +43,14 @@ export class Database {
     InvitationModel.initModel(sequelize);
     FeedbackModel.initModel(sequelize);
     FeedbackItemModel.initModel(sequelize);
-    TemplateFeedbackModel.initModel(sequelize);
-    TemplateFeedbackItemModel.initModel(sequelize);
+    TemplateModel.initModel(sequelize);
+    TemplateItemModel.initModel(sequelize);
 
     CompanyModel.associate();
     UserModel.associate();
     InvitationModel.associate();
-    TemplateFeedbackModel.associate();
-    TemplateFeedbackItemModel.associate();
+    TemplateModel.associate();
+    TemplateItemModel.associate();
     FeedbackModel.associate();
     FeedbackItemModel.associate();
 

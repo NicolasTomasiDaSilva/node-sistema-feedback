@@ -1,22 +1,21 @@
 import { Transaction } from "sequelize";
+import { IFeedbackRepository } from "../../../application/protocols/repositories/feedback-repository";
+import { IInvitationRepository } from "../../../application/protocols/repositories/invite-repository";
+import { ITemplateRepository } from "../../../application/protocols/repositories/template-repository";
 import { IUnitOfWork } from "../../../application/protocols/repositories/unit-of-work";
 import { IUserRepository } from "../../../application/protocols/repositories/user-repository";
-import { IFeedbackRepository } from "../../../application/protocols/repositories/feedback-repository";
-import { ITemplateFeedbackRepository } from "../../../application/protocols/repositories/template-feedback-repository";
-import { IInvitationRepository } from "../../../application/protocols/repositories/invite-repository";
-import { SequelizeUserRepository } from "./repositories/sequelize-user-repository";
-import { SequelizeFeedbackRepository } from "./repositories/sequelize-feedback-repository ";
-import { SequelizeTemplateFeedbackRepository } from "./repositories/sequelize-template-feedback-repository";
-import { SequelizeInvitationRepository } from "./repositories/sequelize-invitation-repository";
-import { Database } from "./sequelize";
 import { IUuidGenerator } from "../../../application/protocols/uuid-generator";
+import { SequelizeFeedbackRepository } from "./repositories/sequelize-feedback-repository ";
+import { SequelizeInvitationRepository } from "./repositories/sequelize-invitation-repository";
+import { SequelizeTemplateRepository } from "./repositories/sequelize-template-repository";
+import { SequelizeUserRepository } from "./repositories/sequelize-user-repository";
+import { Database } from "./sequelize";
 
 export class SequelizeUnitOfWork implements IUnitOfWork {
   private transaction: Transaction | null = null;
   private _userRepository: IUserRepository | null = null;
   private _feedbackRepository: IFeedbackRepository | null = null;
-  private _templateFeedbackRepository: ITemplateFeedbackRepository | null =
-    null;
+  private _templateRepository: ITemplateRepository | null = null;
   private _invitationRepository: IInvitationRepository | null = null;
 
   constructor(private readonly uuidGenerator: IUuidGenerator) {}
@@ -67,15 +66,14 @@ export class SequelizeUnitOfWork implements IUnitOfWork {
     return this._feedbackRepository;
   }
 
-  getTemplateFeedbackRepository(): ITemplateFeedbackRepository {
-    if (!this._templateFeedbackRepository) {
-      this._templateFeedbackRepository =
-        new SequelizeTemplateFeedbackRepository(
-          this.uuidGenerator,
-          this.transaction || undefined
-        );
+  getTemplateRepository(): ITemplateRepository {
+    if (!this._templateRepository) {
+      this._templateRepository = new SequelizeTemplateRepository(
+        this.uuidGenerator,
+        this.transaction || undefined
+      );
     }
-    return this._templateFeedbackRepository;
+    return this._templateRepository;
   }
 
   getInvitationRepository(): IInvitationRepository {

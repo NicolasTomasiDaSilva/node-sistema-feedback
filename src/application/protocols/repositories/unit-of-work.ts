@@ -1,6 +1,6 @@
 import { IFeedbackRepository } from "./feedback-repository";
 import { IInvitationRepository } from "./invite-repository";
-import { ITemplateFeedbackRepository } from "./template-feedback-repository";
+import { ITemplateRepository } from "./template-repository";
 import { IUserRepository } from "./user-repository";
 
 export interface IUnitOfWork {
@@ -9,6 +9,6 @@ export interface IUnitOfWork {
   rollback(): Promise<void>;
   getUserRepository(): IUserRepository;
   getFeedbackRepository(): IFeedbackRepository;
-  getTemplateFeedbackRepository(): ITemplateFeedbackRepository;
+  getTemplateRepository(): ITemplateRepository;
   getInvitationRepository(): IInvitationRepository;
 }

@@ -2,7 +2,7 @@ import { DataTypes, Model, Sequelize } from "sequelize";
 
 import { FeedbackModel } from "./feedback";
 import { InvitationModel } from "./invitation";
-import { TemplateFeedbackModel } from "./template-feedback";
+import { TemplateModel } from "./template";
 import { UserModel } from "./user";
 
 export interface CompanyAttributes {
@@ -69,9 +69,9 @@ export class CompanyModel
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
-    CompanyModel.hasMany(TemplateFeedbackModel, {
+    CompanyModel.hasMany(TemplateModel, {
       foreignKey: "companyId",
-      as: "templateFeedbacks",
+      as: "templates",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
