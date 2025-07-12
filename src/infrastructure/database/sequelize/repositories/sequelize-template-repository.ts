@@ -41,7 +41,9 @@ export class SequelizeTemplateRepository implements ITemplateRepository {
 
     const createdTemplate = await TemplateModel.findByPk(templateModel.id, {
       transaction: this.transaction,
+      include: [{ model: TemplateItemModel, as: "items" }],
     });
+
     if (!createdTemplate) {
       throw new Error("Template not found");
     }
@@ -67,7 +69,7 @@ export class SequelizeTemplateRepository implements ITemplateRepository {
     const templateModel = TemplateMapper.toPersistence(data);
     templateModel.companyId = companyId;
 
-    await TemplateModel.update(data, {
+    await TemplateModel.update(templateModel, {
       where: { id: data.id, companyId },
       transaction: this.transaction,
     });
@@ -98,8 +100,7 @@ export class SequelizeTemplateRepository implements ITemplateRepository {
       });
     }
 
-    const updatedTemplateModel = await TemplateModel.findOne({
-      where: { id: data.id, companyId },
+    const updatedTemplateModel = await TemplateModel.findByPk(data.id, {
       include: [{ model: TemplateItemModel, as: "items" }],
       transaction: this.transaction,
     });
