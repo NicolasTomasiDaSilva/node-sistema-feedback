@@ -6,7 +6,13 @@ import { makeCreateFeedbackController } from "../../main/factories/controllers/m
 
 const feedbackRoutes = Router();
 
-feedbackRoutes.post("/", expressRouteAdapter(makeCreateFeedbackController()));
-feedbackRoutes.get("/", expressRouteAdapter(makeGetFeedbacksController()));
+feedbackRoutes.post(
+  "/",
+  expressRouteAdapter(() => makeCreateFeedbackController())
+);
+feedbackRoutes.get(
+  "/",
+  expressRouteAdapter(() => makeGetFeedbacksController())
+);
 
 export { feedbackRoutes };

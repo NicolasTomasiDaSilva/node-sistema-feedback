@@ -1,10 +1,12 @@
-import { HttpRequest } from "../../presentation/types/http-request";
-import { HttpResponse } from "../../presentation/types/htpp-response";
 import { Request, Response } from "express";
 import { IController } from "../../presentation/protocols/controller";
+import { HttpResponse } from "../../presentation/types/htpp-response";
+import { HttpRequest } from "../../presentation/types/http-request";
 
-export function expressRouteAdapter(controller: IController) {
+export function expressRouteAdapter(controllerFactory: () => IController) {
   return async (request: Request, response: Response) => {
+    const controller = controllerFactory();
+
     const { body, query, params } = request;
     const headers: { [key: string]: string } = {};
     Object.entries(request.headers).forEach(([key, value]) => {

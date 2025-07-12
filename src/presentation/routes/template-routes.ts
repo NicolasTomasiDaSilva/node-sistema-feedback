@@ -6,10 +6,19 @@ import { makeUpdateTemplateController } from "../../main/factories/controllers/m
 
 const templateRoutes = Router();
 
-templateRoutes.get("/", expressRouteAdapter(makeGetTemplatesController()));
+templateRoutes.get(
+  "/",
+  expressRouteAdapter(() => makeGetTemplatesController())
+);
 
-templateRoutes.post("/", expressRouteAdapter(makeCreateTemplateController()));
+templateRoutes.post(
+  "/",
+  expressRouteAdapter(() => makeCreateTemplateController())
+);
 
-templateRoutes.put("/", expressRouteAdapter(makeUpdateTemplateController()));
+templateRoutes.put(
+  "/",
+  expressRouteAdapter(() => makeUpdateTemplateController())
+);
 
 export { templateRoutes };
