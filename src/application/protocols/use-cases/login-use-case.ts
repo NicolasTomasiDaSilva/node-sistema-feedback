@@ -1,4 +1,4 @@
-import { AuthTokensDTO } from "../../dtos/auth-tokens";
+import { AuthTokensDTO } from "../../dtos/auth-tokens-dto";
 import { LoginDTO } from "../../dtos/login-dto";
 
 export interface ILoginUseCase {

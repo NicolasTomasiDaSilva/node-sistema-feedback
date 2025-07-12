@@ -1,9 +1,8 @@
-import { sign, verify, SignOptions } from "jsonwebtoken";
-import { RoleEnum } from "../../domain/enums/role-enum";
+import { sign, SignOptions, verify } from "jsonwebtoken";
+import { AuthTokensDTO } from "../../application/dtos/auth-tokens-dto";
+import { AuthenticatedUserDTO } from "../../application/dtos/authenticated-user-dto";
 import { ITokenService } from "../../application/protocols/services/token-service";
 import { User } from "../../domain/entities/user";
-import { AuthTokensDTO } from "../../application/dtos/auth-tokens";
-import { AuthenticatedUserDTO } from "../../application/dtos/authenticated-user-dto";
 import { UnauthorizedError } from "../../domain/errors/errors";
 
 export class JwtTokenServiceAdapter implements ITokenService {

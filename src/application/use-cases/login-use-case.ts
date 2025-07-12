@@ -1,11 +1,9 @@
-import { User } from "../../domain/entities/user";
 import { NotFoundError } from "../../domain/errors/errors";
-import { AuthTokensDTO } from "../dtos/auth-tokens";
+import { AuthTokensDTO } from "../dtos/auth-tokens-dto";
 import { LoginDTO } from "../dtos/login-dto";
-import { IUserRepository } from "../protocols/repositories/user-repository";
+import { IUnitOfWork } from "../protocols/repositories/unit-of-work";
 import { ITokenService } from "../protocols/services/token-service";
 import { ILoginUseCase } from "../protocols/use-cases/login-use-case";
-import { IUnitOfWork } from "../protocols/repositories/unit-of-work";
 
 export class LoginUseCase implements ILoginUseCase {
   constructor(
