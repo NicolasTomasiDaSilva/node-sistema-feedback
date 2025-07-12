@@ -1,4 +1,4 @@
-import { Transaction } from "sequelize";
+import { Op, Transaction } from "sequelize";
 import { ITemplateRepository } from "../../../../application/protocols/repositories/template-repository";
 import { IUuidGenerator } from "../../../../application/protocols/uuid-generator";
 import { Template } from "../../../../domain/entities/template";
@@ -116,18 +116,26 @@ export class SequelizeTemplateRepository implements ITemplateRepository {
     companyId,
     page,
     perPage,
+    templateName,
   }: {
     companyId: string;
     page: number;
     perPage: number;
+    templateName?: string;
   }): Promise<Template[]> {
-    const offset = (page - 1) * perPage;
+    const where: any = { companyId };
+
+    if (templateName) {
+      where.title = {
+        [Op.iLike]: `%${templateName}%`,
+      };
+    }
 
     const templateModels = await TemplateModel.findAll({
-      where: { companyId },
+      where: where,
       include: [{ model: TemplateItemModel, as: "items" }],
       limit: perPage,
-      offset,
+      offset: (page - 1) * perPage,
       order: [["createdAt", "DESC"]],
       transaction: this.transaction,
     });

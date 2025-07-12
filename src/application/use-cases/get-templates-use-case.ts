@@ -10,7 +10,7 @@ export class GetTemplatesUseCase implements IGetTemplatesUseCase {
   constructor(private readonly unitOfWork: IUnitOfWork) {}
 
   async execute(data: GetTemplatesDTO): Promise<Template[]> {
-    const { currentUser, page, perPage } = data;
+    const { currentUser, page, perPage, templateName } = data;
 
     const requiredRoles: RoleEnum[] = [RoleEnum.manager, RoleEnum.supervisor];
     if (!requiredRoles.includes(data.currentUser.role)) {
@@ -23,6 +23,7 @@ export class GetTemplatesUseCase implements IGetTemplatesUseCase {
       companyId: currentUser.companyId,
       page: page ?? 1,
       perPage: perPage ?? 5,
+      templateName,
     });
   }
 }

@@ -4,5 +4,5 @@ export interface GetTemplatesDTO {
   currentUser: AuthenticatedUserDTO;
   page?: number;
   perPage?: number;
-  receiverName?: string;
+  templateName?: string;
 }

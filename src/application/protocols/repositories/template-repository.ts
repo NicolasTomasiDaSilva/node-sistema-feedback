@@ -9,9 +9,11 @@ export interface ITemplateRepository {
     companyId,
     page,
     perPage,
+    templateName,
   }: {
     companyId: string;
     page: number;
     perPage: number;
+    templateName?: string;
   }): Promise<Template[]>;
 }
