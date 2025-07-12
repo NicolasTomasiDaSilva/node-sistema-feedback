@@ -9,7 +9,8 @@ export class GetFeedbacksUseCase implements IGetFeedbacksUseCase {
   constructor(private readonly unitOfWork: IUnitOfWork) {}
 
   async execute(data: GetFeedbacksDTO): Promise<Feedback[]> {
-    const { currentUser, page, perPage, receiverName } = data;
+    const { currentUser, page, perPage, receiverName, minScore, maxScore } =
+      data;
     if (
       currentUser.role === RoleEnum.manager ||
       currentUser.role === RoleEnum.supervisor
@@ -19,6 +20,8 @@ export class GetFeedbacksUseCase implements IGetFeedbacksUseCase {
         page: page ?? 1,
         perPage: perPage ?? 5,
         receiverName,
+        minScore,
+        maxScore,
       });
     }
     return this.unitOfWork.getFeedbackRepository().findAll({
@@ -26,7 +29,8 @@ export class GetFeedbacksUseCase implements IGetFeedbacksUseCase {
       page: page ?? 1,
       perPage: perPage ?? 5,
       receiverId: currentUser.id,
-      receiverName,
+      minScore,
+      maxScore,
     });
   }
 }

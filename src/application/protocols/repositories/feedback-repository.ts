@@ -8,11 +8,15 @@ export interface IFeedbackRepository {
     perPage,
     receiverId,
     receiverName,
+    minScore,
+    maxScore,
   }: {
     companyId: string;
     page: number;
     perPage: number;
     receiverId?: string;
     receiverName?: string;
+    minScore?: number;
+    maxScore?: number;
   }): Promise<Feedback[]>;
 }

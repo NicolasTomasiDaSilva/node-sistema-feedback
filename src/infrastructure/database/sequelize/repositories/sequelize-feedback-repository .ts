@@ -58,12 +58,16 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
     perPage,
     receiverId,
     receiverName,
+    minScore,
+    maxScore,
   }: {
     companyId: string;
     page: number;
     perPage: number;
     receiverId?: string;
     receiverName?: string;
+    minScore?: number;
+    maxScore?: number;
   }): Promise<Feedback[]> {
     let where: any = { companyId: companyId };
     if (receiverId) {
@@ -75,6 +79,17 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
       { model: UserModel, as: "giver" },
       { model: UserModel, as: "receiver" },
     ];
+
+    if (minScore !== undefined || maxScore !== undefined) {
+      where.score = {};
+      if (minScore !== undefined) {
+        where.score[Op.gte] = minScore;
+      }
+
+      if (maxScore !== undefined) {
+        where.score[Op.lte] = maxScore;
+      }
+    }
 
     // Se há busca por nome, incluir o modelo de usuário receiver
     if (receiverName) {

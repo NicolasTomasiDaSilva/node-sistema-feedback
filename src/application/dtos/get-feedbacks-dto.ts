@@ -5,4 +5,6 @@ export interface GetFeedbacksDTO {
   page?: number;
   perPage?: number;
   receiverName?: string;
+  minScore?: number;
+  maxScore?: number;
 }
