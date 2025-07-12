@@ -1,4 +1,5 @@
 import {
+  BelongsToGetAssociationMixin,
   DataTypes,
   HasManyGetAssociationsMixin,
   Model,
@@ -7,11 +8,13 @@ import {
 } from "sequelize";
 import { CompanyModel } from "./company";
 import { TemplateItemModel } from "./template-item";
+import { UserModel } from "./user";
 
 export interface TemplateAttributes {
   /* ─────────── Colunas da tabela ─────────── */
   id: string;
   companyId: string;
+  creatorId: string;
   title: string;
   createdAt: Date;
   updatedAt: Date;
@@ -25,15 +28,18 @@ export class TemplateModel
   /* ─────────── Colunas da tabela ─────────── */
   declare id: string;
   declare companyId: string;
+  declare creatorId: string;
   declare title: string;
   declare createdAt: Date;
   declare updatedAt: Date;
   declare deletedAt: Date | null;
 
   /* ── Associações (mixins lazy) ── */
+  declare getCreator: BelongsToGetAssociationMixin<UserModel>;
   declare getItems: HasManyGetAssociationsMixin<TemplateItemModel>;
 
   /* ── Propriedade carregada via include ── */
+  declare creator: NonAttribute<UserModel>;
   declare items?: NonAttribute<TemplateItemModel[]>;
 
   static initModel(sequelize: Sequelize) {
@@ -45,6 +51,10 @@ export class TemplateModel
           allowNull: false,
         },
         companyId: {
+          type: DataTypes.UUID,
+          allowNull: false,
+        },
+        creatorId: {
           type: DataTypes.UUID,
           allowNull: false,
         },
@@ -69,6 +79,10 @@ export class TemplateModel
     TemplateModel.belongsTo(CompanyModel, {
       foreignKey: "companyId",
       as: "company",
+    });
+    TemplateModel.belongsTo(UserModel, {
+      foreignKey: "creatorId",
+      as: "creator",
     });
     TemplateModel.hasMany(TemplateItemModel, {
       foreignKey: "templateId",

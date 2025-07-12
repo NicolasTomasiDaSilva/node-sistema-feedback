@@ -1,12 +1,14 @@
 import { Template } from "../../../../domain/entities/template";
 import { TemplateAttributes, TemplateModel } from "../models/template";
 import { TemplateItemMapper } from "./template-item-mapper";
+import { UserMapper } from "./user-mapper";
 
 export class TemplateMapper {
   static toEntity(model: TemplateModel): Template {
     return Template.fromPersistence({
       id: model.id,
       title: model.title,
+      creator: UserMapper.toEntity(model.creator),
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,
@@ -24,6 +26,7 @@ export class TemplateMapper {
     return {
       id: entity.id,
       companyId: "", // Será preenchido pelo repositório
+      creatorId: entity.creator.id,
       title: entity.title,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,

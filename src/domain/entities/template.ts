@@ -1,10 +1,12 @@
 import { BadRequestError } from "../errors/errors";
 import { Entity } from "./entity";
 import { TemplateItem } from "./template-item";
+import { User } from "./user";
 
 interface TemplateProps {
   id: string;
   title: string;
+  creator: User;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
@@ -13,6 +15,7 @@ interface TemplateProps {
 
 export class Template extends Entity {
   private _title: string;
+  private _creator: User;
   private _items: TemplateItem[] | undefined;
 
   private constructor(props: TemplateProps) {
@@ -27,6 +30,7 @@ export class Template extends Entity {
       deletedAt: props.deletedAt,
     });
     this._title = props.title;
+    this._creator = props.creator;
     this._items = props.items;
   }
 
@@ -52,14 +56,19 @@ export class Template extends Entity {
     return {
       id: this.id,
       title: this._title,
+      creator: this._creator.toJSON(),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,
       items: this._items ? this._items.map((item) => item.toJSON()) : undefined,
     };
   }
+
   get title(): string {
     return this._title;
+  }
+  get creator(): User {
+    return this._creator;
   }
   get items(): TemplateItem[] | undefined {
     return this._items;

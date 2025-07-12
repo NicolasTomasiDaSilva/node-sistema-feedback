@@ -42,6 +42,12 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
         throw new NotFoundError("Receiver not found");
       }
 
+      if (giver.companyId !== receiver.companyId) {
+        throw new ForbiddenError(
+          "Giver and receiver must be from the same company"
+        );
+      }
+
       const feedbackId = this.uuidGenerator.generate();
       const feedback = Feedback.create({
         id: feedbackId,

@@ -3,6 +3,7 @@ import { DataTypes, Model, Sequelize } from "sequelize";
 import { RoleEnum } from "../../../../domain/enums/role-enum";
 import { CompanyModel } from "./company";
 import { FeedbackModel } from "./feedback";
+import { TemplateModel } from "./template";
 
 /* ─────────── Colunas da tabela ─────────── */
 export interface UserAttributes {
@@ -86,6 +87,12 @@ export class UserModel extends Model<UserAttributes> implements UserAttributes {
     UserModel.hasMany(FeedbackModel, {
       foreignKey: "receiverId",
       as: "receivedFeedbacks",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    });
+    UserModel.hasMany(TemplateModel, {
+      foreignKey: "creatorId",
+      as: "createdTemplates",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });

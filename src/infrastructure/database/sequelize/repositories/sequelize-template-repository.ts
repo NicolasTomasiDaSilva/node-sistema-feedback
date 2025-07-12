@@ -6,6 +6,7 @@ import { TemplateItemMapper } from "../mappers/template-item-mapper";
 import { TemplateMapper } from "../mappers/template-mapper";
 import { TemplateModel } from "../models/template";
 import { TemplateItemModel } from "../models/template-item";
+import { UserModel } from "../models/user";
 
 export class SequelizeTemplateRepository implements ITemplateRepository {
   constructor(
@@ -41,7 +42,10 @@ export class SequelizeTemplateRepository implements ITemplateRepository {
 
     const createdTemplate = await TemplateModel.findByPk(templateModel.id, {
       transaction: this.transaction,
-      include: [{ model: TemplateItemModel, as: "items" }],
+      include: [
+        { model: TemplateItemModel, as: "items" },
+        { model: UserModel, as: "creator" },
+      ],
     });
 
     if (!createdTemplate) {
@@ -54,7 +58,10 @@ export class SequelizeTemplateRepository implements ITemplateRepository {
   async findById(id: string, companyId: string): Promise<Template | null> {
     const templateModel = await TemplateModel.findOne({
       where: { id, companyId },
-      include: [{ model: TemplateItemModel, as: "items" }],
+      include: [
+        { model: TemplateItemModel, as: "items" },
+        { model: UserModel, as: "creator" },
+      ],
       transaction: this.transaction,
     });
 
@@ -101,7 +108,10 @@ export class SequelizeTemplateRepository implements ITemplateRepository {
     }
 
     const updatedTemplateModel = await TemplateModel.findByPk(data.id, {
-      include: [{ model: TemplateItemModel, as: "items" }],
+      include: [
+        { model: TemplateItemModel, as: "items" },
+        { model: UserModel, as: "creator" },
+      ],
       transaction: this.transaction,
     });
 
@@ -133,7 +143,10 @@ export class SequelizeTemplateRepository implements ITemplateRepository {
 
     const templateModels = await TemplateModel.findAll({
       where: where,
-      include: [{ model: TemplateItemModel, as: "items" }],
+      include: [
+        { model: TemplateItemModel, as: "items" },
+        { model: UserModel, as: "creator" },
+      ],
       limit: perPage,
       offset: (page - 1) * perPage,
       order: [["createdAt", "DESC"]],

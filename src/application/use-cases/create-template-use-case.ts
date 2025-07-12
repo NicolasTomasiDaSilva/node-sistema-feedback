@@ -1,7 +1,8 @@
 import { Template } from "../../domain/entities/template";
 import { TemplateItem } from "../../domain/entities/template-item";
+import { User } from "../../domain/entities/user";
 import { RoleEnum } from "../../domain/enums/role-enum";
-import { ForbiddenError } from "../../domain/errors/errors";
+import { ForbiddenError, NotFoundError } from "../../domain/errors/errors";
 import { CreateTemplateDTO } from "../dtos/create-template-dto";
 
 import { IUnitOfWork } from "../protocols/repositories/unit-of-work";
@@ -24,21 +25,30 @@ export class CreateTemplateUseCase implements ICreateTemplateUseCase {
 
     const templateId = this.uuidGenerator.generate();
 
-    const template = Template.create({
-      id: templateId,
-      title: data.title,
-      items: data.items.map((item) => {
-        return TemplateItem.create({
-          label: item.label,
-          description: item.description,
-          weight: item.weight,
-          order: item.order,
-        });
-      }),
-    });
-
     try {
       await this.unitOfWork.start();
+
+      const creator: User | null = await this.unitOfWork
+        .getUserRepository()
+        .findById(data.currentUser.id, data.currentUser.companyId);
+
+      if (!creator) {
+        throw new NotFoundError("Creator not found");
+      }
+
+      const template = Template.create({
+        id: templateId,
+        title: data.title,
+        creator: creator,
+        items: data.items.map((item) => {
+          return TemplateItem.create({
+            label: item.label,
+            description: item.description,
+            weight: item.weight,
+            order: item.order,
+          });
+        }),
+      });
 
       const createdTemplate = await this.unitOfWork
         .getTemplateRepository()
