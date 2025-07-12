@@ -5,7 +5,7 @@ import { User } from "./user";
 
 interface FeedbackProps {
   id: string;
-  giverId: string;
+  giver: User;
   receiver: User;
   title: string;
   description: string | null;
@@ -18,7 +18,7 @@ interface FeedbackProps {
 }
 
 export class Feedback extends Entity {
-  private readonly _giverId: string;
+  private readonly _giver: User;
   private readonly _receiver: User;
   private _title: string;
   private _description: string | null;
@@ -41,7 +41,7 @@ export class Feedback extends Entity {
       updatedAt: props.updatedAt,
       deletedAt: props.deletedAt,
     });
-    this._giverId = props.giverId;
+    this._giver = props.giver;
     this._receiver = props.receiver;
     this._title = props.title;
     this._description = props.description;
@@ -71,7 +71,7 @@ export class Feedback extends Entity {
   toJSON() {
     return {
       id: this.id,
-      giverId: this._giverId,
+      giver: this._giver.toJSON(),
       receiver: this._receiver.toJSON(),
       title: this._title,
       description: this._description,
@@ -84,8 +84,8 @@ export class Feedback extends Entity {
     };
   }
 
-  get giverId(): string {
-    return this._giverId;
+  get giver(): User {
+    return this._giver;
   }
   get receiver(): User {
     return this._receiver;

@@ -40,7 +40,10 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
     }
     const createdFeedback = await FeedbackModel.findByPk(feedbackModel.id, {
       transaction: this.transaction,
-      include: [{ model: UserModel, as: "receiver" }],
+      include: [
+        { model: UserModel, as: "receiver" },
+        { model: UserModel, as: "giver" },
+      ],
     });
     if (!createdFeedback) {
       throw new Error("Feedback not found");
@@ -67,7 +70,11 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
       where.receiverId = receiverId;
     }
 
-    const includeOptions: any[] = [{ model: FeedbackItemModel, as: "items" }];
+    const includeOptions: any[] = [
+      { model: FeedbackItemModel, as: "items" },
+      { model: UserModel, as: "giver" },
+      { model: UserModel, as: "receiver" },
+    ];
 
     // Se há busca por nome, incluir o modelo de usuário receiver
     if (receiverName) {
@@ -89,6 +96,7 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
       limit: perPage,
       offset: (page - 1) * perPage,
       order: [["createdAt", "DESC"]],
+
       transaction: this.transaction,
     });
 

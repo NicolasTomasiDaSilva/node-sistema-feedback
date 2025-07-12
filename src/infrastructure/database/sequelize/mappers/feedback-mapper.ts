@@ -7,7 +7,7 @@ export class FeedbackMapper {
   static toEntity(model: FeedbackModel): Feedback {
     return Feedback.fromPersistence({
       id: model.id,
-      giverId: model.giverId,
+      giver: UserMapper.toEntity(model.giver),
       receiver: UserMapper.toEntity(model.receiver),
       title: model.title,
       description: model.description,
@@ -28,7 +28,7 @@ export class FeedbackMapper {
   static toPersistence(entity: Feedback): FeedbackAttributes {
     return {
       id: entity.id,
-      giverId: entity.giverId,
+      giverId: entity.giver.id,
       receiverId: entity.receiver.id,
       companyId: "", // Será preenchido pelo repositório
       title: entity.title,

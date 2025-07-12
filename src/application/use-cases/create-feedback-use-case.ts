@@ -26,6 +26,14 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
     try {
       await this.unitOfWork.start();
 
+      const giver: User | null = await this.unitOfWork
+        .getUserRepository()
+        .findById(data.currentUser.id, data.currentUser.companyId);
+
+      if (!giver) {
+        throw new NotFoundError("Giver not found");
+      }
+
       const receiver: User | null = await this.unitOfWork
         .getUserRepository()
         .findById(data.receiverId, data.currentUser.companyId);
@@ -37,7 +45,7 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
       const feedbackId = this.uuidGenerator.generate();
       const feedback = Feedback.create({
         id: feedbackId,
-        giverId: data.currentUser.id,
+        giver: giver,
         receiver: receiver,
         description: data.description,
         observation: data.observation,
@@ -62,7 +70,6 @@ export class CreateFeedbackUseCase implements ICreateFeedbackUseCase {
       await this.unitOfWork.commit();
       return createdFeedback;
     } catch (error) {
-      console.log(error);
       await this.unitOfWork.rollback();
       throw error;
     }

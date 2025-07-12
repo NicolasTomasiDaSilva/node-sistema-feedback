@@ -21,6 +21,7 @@ export class ControllerErrorDecorator implements IController {
     try {
       return await this.controller.handle(request);
     } catch (error) {
+      console.error(error);
       if (error instanceof BadRequestError) {
         return badRequest(error);
       } else if (error instanceof NotFoundError) {

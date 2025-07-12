@@ -44,10 +44,12 @@ export class FeedbackModel
   declare deletedAt: Date | null;
 
   /* ── Associações (mixins lazy) ── */
+  declare getGiver: BelongsToGetAssociationMixin<UserModel>;
   declare getReceiver: BelongsToGetAssociationMixin<UserModel>;
   declare getItems: HasManyGetAssociationsMixin<FeedbackItemModel>;
 
   /* ── Propriedade carregada via include ── */
+  declare giver: NonAttribute<UserModel>;
   declare receiver: NonAttribute<UserModel>;
   declare items?: NonAttribute<FeedbackItemModel[]>;
 
