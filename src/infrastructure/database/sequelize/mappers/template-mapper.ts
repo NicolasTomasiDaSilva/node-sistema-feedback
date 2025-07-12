@@ -1,6 +1,5 @@
 import { Template } from "../../../../domain/entities/template";
 import { TemplateAttributes, TemplateModel } from "../models/template";
-
 import { TemplateItemMapper } from "./template-item-mapper";
 
 export class TemplateMapper {
