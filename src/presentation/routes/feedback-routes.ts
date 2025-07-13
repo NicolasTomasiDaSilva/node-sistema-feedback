@@ -3,6 +3,7 @@ import { expressRouteAdapter } from "../../infrastructure/adapters/express-route
 import { makeGetFeedbacksController } from "../../main/factories/controllers/make-get-feedbacks-controller";
 
 import { makeCreateFeedbackController } from "../../main/factories/controllers/make-create-feedback-controller copy";
+import { makeGetFeedbackController } from "../../main/factories/controllers/make-get-feedback-controller";
 
 const feedbackRoutes = Router();
 
@@ -13,6 +14,11 @@ feedbackRoutes.post(
 feedbackRoutes.get(
   "/",
   expressRouteAdapter(() => makeGetFeedbacksController())
+);
+
+feedbackRoutes.get(
+  "/:id",
+  expressRouteAdapter(() => makeGetFeedbackController())
 );
 
 export { feedbackRoutes };

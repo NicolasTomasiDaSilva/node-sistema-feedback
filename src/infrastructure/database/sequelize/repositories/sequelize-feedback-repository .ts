@@ -116,4 +116,26 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
 
     return FeedbackMapper.toEntityList(models);
   }
+
+  async findById(
+    id: string,
+    companyId: string,
+    receiverId?: string
+  ): Promise<Feedback | null> {
+    let where: any = { id: id, companyId: companyId };
+    if (receiverId) {
+      where.receiverId = receiverId;
+    }
+
+    const model = await FeedbackModel.findOne({
+      where,
+      include: [
+        { model: UserModel, as: "receiver" },
+        { model: UserModel, as: "giver" },
+        { model: FeedbackItemModel, as: "items" },
+      ],
+      transaction: this.transaction,
+    });
+    return model ? FeedbackMapper.toEntity(model) : null;
+  }
 }

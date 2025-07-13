@@ -2,6 +2,11 @@ import { Feedback } from "../../../domain/entities/feedback";
 
 export interface IFeedbackRepository {
   create(data: Feedback, companyId: string): Promise<Feedback>;
+  findById(
+    id: string,
+    companyId: string,
+    receiverId?: string
+  ): Promise<Feedback | null>;
   findAll({
     companyId,
     page,

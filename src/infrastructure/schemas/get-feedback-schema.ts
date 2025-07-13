@@ -1,5 +1,5 @@
 import { z } from "zod";
 
-export const getTemplateSchema = z.object({
+export const getFeedbackSchema = z.object({
   id: z.string().uuid(),
 });
