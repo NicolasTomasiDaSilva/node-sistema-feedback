@@ -8,6 +8,7 @@ export class TemplateMapper {
     return Template.fromPersistence({
       id: model.id,
       title: model.title,
+      description: model.description,
       creator: UserMapper.toEntity(model.creator),
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
@@ -28,6 +29,7 @@ export class TemplateMapper {
       companyId: "", // Será preenchido pelo repositório
       creatorId: entity.creator.id,
       title: entity.title,
+      description: entity.description,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       deletedAt: entity.deletedAt,

@@ -9,5 +9,6 @@ export const createTemplateItemSchema = z.object({
 
 export const createTemplateSchema = z.object({
   title: z.string().trim().min(1).max(50),
+  description: z.string().trim().min(1).max(50).nullable(),
   items: z.array(createTemplateItemSchema),
 });

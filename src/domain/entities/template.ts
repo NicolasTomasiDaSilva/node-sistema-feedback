@@ -6,6 +6,7 @@ import { User } from "./user";
 interface TemplateProps {
   id: string;
   title: string;
+  description: string | null;
   creator: User;
   createdAt: Date;
   updatedAt: Date;
@@ -15,6 +16,7 @@ interface TemplateProps {
 
 export class Template extends Entity {
   private _title: string;
+  private _description: string | null;
   private _creator: User;
   private _items: TemplateItem[] | undefined;
 
@@ -30,6 +32,7 @@ export class Template extends Entity {
       deletedAt: props.deletedAt,
     });
     this._title = props.title;
+    this._description = props.description;
     this._creator = props.creator;
     this._items = props.items;
   }
@@ -56,6 +59,7 @@ export class Template extends Entity {
     return {
       id: this.id,
       title: this._title,
+      description: this._description,
       creator: this._creator.toJSON(),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
@@ -67,11 +71,19 @@ export class Template extends Entity {
   get title(): string {
     return this._title;
   }
+  get description(): string | null {
+    return this._description;
+  }
   get creator(): User {
     return this._creator;
   }
   get items(): TemplateItem[] | undefined {
     return this._items;
+  }
+
+  set description(description: string | null) {
+    this._description = description;
+    this.updated();
   }
 
   set items(items: TemplateItem[]) {

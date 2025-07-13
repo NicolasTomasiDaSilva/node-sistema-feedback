@@ -16,6 +16,7 @@ export interface TemplateAttributes {
   companyId: string;
   creatorId: string;
   title: string;
+  description: string | null;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
@@ -30,6 +31,7 @@ export class TemplateModel
   declare companyId: string;
   declare creatorId: string;
   declare title: string;
+  declare description: string | null;
   declare createdAt: Date;
   declare updatedAt: Date;
   declare deletedAt: Date | null;
@@ -61,6 +63,10 @@ export class TemplateModel
         title: {
           type: DataTypes.STRING,
           allowNull: false,
+        },
+        description: {
+          type: DataTypes.STRING,
+          allowNull: true,
         },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE,

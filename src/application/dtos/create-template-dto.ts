@@ -3,6 +3,7 @@ import { AuthenticatedUserDTO } from "./authenticated-user-dto";
 export interface CreateTemplateDTO {
   currentUser: AuthenticatedUserDTO;
   title: string;
+  description: string | null;
   items: CreateTemplateItemDTO[];
 }
 
