@@ -75,7 +75,6 @@ export class SequelizeFeedbackRepository implements IFeedbackRepository {
     }
 
     const includeOptions: any[] = [
-      { model: FeedbackItemModel, as: "items" },
       { model: UserModel, as: "giver" },
       { model: UserModel, as: "receiver" },
     ];
