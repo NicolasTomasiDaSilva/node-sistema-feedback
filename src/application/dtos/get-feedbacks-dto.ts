@@ -1,9 +1,8 @@
+import { IPagination } from "../protocols/pagination";
 import { AuthenticatedUserDTO } from "./authenticated-user-dto";
 
-export interface GetFeedbacksDTO {
+export interface GetFeedbacksDTO extends IPagination {
   currentUser: AuthenticatedUserDTO;
-  page?: number;
-  perPage?: number;
   receiverName?: string;
   minScore?: number;
   maxScore?: number;

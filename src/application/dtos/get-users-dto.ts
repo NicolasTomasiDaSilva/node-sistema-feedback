@@ -1,8 +1,7 @@
+import { IPagination } from "../protocols/pagination";
 import { AuthenticatedUserDTO } from "./authenticated-user-dto";
 
-export interface GetUsersDTO {
+export interface GetUsersDTO extends IPagination {
   currentUser: AuthenticatedUserDTO;
-  page?: number;
-  perPage?: number;
   name?: string;
 }

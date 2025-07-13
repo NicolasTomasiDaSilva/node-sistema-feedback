@@ -1,8 +1,7 @@
+import { IPagination } from "../protocols/pagination";
 import { AuthenticatedUserDTO } from "./authenticated-user-dto";
 
-export interface GetTemplatesDTO {
+export interface GetTemplatesDTO extends IPagination {
   currentUser: AuthenticatedUserDTO;
-  page?: number;
-  perPage?: number;
   templateName?: string;
 }
