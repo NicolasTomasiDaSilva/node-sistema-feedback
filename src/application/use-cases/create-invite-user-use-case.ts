@@ -1,20 +1,19 @@
 import { Invitation } from "../../domain/entities/invitation";
 import { RoleEnum } from "../../domain/enums/role-enum";
-import { BadRequestError, ForbiddenError } from "../../domain/errors/errors";
-import { InviteUserDTO } from "../dtos/invite-user-dto";
-import { IInvitationRepository } from "../protocols/repositories/invite-repository";
+import { ForbiddenError } from "../../domain/errors/errors";
+import { CreateInviteUserDTO } from "../dtos/create-invite-user-dto";
 
-import { IInviteUserUseCase } from "../protocols/use-cases/invite-user-use-case";
 import { IUnitOfWork } from "../protocols/repositories/unit-of-work";
+import { ICreateInviteUserUseCase } from "../protocols/use-cases/create-invite-user-use-case";
 import { IUuidGenerator } from "../protocols/uuid-generator";
 
-export class InviteUserUseCase implements IInviteUserUseCase {
+export class CreateInviteUserUseCase implements ICreateInviteUserUseCase {
   constructor(
     private readonly unitOfWork: IUnitOfWork,
     private readonly uuidGenerator: IUuidGenerator
   ) {}
 
-  async execute(data: InviteUserDTO): Promise<Invitation> {
+  async execute(data: CreateInviteUserDTO): Promise<Invitation> {
     if (data.currentUser.role !== RoleEnum.manager) {
       throw new ForbiddenError("Only managers can invite users");
     }

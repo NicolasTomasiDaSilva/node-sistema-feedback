@@ -2,7 +2,7 @@ import z from "zod";
 import { RoleEnum } from "../../domain/enums/role-enum";
 import { userSchema } from "./user-schema";
 
-export const inviteUserSchema = userSchema
+export const createInviteUserSchema = userSchema
   .pick({
     name: true,
     phone: true,

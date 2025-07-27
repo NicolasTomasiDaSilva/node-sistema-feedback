@@ -1,10 +1,10 @@
-import { IInviteUserUseCase } from "../../../application/protocols/use-cases/invite-user-use-case";
-import { InviteUserUseCase } from "../../../application/use-cases/invite-user-use-case";
+import { ICreateInviteUserUseCase } from "../../../application/protocols/use-cases/create-invite-user-use-case";
+import { CreateInviteUserUseCase } from "../../../application/use-cases/create-invite-user-use-case";
 import { UuidAdapter } from "../../../infrastructure/adapters/uuid-adapter";
 import { makeUnitOfWork } from "../repositories/make-unit-of-work";
 
-export function makeInviteUserUseCase(): IInviteUserUseCase {
+export function makeCreateInviteUserUseCase(): ICreateInviteUserUseCase {
   const uuidAdapter = new UuidAdapter();
   const unitOfWork = makeUnitOfWork();
-  return new InviteUserUseCase(unitOfWork, uuidAdapter);
+  return new CreateInviteUserUseCase(unitOfWork, uuidAdapter);
 }
