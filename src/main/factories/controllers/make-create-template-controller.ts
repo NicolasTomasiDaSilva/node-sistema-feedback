@@ -1,5 +1,6 @@
 import { ZodValidator } from "../../../infrastructure/adapters/zod-adapter";
-import { createTemplateSchema } from "../../../infrastructure/schemas/create-template-schema";
+import { createTemplateSchema } from "../../../infrastructure/schemas/requests/create-template-schema";
+
 import { CreateTemplateController } from "../../../presentation/controllers/create-template-controller";
 import { IController } from "../../../presentation/protocols/controller";
 import { makeControllerAuthDecorator } from "../decorators/make-controller-auth-decorator";

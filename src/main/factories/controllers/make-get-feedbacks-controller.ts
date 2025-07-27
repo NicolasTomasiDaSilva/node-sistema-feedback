@@ -1,5 +1,5 @@
 import { ZodValidator } from "../../../infrastructure/adapters/zod-adapter";
-import { getFeedbacksSchema } from "../../../infrastructure/schemas/get-feedbacks-schema";
+import { getFeedbacksSchema } from "../../../infrastructure/schemas/requests/get-feedbacks-schema";
 import { GetFeedbacksController } from "../../../presentation/controllers/get-feedbacks-controller";
 
 import { IController } from "../../../presentation/protocols/controller";

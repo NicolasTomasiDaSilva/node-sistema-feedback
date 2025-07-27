@@ -1,5 +1,5 @@
 import { ZodValidator } from "../../../infrastructure/adapters/zod-adapter";
-import { getUsersSchema } from "../../../infrastructure/schemas/get-users-schema";
+import { getUsersSchema } from "../../../infrastructure/schemas/requests/get-users-schema";
 import { GetUsersController } from "../../../presentation/controllers/get-users-controller";
 import { IController } from "../../../presentation/protocols/controller";
 import { makeControllerAuthDecorator } from "../decorators/make-controller-auth-decorator";

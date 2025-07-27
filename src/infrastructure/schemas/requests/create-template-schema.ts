@@ -1,4 +1,5 @@
-import { templateSchema } from "./template-schema";
+import { templateSchema } from "../template-schema";
+
 export const createTemplateSchema = templateSchema.pick({
   title: true,
   description: true,

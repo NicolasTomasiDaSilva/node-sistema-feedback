@@ -1,5 +1,5 @@
 import { ZodValidator } from "../../../infrastructure/adapters/zod-adapter";
-import { createInviteUserSchema } from "../../../infrastructure/schemas/create-invite-user-schema";
+import { createInviteUserSchema } from "../../../infrastructure/schemas/requests/create-invite-user-schema";
 import { CreateInviteUserController } from "../../../presentation/controllers/create-invite-user-controller";
 import { IController } from "../../../presentation/protocols/controller";
 import { makeControllerAuthDecorator } from "../decorators/make-controller-auth-decorator";

@@ -1,5 +1,6 @@
 import { ZodValidator } from "../../../infrastructure/adapters/zod-adapter";
-import { createFeedbackSchema } from "../../../infrastructure/schemas/create-feedback-schema";
+import { createFeedbackSchema } from "../../../infrastructure/schemas/requests/create-feedback-schema";
+
 import { CreateFeedbackController } from "../../../presentation/controllers/create-feedback-controller";
 import { IController } from "../../../presentation/protocols/controller";
 import { makeControllerAuthDecorator } from "../decorators/make-controller-auth-decorator";

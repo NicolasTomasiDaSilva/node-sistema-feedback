@@ -1,5 +1,5 @@
 import { ZodValidator } from "../../../infrastructure/adapters/zod-adapter";
-import { loginSchema } from "../../../infrastructure/schemas/login-schema";
+import { loginSchema } from "../../../infrastructure/schemas/requests/login-schema";
 import { LoginController } from "../../../presentation/controllers/login-controller";
 import { IController } from "../../../presentation/protocols/controller";
 import { makeControllerErrorDecorator } from "../decorators/make-controller-error-decorator";

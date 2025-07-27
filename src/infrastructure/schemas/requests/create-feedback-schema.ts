@@ -1,5 +1,5 @@
 import z from "zod";
-import { feedbackSchema } from "./feedback-schema";
+import { feedbackSchema } from "../feedback-schema";
 
 export const createFeedbackSchema = feedbackSchema
   .pick({
