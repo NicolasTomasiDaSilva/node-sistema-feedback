@@ -39,6 +39,7 @@ export class CreateTemplateUseCase implements ICreateTemplateUseCase {
       const template = Template.create({
         id: templateId,
         title: data.title,
+        description: data.description,
         creator: creator,
         items: data.items.map((item) => {
           return TemplateItem.create({

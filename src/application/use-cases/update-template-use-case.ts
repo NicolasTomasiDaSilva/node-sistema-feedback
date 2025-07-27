@@ -35,6 +35,7 @@ export class UpdateTemplateUseCase implements IUpdateTemplateUseCase {
       if (!existingTemplate) {
         throw new NotFoundError("Template not found");
       }
+
       existingTemplate.description = data.description;
       existingTemplate.title = data.title;
       existingTemplate.items = data.items.map((item) =>
