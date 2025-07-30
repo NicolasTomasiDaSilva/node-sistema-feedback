@@ -23,7 +23,7 @@ templateRoutes.post(
 );
 
 templateRoutes.put(
-  "/",
+  "/:id",
   expressRouteAdapter(() => makeUpdateTemplateController())
 );
 

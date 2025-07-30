@@ -11,17 +11,19 @@ export class UpdateTemplateController implements IController {
   constructor(
     private readonly updateTemplateUseCase: IUpdateTemplateUseCase,
     private readonly bodyValidator: IValidator<
-      Omit<UpdateTemplateDTO, "currentUser">
-    >
+      Omit<UpdateTemplateDTO, "currentUser" | "id">
+    >,
+    private readonly paramsValidator: IValidator<{ id: string }>
   ) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const currentUser = getCurrentUser(request);
-
+    const { id } = this.paramsValidator.validate(request.params);
     const data = this.bodyValidator.validate(request.body);
 
     const dto: UpdateTemplateDTO = {
       currentUser: currentUser,
+      id: id,
       ...data,
     };
 
